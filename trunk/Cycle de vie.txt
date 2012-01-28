@@ -1,2 +1,0 @@
-Permet de voir les differents etats d'une application android. Ceci est tres important pour la persistance des données que 
-l'on verra& plus tard.
