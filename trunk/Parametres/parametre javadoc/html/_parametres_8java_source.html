@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<title>Parametre:  Fichier source de src/projet/parametre/Parametres.java</title>
+
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+
+</head>
+<body>
+<div id="top"><!-- do not remove this div! -->
+
+
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  
+  
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Parametre
+   &#160;<span id="projectnumber">1.1</span>
+   </div>
+   <div id="projectbrief">Projet pour les parametres, le systeme de preference et les popups. Inclut également les ListView et la gestion des images</div>
+  </td>
+  
+  
+  
+ </tr>
+ </tbody>
+</table>
+</div>
+
+<!-- Généré par Doxygen 1.7.6.1 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="namespaces.html"><span>Paquetages</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+    </ul>
+  </div>
+</div>
+<div class="header">
+  <div class="headertitle">
+<div class="title">src/projet/parametre/Parametres.java</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="_parametres_8java.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="keyword">package </span>projet.parametre;
+<a name="l00002"></a>00002 
+<a name="l00003"></a>00003 <span class="keyword">import</span> android.app.Activity;
+<a name="l00004"></a>00004 <span class="keyword">import</span> android.content.Intent;
+<a name="l00005"></a>00005 <span class="keyword">import</span> android.content.SharedPreferences;
+<a name="l00006"></a>00006 <span class="keyword">import</span> android.graphics.Color;
+<a name="l00007"></a>00007 <span class="keyword">import</span> android.os.Bundle;
+<a name="l00008"></a>00008 <span class="keyword">import</span> android.view.Menu;
+<a name="l00009"></a>00009 <span class="keyword">import</span> android.view.MenuItem;
+<a name="l00010"></a>00010 <span class="keyword">import</span> android.view.View;
+<a name="l00011"></a>00011 <span class="keyword">import</span> android.widget.Button;
+<a name="l00012"></a>00012 <span class="keyword">import</span> android.widget.EditText;
+<a name="l00013"></a>00013 
+<a name="l00019"></a><a class="code" href="classprojet_1_1parametre_1_1_parametres.html">00019</a> <span class="keyword">public</span> <span class="keyword">class </span><a class="code" href="classprojet_1_1parametre_1_1_parametres.html">Parametres</a> <span class="keyword">extends</span> Activity
+<a name="l00020"></a>00020 {
+<a name="l00024"></a><a class="code" href="classprojet_1_1parametre_1_1_parametres.html#ab96f9770fac3c7b97d1c9027e001665a">00024</a>     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#ab96f9770fac3c7b97d1c9027e001665a">PREFS_NAME</a> = <span class="stringliteral">&quot;preferenceTaux&quot;</span>;  
+<a name="l00028"></a><a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a638c2caf147b7b88eb05492a8e92c0f2">00028</a>     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a638c2caf147b7b88eb05492a8e92c0f2">PREFS_TEXTE_COLOR</a> = <span class="stringliteral">&quot;preferenceCouleur&quot;</span>;
+<a name="l00029"></a>00029     
+<a name="l00030"></a><a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a773390496623d933cd674fe4de5378cc">00030</a>     <span class="keyword">final</span> <span class="keywordtype">int</span> <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a773390496623d933cd674fe4de5378cc">PARAMETRE</a> = 1;
+<a name="l00031"></a><a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a0b3840471c9ca218e47f7e03c19da263">00031</a>     <span class="keyword">final</span> <span class="keywordtype">int</span> <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a0b3840471c9ca218e47f7e03c19da263">A_PROPOS</a> = 2;
+<a name="l00032"></a><a class="code" href="classprojet_1_1parametre_1_1_parametres.html#aeb72b9fc0772c1618745a50b4cbbf235">00032</a>     <span class="keyword">final</span> <span class="keywordtype">int</span> <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#aeb72b9fc0772c1618745a50b4cbbf235">QUITTER</a> = 3;
+<a name="l00033"></a>00033     
+<a name="l00034"></a><a class="code" href="classprojet_1_1parametre_1_1_parametres.html#ad40ad9bf96fa80bbd753f2eeca7ce471">00034</a>     Button <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#ad40ad9bf96fa80bbd753f2eeca7ce471">load</a>; 
+<a name="l00035"></a><a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a23e49637e822602c2f72a0e3c0f4ee05">00035</a>     Button <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a23e49637e822602c2f72a0e3c0f4ee05">save</a>;
+<a name="l00036"></a><a class="code" href="classprojet_1_1parametre_1_1_parametres.html#acdc0cabaa975e7095fc0362c639cbb03">00036</a>     Button <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#acdc0cabaa975e7095fc0362c639cbb03">init</a>;
+<a name="l00037"></a><a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a548ddf1e0743599ff59f889b410033bd">00037</a>     EditText <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a548ddf1e0743599ff59f889b410033bd">texte</a>;
+<a name="l00038"></a>00038     
+<a name="l00048"></a>00048     @Override
+<a name="l00049"></a><a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a964e6627b3f8e0f64b897e8f178980df">00049</a>     <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a964e6627b3f8e0f64b897e8f178980df">onCreate</a>(Bundle savedInstanceState)
+<a name="l00050"></a>00050     {
+<a name="l00051"></a>00051         super.onCreate(savedInstanceState);
+<a name="l00052"></a>00052         setContentView(<a class="code" href="classprojet_1_1parametre_1_1_r.html">R</a>.layout.main);
+<a name="l00053"></a>00053         
+<a name="l00054"></a>00054         <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#ad40ad9bf96fa80bbd753f2eeca7ce471">load</a> = (Button) findViewById(<a class="code" href="classprojet_1_1parametre_1_1_r.html">R</a>.id.load);
+<a name="l00055"></a>00055         <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a23e49637e822602c2f72a0e3c0f4ee05">save</a> = (Button) findViewById(<a class="code" href="classprojet_1_1parametre_1_1_r.html">R</a>.id.save);
+<a name="l00056"></a>00056         <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#acdc0cabaa975e7095fc0362c639cbb03">init</a> = (Button) findViewById(<a class="code" href="classprojet_1_1parametre_1_1_r.html">R</a>.id.init);
+<a name="l00057"></a>00057         <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a548ddf1e0743599ff59f889b410033bd">texte</a> = (EditText) findViewById(<a class="code" href="classprojet_1_1parametre_1_1_r.html">R</a>.id.texte);
+<a name="l00058"></a>00058         
+<a name="l00059"></a>00059         <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a5ebd5fd5afd89ea48cc9a7f9424dc6ec">initCouleur</a>();   
+<a name="l00060"></a>00060         
+<a name="l00061"></a>00061         <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#ad40ad9bf96fa80bbd753f2eeca7ce471">load</a>.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() {
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063             <span class="keyword">public</span> <span class="keywordtype">void</span> onClick(View arg0) {
+<a name="l00064"></a>00064                 <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#af1d91901483b09c5c52a7cd32ffb202f">initTexte</a>();
+<a name="l00065"></a>00065             }
+<a name="l00066"></a>00066         });
+<a name="l00067"></a>00067         
+<a name="l00068"></a>00068         <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a23e49637e822602c2f72a0e3c0f4ee05">save</a>.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() {
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070             <span class="keyword">public</span> <span class="keywordtype">void</span> onClick(View arg0) {
+<a name="l00071"></a>00071                 <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a91a0932b7c51452674af1521eb3efbbc">saveTexte</a>();
+<a name="l00072"></a>00072             }
+<a name="l00073"></a>00073         });
+<a name="l00074"></a>00074         
+<a name="l00075"></a>00075         <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#acdc0cabaa975e7095fc0362c639cbb03">init</a>.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() {
+<a name="l00076"></a>00076 
+<a name="l00077"></a>00077             <span class="keyword">public</span> <span class="keywordtype">void</span> onClick(View arg0) {
+<a name="l00078"></a>00078                 <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a548ddf1e0743599ff59f889b410033bd">texte</a>.setText(<span class="stringliteral">&quot;texte de test&quot;</span>);
+<a name="l00079"></a>00079             }
+<a name="l00080"></a>00080         });
+<a name="l00081"></a>00081     }
+<a name="l00082"></a>00082     
+<a name="l00093"></a>00093     @Override
+<a name="l00094"></a><a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a196da77e158054bace2cf91e72fec8ee">00094</a>     <span class="keyword">public</span> <span class="keywordtype">boolean</span> <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a196da77e158054bace2cf91e72fec8ee">onCreateOptionsMenu</a>(Menu menu) {
+<a name="l00095"></a>00095         menu.add(0, <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a773390496623d933cd674fe4de5378cc">PARAMETRE</a>, 0, <span class="stringliteral">&quot;Paramètre&quot;</span>);
+<a name="l00096"></a>00096         menu.findItem(<a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a773390496623d933cd674fe4de5378cc">PARAMETRE</a>).setIcon(<a class="code" href="classprojet_1_1parametre_1_1_r.html">R</a>.drawable.setting);
+<a name="l00097"></a>00097         menu.add(0, <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a0b3840471c9ca218e47f7e03c19da263">A_PROPOS</a>, 0, <span class="stringliteral">&quot;A propos&quot;</span>);
+<a name="l00098"></a>00098         menu.findItem(<a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a0b3840471c9ca218e47f7e03c19da263">A_PROPOS</a>).setIcon(<a class="code" href="classprojet_1_1parametre_1_1_r.html">R</a>.drawable.info);
+<a name="l00099"></a>00099         menu.add(0, <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#aeb72b9fc0772c1618745a50b4cbbf235">QUITTER</a>, 0, <span class="stringliteral">&quot;Quitter&quot;</span>);
+<a name="l00100"></a>00100         menu.findItem(<a class="code" href="classprojet_1_1parametre_1_1_parametres.html#aeb72b9fc0772c1618745a50b4cbbf235">QUITTER</a>).setIcon(<a class="code" href="classprojet_1_1parametre_1_1_r.html">R</a>.drawable.quit);
+<a name="l00101"></a>00101         <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00102"></a>00102     }
+<a name="l00103"></a>00103 
+<a name="l00114"></a>00114     @Override
+<a name="l00115"></a><a class="code" href="classprojet_1_1parametre_1_1_parametres.html#ab081808d930caa6cab8f93ceda9e9c13">00115</a>     <span class="keyword">public</span> <span class="keywordtype">boolean</span> <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#ab081808d930caa6cab8f93ceda9e9c13">onOptionsItemSelected</a>(MenuItem item) {
+<a name="l00116"></a>00116         <span class="keywordflow">switch</span> (item.getItemId()) {
+<a name="l00117"></a>00117         <span class="keywordflow">case</span> <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a773390496623d933cd674fe4de5378cc">PARAMETRE</a>:
+<a name="l00118"></a>00118             Intent i = <span class="keyword">new</span> Intent (getApplicationContext(), <a class="code" href="classprojet_1_1parametre_1_1parametre.html">parametre</a>.class);
+<a name="l00119"></a>00119             startActivity(i);
+<a name="l00120"></a>00120             <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00121"></a>00121         <span class="keywordflow">case</span> <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a0b3840471c9ca218e47f7e03c19da263">A_PROPOS</a>:
+<a name="l00122"></a>00122             <span class="comment">//newGame();</span>
+<a name="l00123"></a>00123             <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00124"></a>00124         <span class="keywordflow">case</span> <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#aeb72b9fc0772c1618745a50b4cbbf235">QUITTER</a>:
+<a name="l00125"></a>00125             finish();
+<a name="l00126"></a>00126             <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00127"></a>00127         }
+<a name="l00128"></a>00128         <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00129"></a>00129     }
+<a name="l00130"></a>00130     
+<a name="l00138"></a>00138     @Override
+<a name="l00139"></a><a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a4512f6f6e07f49575e055476d33b79ff">00139</a>     <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a4512f6f6e07f49575e055476d33b79ff">onResume</a>(){
+<a name="l00140"></a>00140         super.onResume();
+<a name="l00141"></a>00141         <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a5ebd5fd5afd89ea48cc9a7f9424dc6ec">initCouleur</a>();  
+<a name="l00142"></a>00142     }
+<a name="l00143"></a>00143     
+<a name="l00151"></a><a class="code" href="classprojet_1_1parametre_1_1_parametres.html#af1d91901483b09c5c52a7cd32ffb202f">00151</a>     <span class="keyword">private</span> <span class="keywordtype">void</span> <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#af1d91901483b09c5c52a7cd32ffb202f">initTexte</a>(){
+<a name="l00152"></a>00152         SharedPreferences settings = getSharedPreferences(<a class="code" href="classprojet_1_1parametre_1_1_parametres.html#ab96f9770fac3c7b97d1c9027e001665a">PREFS_NAME</a>, 0);        
+<a name="l00153"></a>00153         <span class="keywordflow">if</span>(settings.getString(<span class="stringliteral">&quot;texte&quot;</span>, <span class="stringliteral">&quot;0&quot;</span>).equals(<span class="stringliteral">&quot;0&quot;</span>)){
+<a name="l00154"></a>00154             SharedPreferences.Editor editor = settings.edit();
+<a name="l00155"></a>00155             editor.putString(<span class="stringliteral">&quot;texte&quot;</span>, <span class="stringliteral">&quot;texte de test&quot;</span>);
+<a name="l00156"></a>00156             editor.commit();
+<a name="l00157"></a>00157         }
+<a name="l00158"></a>00158         String zTexte = settings.getString(<span class="stringliteral">&quot;texte&quot;</span>, <span class="stringliteral">&quot;0&quot;</span>);
+<a name="l00159"></a>00159         
+<a name="l00160"></a>00160         <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a548ddf1e0743599ff59f889b410033bd">texte</a>.setText(zTexte);
+<a name="l00161"></a>00161     }
+<a name="l00162"></a>00162     
+<a name="l00169"></a><a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a91a0932b7c51452674af1521eb3efbbc">00169</a>     <span class="keyword">private</span> <span class="keywordtype">void</span> <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a91a0932b7c51452674af1521eb3efbbc">saveTexte</a>(){
+<a name="l00170"></a>00170         SharedPreferences settings = getSharedPreferences(<a class="code" href="classprojet_1_1parametre_1_1_parametres.html#ab96f9770fac3c7b97d1c9027e001665a">PREFS_NAME</a>, 0);        
+<a name="l00171"></a>00171         SharedPreferences.Editor editor = settings.edit();
+<a name="l00172"></a>00172         editor.putString(<span class="stringliteral">&quot;texte&quot;</span>, <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a548ddf1e0743599ff59f889b410033bd">texte</a>.getText().toString());
+<a name="l00173"></a>00173         editor.commit();
+<a name="l00174"></a>00174     }
+<a name="l00175"></a>00175     
+<a name="l00184"></a><a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a5ebd5fd5afd89ea48cc9a7f9424dc6ec">00184</a>     <span class="keyword">private</span> <span class="keywordtype">void</span> <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a5ebd5fd5afd89ea48cc9a7f9424dc6ec">initCouleur</a>(){
+<a name="l00185"></a>00185         SharedPreferences settings = getSharedPreferences(<a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a638c2caf147b7b88eb05492a8e92c0f2">PREFS_TEXTE_COLOR</a>, 0);        
+<a name="l00186"></a>00186         <span class="keywordflow">if</span>(settings.getString(<span class="stringliteral">&quot;couleur_texte&quot;</span>, <span class="stringliteral">&quot;0&quot;</span>).equals(<span class="stringliteral">&quot;0&quot;</span>)){
+<a name="l00187"></a>00187             SharedPreferences.Editor editor = settings.edit();
+<a name="l00188"></a>00188             editor.putString(<span class="stringliteral">&quot;couleur_texte&quot;</span>, String.valueOf(Color.RED));
+<a name="l00189"></a>00189             editor.commit();
+<a name="l00190"></a>00190         }
+<a name="l00191"></a>00191         String couleur = settings.getString(<span class="stringliteral">&quot;couleur_texte&quot;</span>, <span class="stringliteral">&quot;0&quot;</span>);
+<a name="l00192"></a>00192         
+<a name="l00193"></a>00193         <a class="code" href="classprojet_1_1parametre_1_1_parametres.html#a548ddf1e0743599ff59f889b410033bd">texte</a>.setTextColor(Integer.parseInt(couleur));
+<a name="l00194"></a>00194     }
+<a name="l00195"></a>00195 }
+</pre></div></div><!-- contents -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Espaces de nommage</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+
+<hr class="footer"/><address class="footer"><small>
+Généré le Dimanche Janvier 29 2012 00:03:33 pour Parametre par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.7.6.1
+</small></address>
+
+</body>
+</html>
