@@ -1,0 +1,281 @@
+\section{\-Référence de la classe projet.\-parametre.\-Parametres}
+\label{classprojet_1_1parametre_1_1_parametres}\index{projet.\-parametre.\-Parametres@{projet.\-parametre.\-Parametres}}
+
+
+\-Est dérivée de \-Activity.
+
+\subsection*{\-Fonctions membres publiques}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf on\-Create} (\-Bundle saved\-Instance\-State)
+\item 
+boolean {\bf on\-Create\-Options\-Menu} (\-Menu menu)
+\item 
+boolean {\bf on\-Options\-Item\-Selected} (\-Menu\-Item item)
+\item 
+void {\bf on\-Resume} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Attributs publics statiques}
+\begin{DoxyCompactItemize}
+\item 
+static final \-String {\bf \-P\-R\-E\-F\-S\-\_\-\-N\-A\-M\-E} = \char`\"{}preference\-Taux\char`\"{}
+\item 
+static final \-String {\bf \-P\-R\-E\-F\-S\-\_\-\-T\-E\-X\-T\-E\-\_\-\-C\-O\-L\-O\-R} = \char`\"{}preference\-Couleur\char`\"{}
+\end{DoxyCompactItemize}
+\subsection*{\-Attributs de paquetage}
+\begin{DoxyCompactItemize}
+\item 
+final int {\bf \-P\-A\-R\-A\-M\-E\-T\-R\-E} = 1
+\item 
+final int {\bf \-A\-\_\-\-P\-R\-O\-P\-O\-S} = 2
+\item 
+final int {\bf \-Q\-U\-I\-T\-T\-E\-R} = 3
+\item 
+\-Button {\bf load}
+\item 
+\-Button {\bf save}
+\item 
+\-Button {\bf init}
+\item 
+\-Edit\-Text {\bf texte}
+\end{DoxyCompactItemize}
+\subsection*{\-Fonctions membres privées}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf init\-Texte} ()
+\item 
+void {\bf save\-Texte} ()
+\item 
+void {\bf init\-Couleur} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Description détaillée}
+\-Classe principal du programme
+
+\begin{DoxyAuthor}{\-Auteur}
+\-Shyzkanza 
+\end{DoxyAuthor}
+
+
+\-Définition à la ligne 19 du fichier \-Parametres.\-java.
+
+
+
+\subsection{\-Documentation des fonctions membres}
+\index{projet\-::parametre\-::\-Parametres@{projet\-::parametre\-::\-Parametres}!init\-Couleur@{init\-Couleur}}
+\index{init\-Couleur@{init\-Couleur}!projet::parametre::Parametres@{projet\-::parametre\-::\-Parametres}}
+\subsubsection[{init\-Couleur}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf projet.\-parametre.\-Parametres.\-init\-Couleur} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  [private]}}\label{classprojet_1_1parametre_1_1_parametres_a5ebd5fd5afd89ea48cc9a7f9424dc6ec}
+\-Fonction étant appelé pour initialisé la couleur du texte de la zone de texte.\par
+ \-On vérifie si le systeme de préférence à déjà été configuré et s'il est vide,\par
+ on met le rouge dedans par default. \-Ensuite la valeur est charger dans le \par
+ \-Text\-View.
+
+\begin{DoxyAuthor}{\-Auteur}
+\-Jessy \-Bonnotte 
+\end{DoxyAuthor}
+
+
+\-Définition à la ligne 184 du fichier \-Parametres.\-java.
+
+\index{projet\-::parametre\-::\-Parametres@{projet\-::parametre\-::\-Parametres}!init\-Texte@{init\-Texte}}
+\index{init\-Texte@{init\-Texte}!projet::parametre::Parametres@{projet\-::parametre\-::\-Parametres}}
+\subsubsection[{init\-Texte}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf projet.\-parametre.\-Parametres.\-init\-Texte} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  [private]}}\label{classprojet_1_1parametre_1_1_parametres_af1d91901483b09c5c52a7cd32ffb202f}
+\-Fonction permettant de récupérer le texte stocké dans le système de préférences\par
+ et de l'insérer dans la zone de texte. \-Si lors de la premiere utilisation le \par
+ système ne comprend aucun texte, on l'initialise avec une valeur par défault.
+
+\begin{DoxyAuthor}{\-Auteur}
+\-Jessy \-Bonnotte 
+\end{DoxyAuthor}
+
+
+\-Définition à la ligne 151 du fichier \-Parametres.\-java.
+
+\index{projet\-::parametre\-::\-Parametres@{projet\-::parametre\-::\-Parametres}!on\-Create@{on\-Create}}
+\index{on\-Create@{on\-Create}!projet::parametre::Parametres@{projet\-::parametre\-::\-Parametres}}
+\subsubsection[{on\-Create}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf projet.\-parametre.\-Parametres.\-on\-Create} (
+\begin{DoxyParamCaption}
+\item[{\-Bundle}]{saved\-Instance\-State}
+\end{DoxyParamCaption}
+)}\label{classprojet_1_1parametre_1_1_parametres_a964e6627b3f8e0f64b897e8f178980df}
+\-Fonction appelé lors de la création de l'activity. le super.\-on\-Create()\par
+ permet de faire les actions de base puis enfin on peut fair eles actions \par
+ personnels
+
+
+\begin{DoxyParams}{\-Paramètres}
+{\em saved\-Instance\-State} & -\/ dernière instance de l'application qui a été sauvegardé\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{\-Auteur}
+\-Jessy \-Bonnotte 
+\end{DoxyAuthor}
+
+
+\-Définition à la ligne 49 du fichier \-Parametres.\-java.
+
+\index{projet\-::parametre\-::\-Parametres@{projet\-::parametre\-::\-Parametres}!on\-Create\-Options\-Menu@{on\-Create\-Options\-Menu}}
+\index{on\-Create\-Options\-Menu@{on\-Create\-Options\-Menu}!projet::parametre::Parametres@{projet\-::parametre\-::\-Parametres}}
+\subsubsection[{on\-Create\-Options\-Menu}]{\setlength{\rightskip}{0pt plus 5cm}boolean {\bf projet.\-parametre.\-Parametres.\-on\-Create\-Options\-Menu} (
+\begin{DoxyParamCaption}
+\item[{\-Menu}]{menu}
+\end{DoxyParamCaption}
+)}\label{classprojet_1_1parametre_1_1_parametres_a196da77e158054bace2cf91e72fec8ee}
+\-Surcharge de la fonction \doxyref{on\-Create\-Options\-Menu()}{p.}{classprojet_1_1parametre_1_1_parametres_a196da77e158054bace2cf91e72fec8ee} afin de créer le menu au clique\par
+ de l'utilisateur sur la touche menu
+
+
+\begin{DoxyParams}{\-Paramètres}
+{\em menu} & -\/ le menu qui est demandé\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Renvoie}
+true -\/ l'affichage est terminé
+\end{DoxyReturn}
+\begin{DoxyAuthor}{\-Auteur}
+\-Jessy \-Bonnotte 
+\end{DoxyAuthor}
+
+
+\-Définition à la ligne 94 du fichier \-Parametres.\-java.
+
+\index{projet\-::parametre\-::\-Parametres@{projet\-::parametre\-::\-Parametres}!on\-Options\-Item\-Selected@{on\-Options\-Item\-Selected}}
+\index{on\-Options\-Item\-Selected@{on\-Options\-Item\-Selected}!projet::parametre::Parametres@{projet\-::parametre\-::\-Parametres}}
+\subsubsection[{on\-Options\-Item\-Selected}]{\setlength{\rightskip}{0pt plus 5cm}boolean {\bf projet.\-parametre.\-Parametres.\-on\-Options\-Item\-Selected} (
+\begin{DoxyParamCaption}
+\item[{\-Menu\-Item}]{item}
+\end{DoxyParamCaption}
+)}\label{classprojet_1_1parametre_1_1_parametres_ab081808d930caa6cab8f93ceda9e9c13}
+\-Surcharge de la fonction \doxyref{on\-Options\-Item\-Selected()}{p.}{classprojet_1_1parametre_1_1_parametres_ab081808d930caa6cab8f93ceda9e9c13} afin d'effectuer les actions\par
+ sur lesquels l'utilisateur clique.
+
+
+\begin{DoxyParams}{\-Paramètres}
+{\em item} & -\/ l'élément sur lequel l'utilisateur a cliqué.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Renvoie}
+boolean -\/ retourne true si le parametre existe ou false sinon.
+\end{DoxyReturn}
+\begin{DoxyAuthor}{\-Auteur}
+\-Jessy \-Bonnotte 
+\end{DoxyAuthor}
+
+
+\-Définition à la ligne 115 du fichier \-Parametres.\-java.
+
+\index{projet\-::parametre\-::\-Parametres@{projet\-::parametre\-::\-Parametres}!on\-Resume@{on\-Resume}}
+\index{on\-Resume@{on\-Resume}!projet::parametre::Parametres@{projet\-::parametre\-::\-Parametres}}
+\subsubsection[{on\-Resume}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf projet.\-parametre.\-Parametres.\-on\-Resume} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classprojet_1_1parametre_1_1_parametres_a4512f6f6e07f49575e055476d33b79ff}
+\-Fonction appelé lors de la restauration de l'activity. le super.\-on\-Resume()\par
+ permet de faire les actions de base puis enfin on peut fair eles actions \par
+ personnels
+
+\begin{DoxyAuthor}{\-Auteur}
+\-Jessy \-Bonnotte 
+\end{DoxyAuthor}
+
+
+\-Définition à la ligne 139 du fichier \-Parametres.\-java.
+
+\index{projet\-::parametre\-::\-Parametres@{projet\-::parametre\-::\-Parametres}!save\-Texte@{save\-Texte}}
+\index{save\-Texte@{save\-Texte}!projet::parametre::Parametres@{projet\-::parametre\-::\-Parametres}}
+\subsubsection[{save\-Texte}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf projet.\-parametre.\-Parametres.\-save\-Texte} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  [private]}}\label{classprojet_1_1parametre_1_1_parametres_a91a0932b7c51452674af1521eb3efbbc}
+\-Fonction permettant d'enregistrer le texte de la zone de texte dans le systeme\par
+ de préférences d'android.
+
+\begin{DoxyAuthor}{\-Auteur}
+\-Jessy \-Bonnotte 
+\end{DoxyAuthor}
+
+
+\-Définition à la ligne 169 du fichier \-Parametres.\-java.
+
+
+
+\subsection{\-Documentation des données membres}
+\index{projet\-::parametre\-::\-Parametres@{projet\-::parametre\-::\-Parametres}!\-A\-\_\-\-P\-R\-O\-P\-O\-S@{\-A\-\_\-\-P\-R\-O\-P\-O\-S}}
+\index{\-A\-\_\-\-P\-R\-O\-P\-O\-S@{\-A\-\_\-\-P\-R\-O\-P\-O\-S}!projet::parametre::Parametres@{projet\-::parametre\-::\-Parametres}}
+\subsubsection[{\-A\-\_\-\-P\-R\-O\-P\-O\-S}]{\setlength{\rightskip}{0pt plus 5cm}final int {\bf projet.\-parametre.\-Parametres.\-A\-\_\-\-P\-R\-O\-P\-O\-S} = 2\hspace{0.3cm}{\ttfamily  [package]}}\label{classprojet_1_1parametre_1_1_parametres_a0b3840471c9ca218e47f7e03c19da263}
+
+
+\-Définition à la ligne 31 du fichier \-Parametres.\-java.
+
+\index{projet\-::parametre\-::\-Parametres@{projet\-::parametre\-::\-Parametres}!init@{init}}
+\index{init@{init}!projet::parametre::Parametres@{projet\-::parametre\-::\-Parametres}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}\-Button {\bf projet.\-parametre.\-Parametres.\-init}\hspace{0.3cm}{\ttfamily  [package]}}\label{classprojet_1_1parametre_1_1_parametres_acdc0cabaa975e7095fc0362c639cbb03}
+
+
+\-Définition à la ligne 36 du fichier \-Parametres.\-java.
+
+\index{projet\-::parametre\-::\-Parametres@{projet\-::parametre\-::\-Parametres}!load@{load}}
+\index{load@{load}!projet::parametre::Parametres@{projet\-::parametre\-::\-Parametres}}
+\subsubsection[{load}]{\setlength{\rightskip}{0pt plus 5cm}\-Button {\bf projet.\-parametre.\-Parametres.\-load}\hspace{0.3cm}{\ttfamily  [package]}}\label{classprojet_1_1parametre_1_1_parametres_ad40ad9bf96fa80bbd753f2eeca7ce471}
+
+
+\-Définition à la ligne 34 du fichier \-Parametres.\-java.
+
+\index{projet\-::parametre\-::\-Parametres@{projet\-::parametre\-::\-Parametres}!\-P\-A\-R\-A\-M\-E\-T\-R\-E@{\-P\-A\-R\-A\-M\-E\-T\-R\-E}}
+\index{\-P\-A\-R\-A\-M\-E\-T\-R\-E@{\-P\-A\-R\-A\-M\-E\-T\-R\-E}!projet::parametre::Parametres@{projet\-::parametre\-::\-Parametres}}
+\subsubsection[{\-P\-A\-R\-A\-M\-E\-T\-R\-E}]{\setlength{\rightskip}{0pt plus 5cm}final int {\bf projet.\-parametre.\-Parametres.\-P\-A\-R\-A\-M\-E\-T\-R\-E} = 1\hspace{0.3cm}{\ttfamily  [package]}}\label{classprojet_1_1parametre_1_1_parametres_a773390496623d933cd674fe4de5378cc}
+
+
+\-Définition à la ligne 30 du fichier \-Parametres.\-java.
+
+\index{projet\-::parametre\-::\-Parametres@{projet\-::parametre\-::\-Parametres}!\-P\-R\-E\-F\-S\-\_\-\-N\-A\-M\-E@{\-P\-R\-E\-F\-S\-\_\-\-N\-A\-M\-E}}
+\index{\-P\-R\-E\-F\-S\-\_\-\-N\-A\-M\-E@{\-P\-R\-E\-F\-S\-\_\-\-N\-A\-M\-E}!projet::parametre::Parametres@{projet\-::parametre\-::\-Parametres}}
+\subsubsection[{\-P\-R\-E\-F\-S\-\_\-\-N\-A\-M\-E}]{\setlength{\rightskip}{0pt plus 5cm}final \-String {\bf projet.\-parametre.\-Parametres.\-P\-R\-E\-F\-S\-\_\-\-N\-A\-M\-E} = \char`\"{}preference\-Taux\char`\"{}\hspace{0.3cm}{\ttfamily  [static]}}\label{classprojet_1_1parametre_1_1_parametres_ab96f9770fac3c7b97d1c9027e001665a}
+\-Référence vers le texte stocké dans le système de préférences 
+
+\-Définition à la ligne 24 du fichier \-Parametres.\-java.
+
+\index{projet\-::parametre\-::\-Parametres@{projet\-::parametre\-::\-Parametres}!\-P\-R\-E\-F\-S\-\_\-\-T\-E\-X\-T\-E\-\_\-\-C\-O\-L\-O\-R@{\-P\-R\-E\-F\-S\-\_\-\-T\-E\-X\-T\-E\-\_\-\-C\-O\-L\-O\-R}}
+\index{\-P\-R\-E\-F\-S\-\_\-\-T\-E\-X\-T\-E\-\_\-\-C\-O\-L\-O\-R@{\-P\-R\-E\-F\-S\-\_\-\-T\-E\-X\-T\-E\-\_\-\-C\-O\-L\-O\-R}!projet::parametre::Parametres@{projet\-::parametre\-::\-Parametres}}
+\subsubsection[{\-P\-R\-E\-F\-S\-\_\-\-T\-E\-X\-T\-E\-\_\-\-C\-O\-L\-O\-R}]{\setlength{\rightskip}{0pt plus 5cm}final \-String {\bf projet.\-parametre.\-Parametres.\-P\-R\-E\-F\-S\-\_\-\-T\-E\-X\-T\-E\-\_\-\-C\-O\-L\-O\-R} = \char`\"{}preference\-Couleur\char`\"{}\hspace{0.3cm}{\ttfamily  [static]}}\label{classprojet_1_1parametre_1_1_parametres_a638c2caf147b7b88eb05492a8e92c0f2}
+\-Référence vers pour la couleur du texte dans le système de préférences 
+
+\-Définition à la ligne 28 du fichier \-Parametres.\-java.
+
+\index{projet\-::parametre\-::\-Parametres@{projet\-::parametre\-::\-Parametres}!\-Q\-U\-I\-T\-T\-E\-R@{\-Q\-U\-I\-T\-T\-E\-R}}
+\index{\-Q\-U\-I\-T\-T\-E\-R@{\-Q\-U\-I\-T\-T\-E\-R}!projet::parametre::Parametres@{projet\-::parametre\-::\-Parametres}}
+\subsubsection[{\-Q\-U\-I\-T\-T\-E\-R}]{\setlength{\rightskip}{0pt plus 5cm}final int {\bf projet.\-parametre.\-Parametres.\-Q\-U\-I\-T\-T\-E\-R} = 3\hspace{0.3cm}{\ttfamily  [package]}}\label{classprojet_1_1parametre_1_1_parametres_aeb72b9fc0772c1618745a50b4cbbf235}
+
+
+\-Définition à la ligne 32 du fichier \-Parametres.\-java.
+
+\index{projet\-::parametre\-::\-Parametres@{projet\-::parametre\-::\-Parametres}!save@{save}}
+\index{save@{save}!projet::parametre::Parametres@{projet\-::parametre\-::\-Parametres}}
+\subsubsection[{save}]{\setlength{\rightskip}{0pt plus 5cm}\-Button {\bf projet.\-parametre.\-Parametres.\-save}\hspace{0.3cm}{\ttfamily  [package]}}\label{classprojet_1_1parametre_1_1_parametres_a23e49637e822602c2f72a0e3c0f4ee05}
+
+
+\-Définition à la ligne 35 du fichier \-Parametres.\-java.
+
+\index{projet\-::parametre\-::\-Parametres@{projet\-::parametre\-::\-Parametres}!texte@{texte}}
+\index{texte@{texte}!projet::parametre::Parametres@{projet\-::parametre\-::\-Parametres}}
+\subsubsection[{texte}]{\setlength{\rightskip}{0pt plus 5cm}\-Edit\-Text {\bf projet.\-parametre.\-Parametres.\-texte}\hspace{0.3cm}{\ttfamily  [package]}}\label{classprojet_1_1parametre_1_1_parametres_a548ddf1e0743599ff59f889b410033bd}
+
+
+\-Définition à la ligne 37 du fichier \-Parametres.\-java.
+
+
+
+\-La documentation de cette classe a été générée à partir du fichier suivant \-:\begin{DoxyCompactItemize}
+\item 
+src/projet/parametre/{\bf \-Parametres.\-java}\end{DoxyCompactItemize}
