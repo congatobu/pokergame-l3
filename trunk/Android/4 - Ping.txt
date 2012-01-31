@@ -1,0 +1,2 @@
+Projet qui permet de voir le fonctionnement des socket sous android.
+Il y a aussi une listview géré de façon dynamique
