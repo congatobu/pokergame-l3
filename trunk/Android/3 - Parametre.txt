@@ -1,1 +1,0 @@
-Ce projet permet de voir le fonctionnement des Activity sous android, les menus et le systemes de préférences
