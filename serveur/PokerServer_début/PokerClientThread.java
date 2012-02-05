@@ -12,7 +12,7 @@ class PokerClientThread extends Thread {
 	PrintWriter screenOut = new PrintWriter(System.out, true);
 	private Socket socket = null;
 	public String clientIP;
-	public PrintWriter out;
+	public BufferedWriter out;
 	public BufferedReader in;
 	public int partieClient;
 	public String pseudo = "";
@@ -28,64 +28,63 @@ class PokerClientThread extends Thread {
 	public void run(){
 		clientIP = socket.getInetAddress().getHostAddress();
 				try{
-			out = new PrintWriter(socket.getOutputStream(), true);
+				//new PrintWriter(socket.getOutputStream(), true);
+			out =  new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 			in = new BufferedReader (new InputStreamReader(socket.getInputStream()));
 			String inputLine;
 			int streamResult;
-			char buf[] = new char[1];
-			do{
-		
-				inputLine = "";
-				do{
-				
-					streamResult = in.read(buf, 0, 1);
-					inputLine += buf[0];
-				} while (buf[0] != '\u0000');
-				
-					
-					
-					
-					
-					
-				if(inputLine.length()!=1){
-				/*
-				C'est ici qu'on va traiter les messages re�us
-				*/
-				
 			
 				
+				
+				 try {
+   while ((inputLine = in.readLine()) != null) {
+
+   
+   screenOut.println("Socket recue : "+inputLine);
+   send(clientIP+" : "+inputLine);
+   	
 						//Reception nom des clients
-			if(inputLine.length()>=5 && inputLine.substring(0,5).equals("<nom>")){
-							this.pseudo = inputLine.substring(5);
+			if(inputLine.length()>=8 && inputLine.substring(0,8).equals("<pseudo>")){
+							this.pseudo = inputLine.substring(8);
+							screenOut.println("Pseudo enregistre : "+inputLine);
 								}
+								
+									//Reception messages des clients
+			if(inputLine.length()>=9 && inputLine.substring(0,9).equals("<message>")){
+							screenOut.println("Message recu : "+inputLine);
+								}	
+   
+   
+      }
+  } catch (Exception e) {
+  
+  screenOut.println("ya un bug dans un thread reception message ");
+        }
+ 
 				
-				
-				
-				
-				
-				
-				
-					 }
-				
-				
-			} while (streamResult != -1);
-			
-			
-		
+
 			
 		PokerServer.deleteClient(this);
 			in.close();
 			out.close();
 			socket.close();
 		}catch(IOException e){
-		screenOut.println("ya un bug dans un thread ");
+		screenOut.println("ya un bug dans un thread (bug général)");
 		e.printStackTrace();
 		}	
 			
 	}
 	
 	public void send(String message){
-		out.println(message);
+		//out.println(message);
+		try{
+		out.write(message+"\n");
+		out.flush();
+		 screenOut.println("Message envoye : "+message);
+		 }
+		 catch(Exception e){
+		 screenOut.println("ya un bug envoi message");
+		 }
 		
 	}
 }
