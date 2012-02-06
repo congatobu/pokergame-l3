@@ -62,18 +62,23 @@ class PokerClientThread extends Thread {
         }
  
 				
-
+			deco();
 			
-		PokerServer.deleteClient(this);
-			in.close();
-			out.close();
-			socket.close();
+		
 		}catch(IOException e){
 		screenOut.println("ya un bug dans un thread (bug général)");
 		e.printStackTrace();
 		}	
 			
 	}
+	
+	public void deco(){
+	PokerServer.deleteClient(this);
+			in.close();
+			out.close();
+			socket.close();
+	}
+	
 	
 	public void send(String message){
 		//out.println(message);
