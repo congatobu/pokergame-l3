@@ -3,14 +3,14 @@
 #include <stdlib.h>
 #include <winsock2.h>
 #include <errno.h>
-#pragma comment(lib, "ws2_32.lib")
+//#pragma comment(lib, "ws2_32.lib")
 #define PORT 6667
 
 using namespace std;
 int main()
 {
-WSADATA wsaData;
-int res = WSAStartup(MAKEWORD(2, 0), &wsaData);
+/*WSADATA wsaData;
+int res = WSAStartup(MAKEWORD(2, 0), &wsaData);*/
 char phrase[255];
 struct sockaddr_in informations;
 

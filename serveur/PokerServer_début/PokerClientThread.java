@@ -9,13 +9,13 @@ import java.util.*;
 
 //-------------------------------------------------------------
 class PokerClientThread extends Thread {
-	PrintWriter screenOut = new PrintWriter(System.out, true);
+	private PrintWriter screenOut = new PrintWriter(System.out, true);
 	private Socket socket = null;
-	public String clientIP;
-	public BufferedWriter out;
-	public BufferedReader in;
-	public int partieClient;
-	public String pseudo = "";
+	private String clientIP;
+	private BufferedWriter out;
+	private BufferedReader in;
+
+	private String pseudo = "";
 
 
 
@@ -24,7 +24,9 @@ class PokerClientThread extends Thread {
 		this.socket = socket;
 	}
 
-	
+		/*
+	Fonction générale reception messages
+	*/
 	public void run(){
 		clientIP = socket.getInetAddress().getHostAddress();
 				try{
@@ -32,35 +34,20 @@ class PokerClientThread extends Thread {
 			out =  new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 			in = new BufferedReader (new InputStreamReader(socket.getInputStream()));
 			String inputLine;
-			int streamResult;
+			
 			
 				
 				
 				 try {
    while ((inputLine = in.readLine()) != null) {
+   
+			traitements(inputLine);
 
-   
-   screenOut.println("Socket recue : "+inputLine);
-   send(clientIP+" : "+inputLine);
-   	
-						//Reception nom des clients
-			if(inputLine.length()>=8 && inputLine.substring(0,8).equals("<pseudo>")){
-							this.pseudo = inputLine.substring(8);
-							screenOut.println("Pseudo enregistre : "+inputLine);
-								}
-								
-									//Reception messages des clients
-			if(inputLine.length()>=9 && inputLine.substring(0,9).equals("<message>")){
-							screenOut.println("Message recu : "+inputLine);
-								}	
-   
-   
       }
   } catch (Exception e) {
   
   screenOut.println("ya un bug dans un thread reception message "+e);
   e.printStackTrace();
-  	deco();
         }
  
 				
@@ -75,6 +62,35 @@ class PokerClientThread extends Thread {
 			
 	}
 	
+		/*
+	Fonction pour traitements messages
+	*/
+	public void traitements(String inputLine){
+	   screenOut.println("Socket recue : "+inputLine);
+   send(clientIP+" : "+inputLine);
+   	
+						//Reception nom des clients
+			if(inputLine.length()>=8 && inputLine.substring(0,8).equals("<pseudo>")){
+							this.pseudo = inputLine.substring(8);
+							screenOut.println("Pseudo enregistre : "+inputLine);
+								}
+								
+									//Reception messages des clients
+			if(inputLine.length()>=9 && inputLine.substring(0,9).equals("<message>")){
+							screenOut.println("Message recu : "+inputLine);
+								}	
+	
+	}
+	
+	
+	/*
+	Fonction pour récupérer ip	*/
+	public String getClientIP(){ return this.clientIP;}
+	
+	
+		/*
+	Fonction pour déconnecter proprement
+	*/
 	public void deco(){
 	try{
 	PokerServer.deleteClient(this);
@@ -89,8 +105,10 @@ class PokerClientThread extends Thread {
 	}
 	
 	
-	public void send(String message){
-		//out.println(message);
+	/*
+	Fonction pour envoyer un message au client
+	*/
+		public void send(String message){
 		try{
 		out.write(message+"\n");
 		out.flush();
