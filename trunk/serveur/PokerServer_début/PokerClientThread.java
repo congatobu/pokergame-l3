@@ -58,7 +58,9 @@ class PokerClientThread extends Thread {
       }
   } catch (Exception e) {
   
-  screenOut.println("ya un bug dans un thread reception message ");
+  screenOut.println("ya un bug dans un thread reception message "+e);
+  e.printStackTrace();
+  	deco();
         }
  
 				
@@ -68,15 +70,22 @@ class PokerClientThread extends Thread {
 		}catch(IOException e){
 		screenOut.println("ya un bug dans un thread (bug général)");
 		e.printStackTrace();
+			deco();
 		}	
 			
 	}
 	
 	public void deco(){
+	try{
 	PokerServer.deleteClient(this);
 			in.close();
 			out.close();
 			socket.close();
+			}catch(IOException e){
+		screenOut.println("ya un bug dans un thread deco"+e);
+		e.printStackTrace();
+		}	
+			
 	}
 	
 	
