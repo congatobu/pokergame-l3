@@ -1,2 +1,0 @@
-Exemple d'application de base qui permet de voir le fonctioonnement des boutons et de al liaison entre 
-le XML de l'interface graphique et le code en lui même
