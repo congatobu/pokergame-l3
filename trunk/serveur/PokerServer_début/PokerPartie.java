@@ -32,6 +32,7 @@ public class PokerPartie {
 	public Vector getClientList(){return clientList;}
 	public String getEtat(){ return clientList.size()+"/"+maxPlayers+" joueurs dans la partie";}
 	public void setMaxPlayers(int m){this.maxPlayers=m;}
+	public int getMaxPlayers(){return this.maxPlayers;}
 	public String getNom(){return this.nomP;}
 	
 	/*
