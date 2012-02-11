@@ -140,10 +140,19 @@ class PokerClientThread extends Thread {
 	/*
 	Fonction pour rejoindre une partie
 	*/
-	public void rejoindrePartie(String p)
-	{
-	
-	//this.partie=
+	public void rejoindrePartie(String nomP)
+	{	int existe = 0;
+		PokerPartie foo = null;
+		for (int i=0;i<PokerServer.partiesList.size();++i){
+			foo = (PokerPartie)PokerServer.partiesList.get(i);
+			if(foo.getNom().equals(nomP)){existe=1;break;}
+		}
+		
+		if(existe==1){
+		if(foo.addPlayer(this)==-1){existe = 0;}else{partie=foo;}
+		}
+		if(existe==0){send("probleme partie trop de joueurs ou partie inconnue");
+			}
 	}
 	
 	
