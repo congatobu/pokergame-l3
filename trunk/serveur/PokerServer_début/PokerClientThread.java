@@ -14,7 +14,7 @@ class PokerClientThread extends Thread {
 	private String clientIP;
 	private BufferedWriter out;
 	private BufferedReader in;
-
+	private PokerPartie partie= null;
 	private String pseudo = "";
 
 
@@ -39,6 +39,7 @@ class PokerClientThread extends Thread {
 				
 				
 				 try {
+				  // lance le traitement du message reçu
    while ((inputLine = in.readLine()) != null) {
    
 			traitements(inputLine);
@@ -66,8 +67,11 @@ class PokerClientThread extends Thread {
 	Fonction pour traitements messages
 	*/
 	public void traitements(String inputLine){
-	   screenOut.println("Socket recue : "+inputLine);
-   send(clientIP+" : "+inputLine);
+	 
+						try{
+						//perroquet test
+		screenOut.println("Socket recue : "+inputLine);
+		send(clientIP+" : "+inputLine);
    	
 						//Reception nom des clients
 			if(inputLine.length()>=8 && inputLine.substring(0,8).equals("<pseudo>")){
@@ -80,13 +84,19 @@ class PokerClientThread extends Thread {
 							screenOut.println("Message recu : "+inputLine);
 								}	
 	
+						}
+						catch(Exception e){
+						 screenOut.println("ya un bug traitements message");
+						 e.printStackTrace();
+						 }
 	}
 	
 	
 	/*
-	Fonction pour récupérer ip	*/
+	accesseurs
+	*/
 	public String getClientIP(){ return this.clientIP;}
-	
+	public String getPseudo(){ return this.pseudo;}
 	
 		/*
 	Fonction pour déconnecter proprement
@@ -97,6 +107,7 @@ class PokerClientThread extends Thread {
 			in.close();
 			out.close();
 			socket.close();
+			if(partie!=null){partie.deleteClient(this);}
 			}catch(IOException e){
 		screenOut.println("ya un bug dans un thread deco"+e);
 		e.printStackTrace();
@@ -116,6 +127,7 @@ class PokerClientThread extends Thread {
 		 }
 		 catch(Exception e){
 		 screenOut.println("ya un bug envoi message");
+		 e.printStackTrace();
 		 }
 		
 	}
