@@ -17,8 +17,9 @@ class PokerClientThread extends Thread {
 	private PokerPartie partie= null;
 	private String pseudo = "";
 
-
-
+	/*
+	Constructeur
+	*/
 	public PokerClientThread(Socket socket){
 		super("PokerClientThread");
 		this.socket = socket;
@@ -103,16 +104,46 @@ class PokerClientThread extends Thread {
 	*/
 	public void deco(){
 	try{
+	in.close();
+	out.close();
+	socket.close();	
+	if(partie!=null){partie.deleteClient(this);}
 	PokerServer.deleteClient(this);
-			in.close();
-			out.close();
-			socket.close();
-			if(partie!=null){partie.deleteClient(this);}
 			}catch(IOException e){
 		screenOut.println("ya un bug dans un thread deco"+e);
 		e.printStackTrace();
 		}	
 			
+	}
+
+		/*
+		Fonction pour libérer la mémoire
+		*/				
+	protected void finalize() throws Throwable{
+	
+	 try {
+	 socket = null;
+	 clientIP=null;
+	 out = null;
+	 in = null;
+	 partie= null;
+	 pseudo = null;
+      screenOut.close();
+       
+    } catch(Exception e) {e.printStackTrace();}
+    finally {
+		  super.finalize();
+    }
+	 
+	}
+	
+	/*
+	Fonction pour rejoindre une partie
+	*/
+	public void rejoindrePartie(String p)
+	{
+	
+	//this.partie=
 	}
 	
 	
