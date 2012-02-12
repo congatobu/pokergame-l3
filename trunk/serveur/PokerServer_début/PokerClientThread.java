@@ -67,7 +67,7 @@ class PokerClientThread extends Thread {
 		/*
 	Fonction pour traitements messages
 	*/
-	public void traitements(String inputLine){
+	private void traitements(String inputLine){
 	 
 						try{
 						//perroquet test
