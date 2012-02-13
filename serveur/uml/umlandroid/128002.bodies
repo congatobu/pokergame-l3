@@ -1,0 +1,59 @@
+class Connection
+!!!128002.java!!!	Connection()
+        
+!!!128130.java!!!	init(in a : String, in p : String) : boolean
+        adresse = a;
+        port = Integer.parseInt(p);
+        
+        hand = new Handler(){
+            @Override
+            public void handleMessage(Message msg){
+                
+            }
+        };
+        
+        try {
+            sock = new Socket(adresse, port);
+            br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            bw = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+            proc = new Thread(this);
+            proc.start();
+        } catch (Exception ex) {
+            return false;
+        }
+        try {
+            say("<pseudo> Shyzkanza");
+        } catch (IOException ex) {
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
+!!!128258.java!!!	say(in message : String) : void
+        bw.write(message+"\n");
+        bw.flush();
+!!!128386.java!!!	dispose() : boolean
+        try {
+            proc.stop();
+            br.close();
+            bw.close();
+            sock.close();
+        } catch (IOException ex) {
+            return false;
+        }
+        return true;
+!!!128514.java!!!	start() : void
+        proc.start();
+!!!128642.java!!!	stop() : void
+        proc.stop();
+!!!128770.java!!!	run() : void
+        
+        String ligne = "";
+        try {
+            while ((ligne = br.readLine()) != null) {
+                if(!ligne.equals("")){
+                    msgvaleur = new Message();
+                    msgvaleur.obj = ligne;
+                    hand.sendMessage(msgvaleur);
+                }
+            }
+        } catch (Exception e) {
+       	}
