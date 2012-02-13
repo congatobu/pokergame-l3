@@ -1,6 +1,9 @@
-import java.io.*;
-import java.util.*;
+import java.util.Stack;
 
+/**
+ * 
+ * @author ben
+ */
 public class Jeu {
 
 	private Stack<Integer> tas = new Stack<Integer>();
@@ -30,9 +33,11 @@ public class Jeu {
 		}
 	}
 	
-		/*
-		Fonction pour libérer la mémoire
-		*/				
+	/**
+         * 
+         * @throws Throwable 
+         */			
+    @Override
 	protected void finalize() throws Throwable{
 	 try {
 	 tas =null;
@@ -43,13 +48,22 @@ public class Jeu {
 	 
 	}
 	
-	public int tireUneCarte()
+    /**
+     * 
+     * @return
+     */
+    public int tireUneCarte()
 	{
 		return tas.pop();
 			
 	}
 	
-	public int couleur(int carte){
+    /**
+     * 
+     * @param carte
+     * @return
+     */
+    public int couleur(int carte){
 		
 		float reste=carte/4; //si le nombre apres la virgule est de .25 alors c'est pique,.5 c'est coeur, .75 trefle et aucun c'est carreaux
 		reste=reste-(int)(carte/4);
@@ -61,14 +75,24 @@ public class Jeu {
 		
 	}
 	
-	public int valeur(int carte){
+        /**
+         * 
+         * @param carte
+         * @return
+         */
+        public int valeur(int carte){
 		if(((carte+1)/4)==1)return(14);
 		else return(carte/4);
 			
 	}
 	
 	
-	public String nomCarte(int carte){
+        /**
+         * 
+         * @param carte
+         * @return
+         */
+        public String nomCarte(int carte){
 		
 		String nom="";
 		
@@ -93,7 +117,12 @@ public class Jeu {
 	}
 	
 	
-	public boolean royale(int[] m){
+        /**
+         * 
+         * @param m
+         * @return
+         */
+        public boolean royale(int[] m){
 		
 		boolean bool=true;
 		
@@ -104,7 +133,12 @@ public class Jeu {
 	}
 	
 	
-	public boolean quinteFlush(int[] m){
+        /**
+         * 
+         * @param m
+         * @return
+         */
+        public boolean quinteFlush(int[] m){
 		
 		boolean bool=true;
 		
@@ -116,7 +150,12 @@ public class Jeu {
 	}
 	
 	
-	public boolean carre(int[] m){
+        /**
+         * 
+         * @param m
+         * @return
+         */
+        public boolean carre(int[] m){
 		
 		boolean bool=true;
 		
@@ -128,7 +167,12 @@ public class Jeu {
 	}
 	
 	
-	public boolean full(int[] m){
+        /**
+         * 
+         * @param m
+         * @return
+         */
+        public boolean full(int[] m){
 		
 		boolean bool=true;
 		
@@ -140,7 +184,12 @@ public class Jeu {
 	}
 	
 	
-	public boolean couleur(int[] m){
+        /**
+         * 
+         * @param m
+         * @return
+         */
+        public boolean couleur(int[] m){
 		
 		boolean bool=true;
 		
@@ -152,7 +201,12 @@ public class Jeu {
 	}
 	
 	
-	public int quinte(int[] valeur){//il faut lui envoyer un tableau avec les valeur des cartes
+        /**
+         * 
+         * @param valeur
+         * @return
+         */
+        public int quinte(int[] valeur){//il faut lui envoyer un tableau avec les valeur des cartes
 		//retourne la valeur de la meilleur quinte(val de la plus grande carte de la suite), si il n'y en a pas retourne 0
 		int val=0;
 		
@@ -166,14 +220,19 @@ public class Jeu {
 	}
 	
 	
-	public int triplette(int[] valeur){//il faut lui envoyer un tableau avec les valeur des cartes
+        /**
+         * 
+         * @param valeur
+         * @return
+         */
+        public int triplette(int[] valeur){//il faut lui envoyer un tableau avec les valeur des cartes
 		//retourne la valeur de la meilleur triplette, si il n'y en a pas retourne 0
 		int val=0;
 		
 		int i=0;
 		int j=0;
 		
-		int cpt=0;//pour connaitre le nombre de carte de meme valeur trouvé
+		int cpt=0;//pour connaitre le nombre de carte de meme valeur trouvï¿½
 		
 		
 		
@@ -198,7 +257,12 @@ public class Jeu {
 	}
 	
 	
-	public int[] doublePaire(int[] valeur){//il faut lui envoyer un tableau avec les valeur des cartes
+        /**
+         * 
+         * @param valeur
+         * @return
+         */
+        public int[] doublePaire(int[] valeur){//il faut lui envoyer un tableau avec les valeur des cartes
 		//retourne les valeurs des deux paires(les meilleures)(la meilleure des 2 en 0), si il n'y a pas 2 paires retourne 0 et 0
 		
 		int[] val={0,0};
@@ -239,7 +303,12 @@ public class Jeu {
 	}
 	
 	
-	public int paire(int[] valeur){//retourne valeur de la paires,si pas de paire retourne 0,faut lui envoyer un tableau avec les valeur des cartes
+        /**
+         * 
+         * @param valeur
+         * @return
+         */
+        public int paire(int[] valeur){//retourne valeur de la paires,si pas de paire retourne 0,faut lui envoyer un tableau avec les valeur des cartes
 		
 		
 		int i=0;
@@ -262,7 +331,12 @@ public class Jeu {
 	
 	
 	
-	public int valeurMain(int[] m){//m contient la main du joueur+les carte sur la table
+        /**
+         * 
+         * @param m
+         * @return
+         */
+        public int valeurMain(int[] m){//m contient la main du joueur+les carte sur la table
 	/* 
 	paire==1
 	2 paires==
@@ -270,8 +344,8 @@ public class Jeu {
 	quinte==4 (5 cartes qui se suivent mais de familles differentes)	
 	couleur==5
 	paires+triplette==6 (il parait que ca se dit full)
-	carré==7
-	Quinte Flush==8 (5 cartes de la même famille qui se suivent)
+	carrï¿½==7
+	Quinte Flush==8 (5 cartes de la mï¿½me famille qui se suivent)
 	la royale==9
 	*/
 	int i=0;

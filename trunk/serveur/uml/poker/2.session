@@ -1,0 +1,14 @@
+window_sizes 1500 787 375 1125 600 82
+diagrams
+  active  classdiagram_ref 128002 // pok
+    891 503 100 4 0 0
+end
+show_stereotypes
+selected class_ref 128514 // PokerServer
+open
+  classview_ref 128258 // poker
+  classview_ref 128130 // unknown
+  classview_ref 128002 // PokerServer_début
+  deploymentview_ref 128002 // PokerServer_début
+end
+end

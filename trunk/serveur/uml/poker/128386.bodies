@@ -1,0 +1,49 @@
+class PokerPartie
+!!!129410.java!!!	PokerPartie(in nom : String, in max : int)
+		this.nomP = nom;
+		this.maxPlayers= max;
+!!!129538.java!!!	getClientList() : Vector
+return clientList;
+!!!129666.java!!!	getEtat() : String
+ return clientList.size()+"/"+maxPlayers+" joueurs dans la partie";
+!!!129794.java!!!	setMaxPlayers(in m : int) : void
+this.maxPlayers=m;
+!!!129922.java!!!	getMaxPlayers() : int
+return this.maxPlayers;
+!!!130050.java!!!	getNom() : String
+return this.nomP;
+!!!130178.java!!!	broadcastClientsPartie(in m : String) : void
+		int i;
+		PokerClientThread foo;
+		for (i=0;i<clientList.size();++i){
+			foo = (PokerClientThread)clientList.get(i);
+			foo.send(m);
+										} 	
+!!!130306.java!!!	deleteClient(inout deadClient : PokerClientThread) : void
+		try{
+		available.acquire();
+		int num;
+		num=clientList.indexOf(deadClient);
+		if(num!=-1){
+		clientList.remove(num);
+					}
+					if(clientList.size()<1){PokerServer.deletePartie(this);}
+						available.release();
+		}catch(Exception e){e.printStackTrace();}
+!!!130434.java!!!	addPlayer(inout np : PokerClientThread) : int
+	if(clientList.size()<maxPlayers){
+	clientList.add(np);	return 0;}
+	else return -1;
+!!!130562.java!!!	finalize() : void
+	
+	 try {
+        clientList.clear();
+	available  =null;
+	nomP = null;
+      screenOut.close();
+       
+    } catch(Exception e) {e.printStackTrace();}
+    finally {
+		  super.finalize();
+    }
+	 
