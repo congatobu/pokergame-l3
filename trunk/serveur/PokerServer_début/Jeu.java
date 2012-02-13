@@ -5,8 +5,10 @@ public class Jeu {
 
 	private Stack<Integer> tas = new Stack<Integer>();
 	
-	
-	
+	/**
+	*initialise le paquet de 52 cartes
+	*@author Steve Giner
+	*/
 	public void initTasDe52cartes(){
 		int[] tab=new int[52];
 		int random;
@@ -28,6 +30,18 @@ public class Jeu {
 		}
 	}
 	
+		/*
+		Fonction pour libérer la mémoire
+		*/				
+	protected void finalize() throws Throwable{
+	 try {
+	 tas =null;
+    } catch(Exception e) {e.printStackTrace();}
+    finally {
+		  super.finalize();
+    }
+	 
+	}
 	
 	public int tireUneCarte()
 	{
