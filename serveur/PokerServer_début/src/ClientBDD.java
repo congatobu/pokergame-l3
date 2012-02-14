@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package bddpoker;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -18,7 +13,7 @@ import org.jdom.output.XMLOutputter;
  * Classe permettant de gérer la base de données joueur. Cette base de données<br>
  * contient les infos relatives aux joueurs inscrits.
  * 
- * @author Shyzkanza
+ * @author Jessy Bonnotte, @author Benjamin Maurin
  */
 public class ClientBDD {
     private Document document;
@@ -36,6 +31,7 @@ public class ClientBDD {
         SAXBuilder sxb = new SAXBuilder();
         try{
             document = sxb.build(new File("BDD\\Client.xml"));
+        
         }catch (Exception e){
 
         }
@@ -65,8 +61,9 @@ public class ClientBDD {
      * <li> <b>OK</b> : opération effectué </li>
      * <li> <b>ALREADY USE PSEUDO</b> : pseudo déjà utilisé, ajout impossible </li>
      * <li> <b>ERREUR BDD</b> : erreur a l'ajout, veuillez recommencer </li>
+     * <li> <b>WRONG PSEUDO FORMAT</b> : mauvais format de pseudo </li>
      * </ul>
-     * 
+     * @author Maurin Benjamin
      * @author Jessy Bonnotte
      * 
      * @param pseudo pseudo du joueur a ajouter dans la base
@@ -76,6 +73,7 @@ public class ClientBDD {
      */
     public String ajouteJoueur(String pseudo, String password){
         Ouverture();
+        if(!verifFormatPseudo(pseudo)){ return "WRONG PSEUDO FORMAT";}
         if(!verifPseudo(pseudo)){
             return "ALREADY USE PSEUDO";
         }
@@ -236,7 +234,7 @@ public class ClientBDD {
      * <li> <b>WRONG PASSWORD</b> : mauvais password utilisé, changement impossible </li>
      * <li> <b>NO PSEUDO FOUND</b> : pseudo introuvable, changement impossible </li>
      * </ul>
-     * 
+     *  
      * @author Jessy Bonnotte
      * 
      * @param pseudo le pseudo du joueur
@@ -248,6 +246,7 @@ public class ClientBDD {
     public String changeMotDePasse(String pseudo, String ancienMotDePasse, String nouveauMotDePasse){
         List element = racine.getChildren("joueur");
         Element temp;
+        
         
         for (int i = 0; i < element.size(); i++) {
             temp = (Element) element.get(i);
@@ -275,8 +274,9 @@ public class ClientBDD {
      * <li> <b>WRONG PASSWORD</b> : mauvais password utilisé, changement impossible </li>
      * <li> <b>NO PSEUDO FOUND</b> : pseudo introuvable, changement impossible </li>
      * <li> <b>ALREADY USE PSEUDO</b> : pseudo introuvable, changement impossible </li>
+     * <li> <b>WRONG PSEUDO FORMAT</b> : mauvais format de pseudo </li>
      * </ul>
-     * 
+     * @author Maurin Benjamin
      * @author Jessy Bonnotte
      * 
      * @param ancienPseudo le pseudo a changer
@@ -289,20 +289,25 @@ public class ClientBDD {
         List element = racine.getChildren("joueur");
         Element temp;
         
+          if(!verifFormatPseudo(nouveauPseudo)){ return "WRONG PSEUDO FORMAT";}
+        
         for (int i = 0; i < element.size(); i++) {
             temp = (Element) element.get(i);
             if(temp.getAttributeValue("pseudo").equals(ancienPseudo)){
                 if(temp.getChildText("password").equals(motDePasse)){
-                    if(verifPseudo(nouveauPseudo)){
+                    if(verifFormatPseudo(nouveauPseudo)){
+                  
                         temp.setAttribute("pseudo", nouveauPseudo);
                         Enregistre();
                         return "OK";
+                    
                     }else{
                         return "ALREADY USE PSEUDO";
                     }
                 }else{
                     return "WRONG PASSWORD";
                 }
+                    
             }
         }
         return "NO PSEUDO FOUND";
@@ -325,8 +330,9 @@ public class ClientBDD {
      * <li> <b>OK</b> : opération effectué </li>
      * <li> <b>WRONG PASSWORD</b> : mauvais password utilisé, suppression impossible </li>
      * <li> <b>NO PSEUDO FOUND</b> : pseudo introuvable, suppression impossible </li>
+     * <li> <b>WRONG PSEUDO FORMAT</b> : pseudo introuvable, suppression impossible </li>
      * </ul>
-     * 
+     * @author Maurin Benjamin
      * @author Jessy Bonnotte
      * 
      * @param pseudo le pseudo du joueur a supprimer
@@ -336,6 +342,9 @@ public class ClientBDD {
     public String effaceJoueur(String pseudo, String password){
         List listeJoueur = racine.getChildren("joueur");
         Iterator i = listeJoueur.iterator();
+        
+        if(!verifFormatPseudo(pseudo)){ return "WRONG PSEUDO FORMAT";}
+        
         while(i.hasNext()){
             Element courant = (Element) i.next();
             if(courant.getAttributeValue("pseudo").equals(pseudo)){
@@ -359,6 +368,42 @@ public class ClientBDD {
     public int getNombreJoueur(){
         return racine.getChildren().size();
     }
+    
+    
+    
+    
+      /**
+     * Fonction permettant de vérifier qu'un pseudo est dans un bon format.<br>
+     * 
+     *
+     * @author Benjamin Maurin
+     * 
+     * @param s le pseudo du joueur à vérifier
+     * 
+     * @return {@code boolean} retourne vrai si le pseudo est correct
+     */
+    private boolean verifFormatPseudo(String s){
+	String bonnes_lettres = "azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN123456789éèàâêîôûäëïöüù";
+        String A_Test = s;
+        if(s.length()<3)
+        {
+            return false;
+        }
+	while(A_Test.length()>0)
+	{
+		if(bonnes_lettres.indexOf(A_Test.substring(0,1))==-1)
+		{
+			return false;
+		}
+		A_Test=A_Test.substring(1);
+	}
+	
+	return true;
+}
+  
+    
+    
+    
     
     /**
      * Fonction permettant de vérifier qu'un pseudo est présent dans la base.<br>
@@ -401,4 +446,26 @@ public class ClientBDD {
         }
         return ret;
     }
+    
+    
+      /**
+     * Fonction pour optimiser la suppression de l'objet
+     * @author Benjamin Maurin
+     * @throws Throwable 
+     */
+    @Override
+    protected void finalize() throws Throwable{
+        try {
+      document = null;
+      racine = null;
+      date = null;
+        } catch(Exception e) {
+        
+        }
+        finally {
+            super.finalize();
+        }
+    }
+    
+    
 }

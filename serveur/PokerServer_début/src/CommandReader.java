@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 
 /**
  * Classe pour lire les commandes
- * @author Ben maurin
+ * @author Benjamin Maurin
  */
 class CommandReader extends Thread{
     BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -23,6 +23,7 @@ class CommandReader extends Thread{
 
     /**
      * Fonction qui lit les commandes
+     * @author Benjamin Maurin
      */
     @Override
     public void run(){

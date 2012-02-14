@@ -7,7 +7,7 @@ import java.util.concurrent.Semaphore;
 
 /**
  * Classe du serveur qui va gerer les parties
- * @author ben
+ * @author benjamin Maurin
  */
 public class PokerPartie {
 		
@@ -17,12 +17,14 @@ public class PokerPartie {
     private int maxPlayers = 8;
     private Semaphore available = new Semaphore(1, true);
     private String nomP = "";
+    private Jeu jeu;
 
     /**
     *Constructeur
+    * @author benjamin Maurin
     *@param nom : nom de la partie
     * @param max : nombre de joueurs maximum dans la partie
-    * @author ben maurin
+    * 
     */
     public PokerPartie(String nom,int max){
         this.nomP = nom;
@@ -30,7 +32,8 @@ public class PokerPartie {
     }
 	
     /**
-     * 
+     * accesseur
+     * @author benjamin Maurin
      * @return clientList
      */
     public Vector getClientList(){
@@ -38,7 +41,8 @@ public class PokerPartie {
     }
     
     /**
-     * 
+     * accesseur
+     * @author benjamin Maurin
      * @return nombre joueurs dans la partie
      */
     public String getEtat(){ 
@@ -46,7 +50,8 @@ public class PokerPartie {
     }
     
     /**
-     * 
+     * accesseur
+     * @author benjamin Maurin
      * @param m maxPlayeur
      */
     public void setMaxPlayers(int m){
@@ -54,7 +59,8 @@ public class PokerPartie {
     }
     
     /**
-     * 
+     * accesseur
+     * @author benjamin Maurin
      * @return maxPlayers
      */
     public int getMaxPlayers(){
@@ -62,7 +68,8 @@ public class PokerPartie {
     }
     
     /**
-     * 
+     * accesseur
+     * @author benjamin Maurin
      * @return nombre de joueurs dans la partie
      */
     public int getNbJ(){
@@ -70,7 +77,8 @@ public class PokerPartie {
     }
     
     /**
-     * 
+     * accesseur
+     * @author benjamin Maurin
      * @return nom de la partie
      */
     public String getNom(){
@@ -80,6 +88,7 @@ public class PokerPartie {
 
     /**
      * Fonction pour envoyer un message à tous les clients de la partie
+     * @author Benjamin Maurin
      * @param m : message à envoyer
      */
     public void broadcastClientsPartie(String m)	{
@@ -93,6 +102,7 @@ public class PokerPartie {
     
     /**
      * Fonction pour enlever un client de la partie
+     * @author Benjamin Maurin
      * @param deadClient client à supprimer
      */
     public void deleteClient(PokerClientThread deadClient){
@@ -115,8 +125,9 @@ public class PokerPartie {
 
     /**
      * Fonction pour ajouter un client à la partie
+     * @author Benjamin Maurin
      * @param np nouveau player
-     * @return
+     * @return 0 si c'est possible -1 sinon
      */
     public int addPlayer(PokerClientThread np){
     if(clientList.size()<maxPlayers){
@@ -126,6 +137,7 @@ public class PokerPartie {
 
     /**
     * Fonction pour libérer la mémoire
+    * @author Benjamin Maurin
     * @throws Throwable
     */
     @Override
@@ -134,6 +146,7 @@ public class PokerPartie {
             clientList.clear();
             available  =null;
             nomP = null;
+            jeu = null;
             screenOut.close();
         }catch(Exception e) {
         
