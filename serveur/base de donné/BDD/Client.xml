@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Joueurs>
+  <joueur numero="1" pseudo="Shyzkanzo">
+    <password>sniff</password>
+    <dateInscription>Lundi 13 Février 2012</dateInscription>
+    <partieGagne>0</partieGagne>
+    <partiePerdu>0</partiePerdu>
+  </joueur>
+  <joueur numero="3" pseudo="Mathieu">
+    <password>sniff</password>
+    <dateInscription>Lundi 13 Février 2012</dateInscription>
+    <partieGagne>1</partieGagne>
+    <partiePerdu>1</partiePerdu>
+  </joueur>
+</Joueurs>
+
