@@ -31,7 +31,6 @@ public class ClientBDD {
         SAXBuilder sxb = new SAXBuilder();
         try{
             document = sxb.build(new File("BDD\\Client.xml"));
-        
         }catch (Exception e){
 
         }
@@ -59,9 +58,10 @@ public class ClientBDD {
      * Retourne :<br>
      * <ul>
      * <li> <b>OK</b> : opération effectué </li>
-     * <li> <b>ALREADY USE PSEUDO</b> : pseudo déjà utilisé, ajout impossible </li>
+     * <li> <b>AUPSEUDO</b> : pseudo déjà utilisé, ajout impossible </li>
      * <li> <b>ERREUR BDD</b> : erreur a l'ajout, veuillez recommencer </li>
-     * <li> <b>WRONG PSEUDO FORMAT</b> : mauvais format de pseudo </li>
+     * <li> <b>WFPSEUDO</b> : mauvais format de pseudo </li>
+     * <li> <b>WFPASS</b> : mauvais format de password </li>
      * </ul>
      * @author Maurin Benjamin
      * @author Jessy Bonnotte
@@ -73,9 +73,11 @@ public class ClientBDD {
      */
     public String ajouteJoueur(String pseudo, String password){
         Ouverture();
-        if(!verifFormatPseudo(pseudo)){ return "WRONG PSEUDO FORMAT";}
+        
+        if(!verifFormat(pseudo)){ return "WFPSEUDO";}
+        if(!verifFormat(password)){ return "WFPASS";}
         if(!verifPseudo(pseudo)){
-            return "ALREADY USE PSEUDO";
+            return "AUPSEUDO";
         }
         try{
             date = new Dateur();
@@ -152,11 +154,11 @@ public class ClientBDD {
      * Retourne :<br>
      * <ul>
      * <li> <b>OK</b> : opération effectué </li>
-     * <li> <b>WRONG PASSWORD</b> : mauvais password utilisé, connexion impossible </li>
-     * <li> <b>NO PSEUDO FOUND</b> : pseudo introuvable, connexion impossible </li>
+     * <li> <b>WPASSWORD</b> : mauvais password utilisé, connexion impossible </li>
+     * <li> <b>WPSEUDO</b> : pseudo introuvable, connexion impossible </li>
      * </ul>
      * 
-     * @author Jessy Bonnotte
+     * @author Jessy Bonnotte @author Maurin Benjamin
      * 
      * @param pseudo pseudo du joueur voulant se connecter
      * @param motDePasse mot de passe du joueur voulant se connecter
@@ -173,11 +175,11 @@ public class ClientBDD {
                 if(temp.getChildText("password").equals(motDePasse)){
                     return "OK";
                 }else{
-                    return "WRONG PASSWORD";
+                    return "WPASSWORD";
                 }
             }
         }
-        return "NO PSEUDO FOUND";
+        return "WPSEUDO";
     }
     
     /**
@@ -231,11 +233,12 @@ public class ClientBDD {
      * Retourne :<br>
      * <ul>
      * <li> <b>OK</b> : opération effectué </li>
-     * <li> <b>WRONG PASSWORD</b> : mauvais password utilisé, changement impossible </li>
-     * <li> <b>NO PSEUDO FOUND</b> : pseudo introuvable, changement impossible </li>
+     * <li> <b>WPASSWORD</b> : mauvais password utilisé, changement impossible </li>
+     * <li> <b>WPSEUDO</b> : pseudo introuvable, changement impossible </li>
+     * <li> <b>WFPASS</b> : mauvais format de nouveau password </li>
      * </ul>
      *  
-     * @author Jessy Bonnotte
+     * @author Jessy Bonnotte @author Maurin Benjamin
      * 
      * @param pseudo le pseudo du joueur
      * @param ancienMotDePasse l'ancien mot de passe du joueur
@@ -248,6 +251,8 @@ public class ClientBDD {
         Element temp;
         
         
+        if(!verifFormat(nouveauMotDePasse)){ return "WFPASS";}
+        
         for (int i = 0; i < element.size(); i++) {
             temp = (Element) element.get(i);
             if(temp.getAttributeValue("pseudo").equals(pseudo)){
@@ -257,11 +262,11 @@ public class ClientBDD {
                     return "OK";
 
                 }else{
-                    return "WRONG PASSWORD";
+                    return "WPASSWORD";
                 }
             }
         }
-        return "NO PSEUDO FOUND";
+        return "WPSEUDO";
     }
     
     /**
@@ -271,10 +276,10 @@ public class ClientBDD {
      * Retourne :<br>
      * <ul>
      * <li> <b>OK</b> : opération effectué </li>
-     * <li> <b>WRONG PASSWORD</b> : mauvais password utilisé, changement impossible </li>
-     * <li> <b>NO PSEUDO FOUND</b> : pseudo introuvable, changement impossible </li>
-     * <li> <b>ALREADY USE PSEUDO</b> : pseudo introuvable, changement impossible </li>
-     * <li> <b>WRONG PSEUDO FORMAT</b> : mauvais format de pseudo </li>
+     * <li> <b>WPASSWORD</b> : mauvais password utilisé, changement impossible </li>
+     * <li> <b>WPSEUDO</b> : pseudo introuvable </li>
+     * <li> <b>AUPSEUDO</b> : pseudo déjà utilisé </li>
+     * <li> <b>WFPSEUDO</b> : mauvais format de pseudo </li>
      * </ul>
      * @author Maurin Benjamin
      * @author Jessy Bonnotte
@@ -289,28 +294,28 @@ public class ClientBDD {
         List element = racine.getChildren("joueur");
         Element temp;
         
-          if(!verifFormatPseudo(nouveauPseudo)){ return "WRONG PSEUDO FORMAT";}
+          if(!verifFormat(nouveauPseudo)){ return "WFPSEUDO";}
         
         for (int i = 0; i < element.size(); i++) {
             temp = (Element) element.get(i);
             if(temp.getAttributeValue("pseudo").equals(ancienPseudo)){
                 if(temp.getChildText("password").equals(motDePasse)){
-                    if(verifFormatPseudo(nouveauPseudo)){
+                    if(verifPseudo(nouveauPseudo)){
                   
                         temp.setAttribute("pseudo", nouveauPseudo);
                         Enregistre();
                         return "OK";
                     
                     }else{
-                        return "ALREADY USE PSEUDO";
+                        return "AUPSEUDO";
                     }
                 }else{
-                    return "WRONG PASSWORD";
+                    return "WPASSWORD";
                 }
                     
             }
         }
-        return "NO PSEUDO FOUND";
+        return "WPSEUDO";
     }
     
     /**
@@ -328,9 +333,8 @@ public class ClientBDD {
      * Retourne :<br>
      * <ul>
      * <li> <b>OK</b> : opération effectué </li>
-     * <li> <b>WRONG PASSWORD</b> : mauvais password utilisé, suppression impossible </li>
-     * <li> <b>NO PSEUDO FOUND</b> : pseudo introuvable, suppression impossible </li>
-     * <li> <b>WRONG PSEUDO FORMAT</b> : pseudo introuvable, suppression impossible </li>
+     * <li> <b>WPASSWORD</b> : mauvais password utilisé, suppression impossible </li>
+     * <li> <b>WPSEUDO</b> : pseudo introuvable, suppression impossible </li>
      * </ul>
      * @author Maurin Benjamin
      * @author Jessy Bonnotte
@@ -343,7 +347,7 @@ public class ClientBDD {
         List listeJoueur = racine.getChildren("joueur");
         Iterator i = listeJoueur.iterator();
         
-        if(!verifFormatPseudo(pseudo)){ return "WRONG PSEUDO FORMAT";}
+
         
         while(i.hasNext()){
             Element courant = (Element) i.next();
@@ -353,11 +357,11 @@ public class ClientBDD {
                     Enregistre();
                     return "OK";
                 }else{
-                    return "WRONG PASSWORD";
+                    return "WPASSWORD";
                 }  
             }
         }
-        return "NO PSEUDO FOUND"; 
+        return "WPSEUDO"; 
     }
     
     /**
@@ -373,19 +377,19 @@ public class ClientBDD {
     
     
       /**
-     * Fonction permettant de vérifier qu'un pseudo est dans un bon format.<br>
+     * Fonction permettant de vérifier qu'un pseudo/password/partie est dans un bon format.<br>
      * 
      *
      * @author Benjamin Maurin
      * 
-     * @param s le pseudo du joueur à vérifier
+     * @param s le pseudo/password/partie à vérifier
      * 
-     * @return {@code boolean} retourne vrai si le pseudo est correct
+     * @return {@code boolean} retourne vrai si le format est correct
      */
-    private boolean verifFormatPseudo(String s){
+    private boolean verifFormat(String s){
 	String bonnes_lettres = "azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN123456789éèàâêîôûäëïöüù";
         String A_Test = s;
-        if(s.length()<3)
+        if(s.length()<3 || s.length()>15)
         {
             return false;
         }

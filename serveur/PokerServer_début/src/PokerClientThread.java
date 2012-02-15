@@ -15,11 +15,12 @@ class PokerClientThread extends Thread {
     private BufferedReader in;
     private PokerPartie partie= null;
     private String pseudo = "";
-    private ClientBDD bd;
-    
+    private ClientBDD bd = new ClientBDD();;
+    private Crypt crypt;
 
     public PokerClientThread(Socket socket){
         super("PokerClientThread");
+        bd.Ouverture();
         this.socket = socket;
         System.err.println();
     }
@@ -40,7 +41,7 @@ class PokerClientThread extends Thread {
             try {
                 // lance le traitement du message reçu
                 while ((inputLine = in.readLine()) != null) {
-                    traitements(inputLine);
+                    traitements(crypt.deCrypt(inputLine));
                 }
             } catch (Exception e) {
                 screenOut.println("ya un bug dans un thread reception message "+e);
@@ -146,7 +147,7 @@ class PokerClientThread extends Thread {
      */
     public void send(String message){
         try{
-            out.write(message+"\n");
+            out.write(crypt.enCrypt(message+"\n"));
             out.flush();
             screenOut.println("Message envoye : "+message);
         }catch(Exception e){
@@ -194,13 +195,12 @@ class PokerClientThread extends Thread {
     private void traitements(String inputLine){
         try{
             //perroquet test
-            screenOut.println("Socket recue : "+inputLine);
-            send(clientIP+" : "+inputLine);
+          //  screenOut.println("Socket recue : "+inputLine);
+         //   send(clientIP+" : "+inputLine);
 
-            //Reception nom des clients
-            if(inputLine.length()>=8 && inputLine.substring(0,8).equals("<pseudo>")){
-                this.pseudo = inputLine.substring(8);
-                screenOut.println("Pseudo enregistre : "+inputLine);
+            //Demandes des parties en cours
+            if(inputLine.length()>=9 && inputLine.substring(0,9).equals("GETPARTIE")){
+                    send(PokerServer.listClientParties());
             }
 
             //Reception messages des clients
