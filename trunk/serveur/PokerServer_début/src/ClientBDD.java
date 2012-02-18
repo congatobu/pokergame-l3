@@ -3,6 +3,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
@@ -19,7 +22,7 @@ public class ClientBDD {
     private Document document;
     private Element racine;
     private Dateur date;
-
+    private Semaphore available = new Semaphore(1, true);
     /**
      * Fonction permettant d'ouvrir le fichier. Elle initialise la variable
      * document avec le fichier XML complet et racine avec l'element racine du
@@ -73,11 +76,18 @@ public class ClientBDD {
      */
     public String ajouteJoueur(String pseudo, String password){
         Ouverture();
-        
-        if(!verifFormat(pseudo)){ return "WFPSEUDO";}
-        if(!verifFormat(password)){ return "WFPASS";}
+        try{
+         available.acquire();
+        }
+         catch(Exception e){
+            e.printStackTrace();
+        }
+        if(!verifFormat(pseudo)){ 
+             available.release();
+            return "WFPSEUDO";}
+        if(!verifFormat(password)){ available.release();return "WFPASS";}
         if(!verifPseudo(pseudo)){
-            return "AUPSEUDO";
+          available.release();  return "AUPSEUDO";
         }
         try{
             date = new Dateur();
@@ -106,9 +116,9 @@ public class ClientBDD {
             racine.addContent(enfant);
             Enregistre();
         }catch(Exception e){
-            return "ERREUR BDD";
+         available.release();   return "ERREUR BDD";
         }
-        return "OK";
+    available.release();    return "OK";
     }
     
     /**
@@ -187,13 +197,17 @@ public class ClientBDD {
      * La fonction prend en paramètre le pseudo du joueur en question.
      * 
      * @author Jessy bonnotte
-     * 
+     * @author Benjamin Maurin
      * @param pseudo le pseudo du joueur qui a gagné
      */
     public void gagnePartie(String pseudo){
         List listeJoueur = racine.getChildren("joueur");
         Iterator i = listeJoueur.iterator();
-        
+          try {
+            available.acquire();
+        } catch (InterruptedException ex) {
+           ex.printStackTrace();
+        }
         while(i.hasNext()){
             Element courant = (Element) i.next();
             if(courant.getAttributeValue("pseudo").equals(pseudo)){
@@ -202,6 +216,7 @@ public class ClientBDD {
                 break;
             }
         }
+        available.release();
     }
     
     /**
@@ -209,12 +224,17 @@ public class ClientBDD {
      * La fonction prend en paramètre le pseudo du joueur en question.
      * 
      * @author Jessy bonnotte
-     * 
+     * @author Benjamin Maurin
      * @param pseudo le pseudo du joueur qui a perdu
      */
     public void perdPartie(String pseudo){
         List listeJoueur = racine.getChildren("joueur");
         Iterator i = listeJoueur.iterator();
+        try {
+            available.acquire();
+        } catch (InterruptedException ex) {
+           ex.printStackTrace();
+        }
         
         while(i.hasNext()){
             Element courant = (Element) i.next();
@@ -224,6 +244,7 @@ public class ClientBDD {
                 break;
             }
         }
+        available.release();
     }
       
     /**
@@ -250,8 +271,13 @@ public class ClientBDD {
         List element = racine.getChildren("joueur");
         Element temp;
         
+        try {
+            available.acquire();
+        } catch (InterruptedException ex) {
+           ex.printStackTrace();
+        }
         
-        if(!verifFormat(nouveauMotDePasse)){ return "WFPASS";}
+        if(!verifFormat(nouveauMotDePasse)){  available.release();return "WFPASS";}
         
         for (int i = 0; i < element.size(); i++) {
             temp = (Element) element.get(i);
@@ -259,13 +285,16 @@ public class ClientBDD {
                 if(temp.getChildText("password").equals(ancienMotDePasse)){  
                     temp.getChild("password").setText(nouveauMotDePasse);
                     Enregistre();
+                     available.release();
                     return "OK";
 
                 }else{
+                     available.release();
                     return "WPASSWORD";
                 }
             }
         }
+         available.release();
         return "WPSEUDO";
     }
     
@@ -294,7 +323,13 @@ public class ClientBDD {
         List element = racine.getChildren("joueur");
         Element temp;
         
-          if(!verifFormat(nouveauPseudo)){ return "WFPSEUDO";}
+              try {
+            available.acquire();
+        } catch (InterruptedException ex) {
+           ex.printStackTrace();
+        }
+              
+          if(!verifFormat(nouveauPseudo)){  available.release(); return "WFPSEUDO";}
         
         for (int i = 0; i < element.size(); i++) {
             temp = (Element) element.get(i);
@@ -304,17 +339,19 @@ public class ClientBDD {
                   
                         temp.setAttribute("pseudo", nouveauPseudo);
                         Enregistre();
+                          available.release();
                         return "OK";
                     
                     }else{
-                        return "AUPSEUDO";
+                        available.release();  return "AUPSEUDO";
                     }
                 }else{
-                    return "WPASSWORD";
+                    available.release();  return "WPASSWORD";
                 }
                     
             }
         }
+          available.release();
         return "WPSEUDO";
     }
     
@@ -347,7 +384,11 @@ public class ClientBDD {
         List listeJoueur = racine.getChildren("joueur");
         Iterator i = listeJoueur.iterator();
         
-
+      try {
+            available.acquire();
+        } catch (InterruptedException ex) {
+           ex.printStackTrace();
+        }
         
         while(i.hasNext()){
             Element courant = (Element) i.next();
@@ -355,12 +396,13 @@ public class ClientBDD {
                 if(courant.getChildText("password").equals(password)){
                     racine.removeContent(courant);
                     Enregistre();
-                    return "OK";
+                  available.release();  return "OK";
                 }else{
-                    return "WPASSWORD";
+                  available.release();  return "WPASSWORD";
                 }  
             }
         }
+        available.release();
         return "WPSEUDO"; 
     }
     
