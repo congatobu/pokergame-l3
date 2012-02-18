@@ -116,9 +116,11 @@ public class PokerPartie {
             if(clientList.size()<1){
                 PokerServer.deletePartie(this);
             }
-            available.release();
         }catch(Exception e){
             e.printStackTrace();
+        }
+            finally {
+             available.release();
         }
     }
 

@@ -2,6 +2,7 @@
 
 import java.io.*;
 import java.net.Socket;
+import java.util.StringTokenizer;
 
 /**
  * Classe du thread par client qui gère les messages avec son client
@@ -15,13 +16,16 @@ class PokerClientThread extends Thread {
     private BufferedReader in;
     private PokerPartie partie= null;
     private String pseudo = "";
-    private ClientBDD bd = new ClientBDD();;
     private Crypt crypt;
-
+    private int[] jetons = new int[2];
+    private int[] cartes = new int[2];
+    
     public PokerClientThread(Socket socket){
         super("PokerClientThread");
-        bd.Ouverture();
         this.socket = socket;
+        //jetons[0] == jetons totaux , jetons[1] jetons posées
+        jetons[0] = -1;jetons[1] = -1;
+        cartes[0] = -1;cartes[1] = -1;
         System.err.println();
     }
 
@@ -54,6 +58,50 @@ class PokerClientThread extends Thread {
     }
 
 
+    
+         /**
+     * @author benjamin Maurin
+     * @return cartes du joueur
+     */
+    public int[] getCartes(){ 
+        return this.cartes;
+    }
+    
+     /**
+     * @author benjamin Maurin
+     */
+    public void setCartes(int a, int b){ 
+        this.cartes[0]=a; this.cartes[1]=b;
+    }
+     /**
+     * @author benjamin Maurin
+     * @return Jetons totaux du joueur
+     */
+    public int getJetonsTotaux(){ 
+        return this.jetons[0];
+    }
+    
+      /**
+     * @author benjamin Maurin
+     * @return Jetons posés du joueur
+     */
+    public int getJetonsPosés(){ 
+        return this.jetons[1];
+    }
+    
+     /**
+     * @author benjamin Maurin
+     */
+    public void setJetonsTotaux(int a){ 
+       this.jetons[0] = a;
+    }
+    
+     /**
+     * @author benjamin Maurin
+     */
+    public void setJetonsPosés(int a){ 
+       this.jetons[1] = a;
+    }
 
     /**
      * @author benjamin Maurin
@@ -103,7 +151,9 @@ class PokerClientThread extends Thread {
             in = null;
             partie= null;
             pseudo = null;
-            bd = null;
+            crypt = null;
+            jetons =null;
+            cartes = null;
             screenOut.close();
         } catch(Exception e) {
         
@@ -191,25 +241,50 @@ class PokerClientThread extends Thread {
      * Fonction qui traite le message en fonction de ses balises
      * @author benjamin Maurin
      * @param inputLine : le message à traiter
+     * @param   *1 : message traité *0: type de message inconnu *-1 : erreur dans le traitement
      */
-    private void traitements(String inputLine){
+    private int traitements(String inputLine){
         try{
             //perroquet test
           //  screenOut.println("Socket recue : "+inputLine);
          //   send(clientIP+" : "+inputLine);
 
+            StringTokenizer  st = new StringTokenizer(inputLine," ");
+            String cmd = st.nextToken();
+            
             //Demandes des parties en cours
-            if(inputLine.length()>=9 && inputLine.substring(0,9).equals("GETPARTIE")){
+            if(cmd.equals("GETPARTIE")){
                     send(PokerServer.listClientParties());
+                    return 1;
             }
-
-            //Reception messages des clients
-            if(inputLine.length()>=9 && inputLine.substring(0,9).equals("<message>")){
-                screenOut.println("Message recu : "+inputLine);
-            }	
-
+            //Creation de compte
+            if(cmd.equals("CREATCPT"))
+            {
+                send(PokerServer.bd.ajouteJoueur(st.nextToken(), st.nextToken())+"\n");
+                deco();
+                return 1;
+            }
+             //Changer de pseudo
+              if(cmd.equals("ACTPSEUDO"))
+            {
+                send(PokerServer.bd.changePseudo(st.nextToken(), st.nextToken(), st.nextToken())+"\n");
+                deco();
+                return 1;
+            }
+              //Changer de mot de passe
+               if(cmd.equals("ACTPASS"))
+            {
+                send(PokerServer.bd.changePseudo(st.nextToken(), st.nextToken(), st.nextToken())+"\n");
+                deco();
+                return 1;
+            }
+        
+                return 0;
+                
         }catch(Exception e){
             screenOut.println("ya un bug traitements message");
+            e.printStackTrace();
+            return -1;
         }
     }
     
