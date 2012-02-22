@@ -17,6 +17,8 @@ class PokerClientThread extends Thread {
     private PokerPartie partie= null;
     private String pseudo = "";
     private Crypt crypt;
+    private boolean lecture = true;
+    private boolean connecte = false;
     private int[] jetons = new int[2];
     private int[] cartes = new int[2];
     
@@ -44,12 +46,14 @@ class PokerClientThread extends Thread {
 
             try {
                 // lance le traitement du message reçu
-                while ((inputLine = in.readLine()) != null) {
-                    traitements(crypt.deCrypt(inputLine));
+                while (lecture && ((inputLine = in.readLine()) != null) ) {
+                    //crypt.deCrypt(inputLine)
+                    traitements(inputLine);
                 }
             } catch (Exception e) {
                 screenOut.println("ya un bug dans un thread reception message "+e);
             }
+            if(lecture)
             deco();
         }catch(IOException e){
             screenOut.println("ya un bug dans un thread (bug général)");
@@ -125,6 +129,7 @@ class PokerClientThread extends Thread {
      */
     public void deco(){
         try{
+            lecture = false;
             in.close();
             out.close();
             socket.close();	
@@ -196,8 +201,8 @@ class PokerClientThread extends Thread {
      * @param message : message à envoyer
      */
     public void send(String message){
-        try{
-            out.write(crypt.enCrypt(message+"\n"));
+        try{//crypt.enCrypt(message
+            out.write(message+"\n");
             out.flush();
             screenOut.println("Message envoye : "+message);
         }catch(Exception e){
@@ -246,35 +251,50 @@ class PokerClientThread extends Thread {
     private int traitements(String inputLine){
         try{
             //perroquet test
-          //  screenOut.println("Socket recue : "+inputLine);
+            screenOut.println("Socket recue : "+inputLine+"\n");
          //   send(clientIP+" : "+inputLine);
 
-            StringTokenizer  st = new StringTokenizer(inputLine," ");
+            StringTokenizer  st = new StringTokenizer(inputLine,"@");
             String cmd = st.nextToken();
+            String test1 = "";
             
+            //Demande de connection
+            if(cmd.equals("CONNECT")){
+                    screenOut.println("demande de connection\n");
+                    test1=st.nextToken();    
+                    cmd=PokerServer.bd.verifPassword(test1,st.nextToken());
+                    send(cmd);
+                    if(!cmd.equals("CONNECTOK")) deco();
+                    else  {connecte = true;pseudo = test1;}
+                    return 1;
+            }
             //Demandes des parties en cours
             if(cmd.equals("GETPARTIE")){
+                    screenOut.println("Liste des parties envoyés à un joueur\n");
                     send(PokerServer.listClientParties());
                     return 1;
             }
             //Creation de compte
             if(cmd.equals("CREATCPT"))
             {
-                send(PokerServer.bd.ajouteJoueur(st.nextToken(), st.nextToken())+"\n");
+                screenOut.println("nouveau compte créé\n");
+                send(PokerServer.bd.ajouteJoueur(st.nextToken(), st.nextToken()));
                 deco();
                 return 1;
             }
              //Changer de pseudo
               if(cmd.equals("ACTPSEUDO"))
             {
-                send(PokerServer.bd.changePseudo(st.nextToken(), st.nextToken(), st.nextToken())+"\n");
+                 screenOut.println("pseudo actualisé\n");
+                send(PokerServer.bd.changePseudo(st.nextToken(), st.nextToken(), st.nextToken()));
                 deco();
                 return 1;
             }
               //Changer de mot de passe
                if(cmd.equals("ACTPASS"))
             {
-                send(PokerServer.bd.changePseudo(st.nextToken(), st.nextToken(), st.nextToken())+"\n");
+                screenOut.println("mot de passe actualisé\n");
+                send(PokerServer.bd.changePseudo(st.nextToken(), st.nextToken(), st.nextToken()));
                 deco();
                 return 1;
             }

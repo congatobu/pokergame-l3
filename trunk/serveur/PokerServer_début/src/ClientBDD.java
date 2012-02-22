@@ -60,9 +60,9 @@ public class ClientBDD {
      * 
      * Retourne :<br>
      * <ul>
-     * <li> <b>OK</b> : opération effectué </li>
+     * <li> <b>CREATOK</b> : opération effectué </li>
      * <li> <b>AUPSEUDO</b> : pseudo déjà utilisé, ajout impossible </li>
-     * <li> <b>ERREUR BDD</b> : erreur a l'ajout, veuillez recommencer </li>
+     * <li> <b>ERREURBDD</b> : erreur a l'ajout, veuillez recommencer </li>
      * <li> <b>WFPSEUDO</b> : mauvais format de pseudo </li>
      * <li> <b>WFPASS</b> : mauvais format de password </li>
      * </ul>
@@ -116,9 +116,9 @@ public class ClientBDD {
             racine.addContent(enfant);
             Enregistre();
         }catch(Exception e){
-         available.release();   return "ERREUR BDD";
+         available.release();   return "ERREURBDD";
         }
-    available.release();    return "OK";
+    available.release();    return "CREATOK";
     }
     
     /**
@@ -164,7 +164,7 @@ public class ClientBDD {
      * Retourne :<br>
      * <ul>
      * <li> <b>OK</b> : opération effectué </li>
-     * <li> <b>WPASSWORD</b> : mauvais password utilisé, connexion impossible </li>
+     * <li> <b>WPASS</b> : mauvais password utilisé, connexion impossible </li>
      * <li> <b>WPSEUDO</b> : pseudo introuvable, connexion impossible </li>
      * </ul>
      * 
@@ -183,9 +183,9 @@ public class ClientBDD {
             temp = (Element) element.get(i);
             if(temp.getAttributeValue("pseudo").equals(pseudo)){
                 if(temp.getChildText("password").equals(motDePasse)){
-                    return "OK";
+                    return "CONNECTOK";
                 }else{
-                    return "WPASSWORD";
+                    return "WPASS";
                 }
             }
         }
@@ -254,7 +254,7 @@ public class ClientBDD {
      * Retourne :<br>
      * <ul>
      * <li> <b>OK</b> : opération effectué </li>
-     * <li> <b>WPASSWORD</b> : mauvais password utilisé, changement impossible </li>
+     * <li> <b>WPASS</b> : mauvais password utilisé, changement impossible </li>
      * <li> <b>WPSEUDO</b> : pseudo introuvable, changement impossible </li>
      * <li> <b>WFPASS</b> : mauvais format de nouveau password </li>
      * </ul>
@@ -290,7 +290,7 @@ public class ClientBDD {
 
                 }else{
                      available.release();
-                    return "WPASSWORD";
+                    return "WPASS";
                 }
             }
         }
@@ -305,7 +305,7 @@ public class ClientBDD {
      * Retourne :<br>
      * <ul>
      * <li> <b>OK</b> : opération effectué </li>
-     * <li> <b>WPASSWORD</b> : mauvais password utilisé, changement impossible </li>
+     * <li> <b>WPASS</b> : mauvais password utilisé, changement impossible </li>
      * <li> <b>WPSEUDO</b> : pseudo introuvable </li>
      * <li> <b>AUPSEUDO</b> : pseudo déjà utilisé </li>
      * <li> <b>WFPSEUDO</b> : mauvais format de pseudo </li>
@@ -346,7 +346,7 @@ public class ClientBDD {
                         available.release();  return "AUPSEUDO";
                     }
                 }else{
-                    available.release();  return "WPASSWORD";
+                    available.release();  return "WPASS";
                 }
                     
             }
@@ -370,7 +370,7 @@ public class ClientBDD {
      * Retourne :<br>
      * <ul>
      * <li> <b>OK</b> : opération effectué </li>
-     * <li> <b>WPASSWORD</b> : mauvais password utilisé, suppression impossible </li>
+     * <li> <b>WPASS</b> : mauvais password utilisé, suppression impossible </li>
      * <li> <b>WPSEUDO</b> : pseudo introuvable, suppression impossible </li>
      * </ul>
      * @author Maurin Benjamin
@@ -398,7 +398,7 @@ public class ClientBDD {
                     Enregistre();
                   available.release();  return "OK";
                 }else{
-                  available.release();  return "WPASSWORD";
+                  available.release();  return "WPASS";
                 }  
             }
         }
