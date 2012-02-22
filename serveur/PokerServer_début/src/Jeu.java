@@ -31,7 +31,7 @@ public class Jeu {
 	}
 	
 		/**
-		*Fonction pour libérer la mémoire
+		*Fonction pour liberer la memoire
 		*@author Steve Giner
 		*/				
 	protected void finalize() throws Throwable{
@@ -132,7 +132,7 @@ public class Jeu {
 	public int quinteFlush(int[][] coul){
 		
 		int val=0;
-		int[][] cpt={{0,0,0,0},{0,0,0,0}};//on va prendre la valeur de la carte trouvée la meilleure dans chaque couleur et voir si on arrive a en faire une suite de 5 cartes 
+		int[][] cpt={{0,0,0,0},{0,0,0,0}};//on va prendre la valeur de la carte trouvee la meilleure dans chaque couleur et voir si on arrive a en faire une suite de 5 cartes 
 		int c=-1;
 		int r=-1;
 		
@@ -146,7 +146,7 @@ public class Jeu {
 				cpt[0][coul[1][i]]=coul[0][i];
 				
 			}
-			else{//on a deja une valeur a trouvée
+			else{//on a deja une valeur a trouvee
 				
 				if(cpt[0][coul[1][i]]==coul[0][i-1]+1){
 					cpt[1][coul[1][i]]++;
@@ -365,8 +365,8 @@ public class Jeu {
 	
 	
 	/**
-	*retourne la valeur de la meilleur triplette en 0 et celle de la meilleur paire en 1 (sans prendre en compte la triplette trouvée)
-	*retourne un 0 si une des deux n'est pas trouvé
+	*retourne la valeur de la meilleur triplette en 0 et celle de la meilleur paire en 1 (sans prendre en compte la triplette trouvee)
+	*retourne un 0 si une des deux n'est pas trouvee
 	*@author Steve Giner
 	*/
 	public int[] full(int[] valeur){
@@ -404,8 +404,8 @@ public class Jeu {
 	*quinte==4 (5 cartes qui se suivent mais de familles differentes)	
 	*couleur==5
 	*paires+triplette==6 (il parait que ca se dit full)
-	*carré==7
-	*Quinte Flush==8 (5 cartes de la même famille qui se suivent)
+	*carre==7
+	*Quinte Flush==8 (5 cartes de la meme famille qui se suivent)
 	*la royale==9
 	*@author Steve Giner
 	*/
