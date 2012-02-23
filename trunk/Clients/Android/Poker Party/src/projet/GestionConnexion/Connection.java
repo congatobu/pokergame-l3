@@ -8,11 +8,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +21,7 @@ import java.util.logging.Logger;
 public class Connection implements Runnable{
     // Activity courante
     public static final int     ACCUEUIL = 1;
+    public static final int     PARAMETRE = 2;
     private int                 currentActivity = 0;
     
     // Propriétés de comunication
@@ -64,6 +63,7 @@ public class Connection implements Runnable{
     
     public boolean init(String a, String p){
         adresse = a;
+        cryptTram = new Crypt();
         port = Integer.parseInt(p);
         analTram = new AnalyseurTram();
         
@@ -77,40 +77,26 @@ public class Connection implements Runnable{
                 }
             }
         };
-        Log.v("Accueuil", "11111");
+        
         try {
-            // create new task
-            theTask = new FutureTask<Object>(new Runnable() {
-                public void run() {
-                    try {
-                        sock = new Socket(adresse, port);
-                        br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-                        bw = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
-                        proc = new Thread(this);
-                        proc.start();
-                        msgvaleur = new Message();
-                        msgvaleur.obj = "CONNECT OK";
-                        hand.sendMessage(msgvaleur);
-                    } catch (Exception ex) {
-                        
-                    }
-                }
-            }, null);
-            Log.v("Accueuil", "22222");
-            // start task in a new thread
-            new Thread(theTask).start();
-            try {
-                // wait for the execution to finish, timeout after 10 secs 
-                theTask.get(4L, TimeUnit.SECONDS);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ExecutionException ex) {
-                Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+
+            sock = new Socket();
+            Log.v("Parametre", "avant socket");
+            sock.connect(new InetSocketAddress(adresse, port), 3000);
+            Log.v("Parametre", "apres socket");
+            if(!sock.isConnected()){
+                msgvaleur = new Message();
+                msgvaleur.obj = "TIMEOUT";
+                hand.sendMessage(msgvaleur);
+                return false;
             }
-        }
-        catch (TimeoutException e) {
+            br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            bw = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+            proc = new Thread(this);
+            proc.start();                   
+        }catch (Exception e) {
             msgvaleur = new Message();
-            msgvaleur.obj = "TIMEOUT";
+            msgvaleur.obj = "ERREUR";
             hand.sendMessage(msgvaleur);
             return false;
         }
@@ -118,13 +104,12 @@ public class Connection implements Runnable{
     }
     
     public void say(String message) throws IOException{
-        bw.write(message+"\n");
+        bw.write(/*cryptTram.enCrypt(*/message/*)*/+"\n");
         bw.flush();
     }
     
     public boolean dispose(){
         try {
-            proc.stop();
             br.close();
             bw.close();
             sock.close();
@@ -144,13 +129,12 @@ public class Connection implements Runnable{
 
     @Override
     public void run() {
-        
         String ligne = "";
         try {
             while ((ligne = br.readLine()) != null) {
                 if(!ligne.equals("")){
                     msgvaleur = new Message();
-                    msgvaleur.obj = ligne;
+                    msgvaleur.obj = /*cryptTram.deCrypt(*/ligne/*)*/;
                     hand.sendMessage(msgvaleur);
                 }
             }

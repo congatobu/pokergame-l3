@@ -24,17 +24,13 @@ import projet.GestionConnexion.AnalyseurEnvoi;
 import projet.GestionConnexion.Connection;
 import projet.GestionConnexion.CreateurTram;
 
-public class Accueuil extends Activity
-{
-    private static Toast            t;
-    private static int              time = Toast.LENGTH_SHORT;
-    
-    // popup de création de compte
-    private AlertDialog.Builder     builde;
-    private AlertDialog             alertDialog;
+public class Accueuil extends Activity{
     
     // Gestion de la connexion
     public static Connection        connect;
+    
+    // Creation de tram puis envoi
+    public static CreateurTram      sender;
     
     // Gestion des éléments graphiques
     private Button                  connection;
@@ -49,9 +45,6 @@ public class Accueuil extends Activity
     // Verification pseudo/mot de passe
     private AnalyseurEnvoi          verifEnvoi;  
     
-    // Creation de tram puis envoi
-    public static CreateurTram      sender;
-    
     // gestion des éléments du menu paramètre
     private final int               PARAMETRE = 1;
     private final int               A_PROPOS = 2;
@@ -60,7 +53,7 @@ public class Accueuil extends Activity
     // Pour la boite de dialog 
     AlertDialog.Builder             adb;
     
-    // Affichage d'un Toast pour les methodes static
+    // Handler pour sortir les messages de la partie static
     private static Handler messageHandler;
     
     /**
@@ -82,8 +75,8 @@ public class Accueuil extends Activity
             }
         };
 
+        sender = new CreateurTram();
         connect = new Connection();
-        connect.setActivity(Connection.ACCUEUIL);
         verifEnvoi = new AnalyseurEnvoi();
         getWindow().setBackgroundDrawableResource(R.drawable.fond);
         
@@ -95,6 +88,15 @@ public class Accueuil extends Activity
             Toast.makeText(this, "Problème a l'initialisation des objets", Toast.LENGTH_SHORT).show();
         }
         initZone();
+    }
+    
+    /**
+     * 
+     */
+    @Override
+    public void onResume(){
+        super.onResume();
+        connect.setActivity(Connection.ACCUEUIL);
     }
     
     /** 
@@ -189,8 +191,6 @@ public class Accueuil extends Activity
             //On affecte un bouton "OK" à notre AlertDialog et on lui affecte un évènement
             adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    
-                    Log.v("Accueuil", "test");
                     
                     if(verifEnv.analysePseudo(pseudoCRT.getText().toString()) && verifEnv.analyseMDP(mdpCRT.getText().toString())){
                         String[] arg = new String[2];
