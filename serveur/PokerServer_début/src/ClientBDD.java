@@ -428,7 +428,7 @@ public class ClientBDD {
      * 
      * @return {@code boolean} retourne vrai si le format est correct
      */
-    private boolean verifFormat(String s){
+    public boolean verifFormat(String s){
 	String bonnes_lettres = "azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN0123456789éèàâêîôûäëïöüù";
         String A_Test = s;
         if(s.length()<3 || s.length()>15)

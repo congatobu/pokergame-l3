@@ -158,7 +158,7 @@ class PokerClientThread extends Thread {
             crypt = null;
             jetons =null;
             cartes = null;
-            screenOut.close();
+            screenOut=null;
         } catch(Exception e) {
         
         }
@@ -267,7 +267,20 @@ class PokerClientThread extends Thread {
                 lecture=false;
                 return 1;
             }
-        
+                //Creer une partie
+               if(cmd.equals("CREATP"))
+            {
+                screenOut.println("creation de partie en cours...\n");
+                    send(PokerServer.creerPartie(this, st.nextToken(),Integer.parseInt(st.nextToken())));
+                return 1;
+            }
+                    //rejoindre une partie
+               if(cmd.equals("REJP"))
+            {
+                screenOut.println("tentative de rejoindre une aprtie...\n");
+                    send(PokerServer.rejoindrePartie(this, st.nextToken()));
+                return 1;
+            }
                 return 0;
                 
         }catch(Exception e){

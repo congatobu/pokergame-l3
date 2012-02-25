@@ -24,11 +24,13 @@ public class PokerPartie {
     * @author benjamin Maurin
     *@param nom : nom de la partie
     * @param max : nombre de joueurs maximum dans la partie
+     * @param createur : createur de la partie
     * 
     */
-    public PokerPartie(String nom,int max){
+    public PokerPartie(String nom,int max,PokerClientThread createur){
         this.nomP = nom;
         this.maxPlayers= max;
+        addPlayer(createur);
     }
 	
     /**
@@ -135,7 +137,7 @@ public class PokerPartie {
     if(clientList.size()<maxPlayers){
     clientList.add(np);	return 0;}
     else return -1;
-                                                                                    }
+                                             }
 
     /**
     * Fonction pour libérer la mémoire
