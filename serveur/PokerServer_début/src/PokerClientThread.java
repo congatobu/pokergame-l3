@@ -53,7 +53,6 @@ class PokerClientThread extends Thread {
             } catch (Exception e) {
                 screenOut.println("ya un bug dans un thread reception message "+e);
             }
-            if(lecture)
             deco();
         }catch(IOException e){
             screenOut.println("ya un bug dans un thread (bug général)");
@@ -210,36 +209,6 @@ class PokerClientThread extends Thread {
         }
     }
     
-    /**
-     * 
-     * Traite la base de données
-     * @author benjamin Maurin
-     */
-    public void traiteBD()
-    {
-        
-        /*
-           ClientBDD clientBDD = new ClientBDD();
-        clientBDD.Ouverture();
-        String[] temp;
-        
-        clientBDD.effaceBase();
-        
-        System.out.println(clientBDD.ajouteJoueur("Shyzkanza", "plop"));
-        System.out.println(clientBDD.verifPassword("Shyzkanza", "sniff"));
-        System.out.println(clientBDD.verifPassword("Shyzkanzo", "tsssss")+"\n");
-        
-        System.out.println(clientBDD.changePseudo("Shyzkanzi", "plop", "Shyzkanzu"));
-        System.out.println(clientBDD.changePseudo("Shyzkanza", "plop", "Shyzkanzo")+"\n");
-        System.out.println(clientBDD.changeMotDePasse("Shyzkanzo", "sniff", "sniff"));
-        System.out.println(clientBDD.changeMotDePasse("Shyzkanzo", "plop", "sniff")+"\n");
-        clientBDD.gagnePartie("Mathieu");
-        clientBDD.perdPartie("Mathieu");*/
-        
-    }
-    
-    
-    
    
     
         /**
@@ -264,7 +233,7 @@ class PokerClientThread extends Thread {
                     test1=st.nextToken();    
                     cmd=PokerServer.bd.verifPassword(test1,st.nextToken());
                     send(cmd);
-                    if(!cmd.equals("CONNECTOK")) deco();
+                    if(!cmd.equals("CONNECTOK")) lecture=false;
                     else  {connecte = true;pseudo = test1;}
                     return 1;
             }
@@ -279,7 +248,7 @@ class PokerClientThread extends Thread {
             {
                 screenOut.println("nouveau compte créé\n");
                 send(PokerServer.bd.ajouteJoueur(st.nextToken(), st.nextToken()));
-                deco();
+                lecture=false;
                 return 1;
             }
              //Changer de pseudo
@@ -287,7 +256,7 @@ class PokerClientThread extends Thread {
             {
                  screenOut.println("pseudo actualisé\n");
                 send(PokerServer.bd.changePseudo(st.nextToken(), st.nextToken(), st.nextToken()));
-                deco();
+                lecture=false;
                 return 1;
             }
               //Changer de mot de passe
@@ -295,7 +264,7 @@ class PokerClientThread extends Thread {
             {
                 screenOut.println("mot de passe actualisé\n");
                 send(PokerServer.bd.changePseudo(st.nextToken(), st.nextToken(), st.nextToken()));
-                deco();
+                lecture=false;
                 return 1;
             }
         
@@ -304,6 +273,8 @@ class PokerClientThread extends Thread {
         }catch(Exception e){
             screenOut.println("ya un bug traitements message");
             e.printStackTrace();
+            send("ERROR");
+            lecture=false;
             return -1;
         }
     }

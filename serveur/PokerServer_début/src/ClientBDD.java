@@ -163,7 +163,7 @@ public class ClientBDD {
      * 
      * Retourne :<br>
      * <ul>
-     * <li> <b>OK</b> : opération effectué </li>
+     * <li> <b>CONNECTOK</b> : opération effectué </li>
      * <li> <b>WPASS</b> : mauvais password utilisé, connexion impossible </li>
      * <li> <b>WPSEUDO</b> : pseudo introuvable, connexion impossible </li>
      * </ul>
@@ -429,7 +429,7 @@ public class ClientBDD {
      * @return {@code boolean} retourne vrai si le format est correct
      */
     private boolean verifFormat(String s){
-	String bonnes_lettres = "azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN123456789éèàâêîôûäëïöüù";
+	String bonnes_lettres = "azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN0123456789éèàâêîôûäëïöüù";
         String A_Test = s;
         if(s.length()<3 || s.length()>15)
         {
