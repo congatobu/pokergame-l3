@@ -49,7 +49,7 @@ public class Jeu {
 	}
 	
 		/**
-		*Fonction pour libérer la mémoire
+		*Fonction pour liberer la memoire
 		*@author Steve Giner
 		*/				
 	protected void finalize() throws Throwable{
@@ -137,20 +137,20 @@ public class Jeu {
 	private int quinteFlush(int[][] coul){
 		
 		int val=0;
-		int[][] cpt={{0,0,0,0},{0,0,0,0}};//on va prendre la valeur de la carte trouvée la meilleure dans chaque couleur et voir si on arrive a en faire une suite de 5 cartes 
+		int[][] cpt={{0,0,0,0},{0,0,0,0}};//on va prendre la valeur de la carte trouvee la meilleure dans chaque couleur et voir si on arrive a en faire une suite de 5 cartes 
 
 		
 		
 		
 		for(int i=6;i>0;i--){
 			
-			if(cpt[1][coul[1][i]]==0){//si on a pas de de suite commencée
+			if(cpt[1][coul[1][i]]==0){//si on a pas de de suite commencee
 				
 				cpt[1][coul[1][i]]++;
 				cpt[0][coul[1][i]]=coul[0][i];
 				
 			}
-			else{//on a deja une valeur a trouvée
+			else{//on a deja une valeur a trouvee
 				
 				if(cpt[0][coul[1][i]]==coul[0][i-1]+1){
 					cpt[1][coul[1][i]]++;
@@ -369,8 +369,8 @@ public class Jeu {
 	
 	
 	/**
-	*retourne la valeur de la meilleur triplette en 0 et celle de la meilleur paire en 1 (sans prendre en compte la triplette trouvée)
-	*retourne un 0 si une des deux n'est pas trouvé
+	*retourne la valeur de la meilleur triplette en 0 et celle de la meilleur paire en 1 (sans prendre en compte la triplette trouvee)
+	*retourne un 0 si une des deux n'est pas trouve
 	*@author Steve Giner
 	*/
 	private float full(int[] valeur){
@@ -409,8 +409,8 @@ public class Jeu {
 	*quinte==4 (5 cartes qui se suivent mais de familles differentes)	
 	*couleur==5
 	*paires+triplette==6 (il parait que ca se dit full)
-	*carré==7
-	*Quinte Flush==8 (5 cartes de la même famille qui se suivent)
+	*carre==7
+	*Quinte Flush==8 (5 cartes de la meme famille qui se suivent)
 	*la royale==9
 	*et retourne la valeur de la meilleure carte de la combinaison
 	*@author Steve Giner
@@ -483,7 +483,7 @@ public class Jeu {
 	
 	
 	/**
-	*détermine qui est le gagnant, retourne un tableau contenant en:
+	*determine qui est le gagnant, retourne un tableau contenant en:
 	*0==la valeur de la combinaison
 	*1==la valeur de la meilleure carte de la combinaison(si double combinaison(full ou double paire) le nombre apres la virgule indique la valeur des cartes de la deuxieme combinaison) 
 	*2 et +==le ou les joueurs gagnants
@@ -514,7 +514,7 @@ public class Jeu {
 			
 			valeur[j]=valeurMain(m[j]);//en 0 on a la valeur de la combinaison et dans 1 celle de la meilleure carte de la combinaison
 			
-			if(max0<valeur[j][0]){//ici on recupere les cas d'égalités
+			if(max0<valeur[j][0]){//ici on recupere les cas d'egalites
 				
 				max0=valeur[j][0];
 				max1=valeur[j][1];
@@ -542,7 +542,7 @@ public class Jeu {
 		
 		
 		
-		if(cpt>0){//si il y a une egalité
+		if(cpt>0){//si il y a une egalite
 			int imaxfinal=0;
 			boolean egal=false;
 			int[] egalite=new int[cpt+1];
@@ -591,7 +591,7 @@ public class Jeu {
 	}
 	
 	/**
-	*compare le reste des mains de 2 joueurs,return 0 si egalité,1 si m1 moins bien que m2 et 2 si m1 mieux que m2. error==-1
+	*compare le reste des mains de 2 joueurs,return 0 si egalite,1 si m1 moins bien que m2 et 2 si m1 mieux que m2. error==-1
 	*@author Steve Giner
 	*/
 	private int compareReste(int[] m1, int[] m2, float[] val) {
@@ -658,7 +658,7 @@ public class Jeu {
 	}
 	
 	/**
-	*compare le reste des mains de 2 joueurs,return 0 si egalité,1 si m1 moins bien que m2 et 2 si m1 mieux que m2.
+	*compare le reste des mains de 2 joueurs,return 0 si egalite,1 si m1 moins bien que m2 et 2 si m1 mieux que m2.
 	*@author Steve Giner
 	*/
 	private int compare(int[] m1, int[] m2,int taille) {
