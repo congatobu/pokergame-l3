@@ -13,11 +13,8 @@ public class Crypt {
     
     /**
      * Fonction permettant de crypter la tram a envoyer.
-     * 
      * @author Jessy Bonnotte
-     * 
      * @param tram la tram a encrypter
-     * 
      * @return {@code String} la tram a envoyer encrypté
      */
     public String enCrypt(String tram){
@@ -40,11 +37,8 @@ public class Crypt {
     
     /**
      * Fonction permettant le décryptage. Elle prend en parametre la tram reçu par le joueur.
-     * 
      * @author Jessy Bonnotte
-     * 
      * @param tram reçu du client
-     * 
      * @return {@code String} la tram reçu décrypté
      */
     public String deCrypt(String tram){
