@@ -3,6 +3,8 @@
 import java.io.*;
 import java.net.Socket;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Classe du thread par client qui gère les messages avec son client
@@ -50,9 +52,11 @@ class PokerClientThread extends Thread {
                     //crypt.deCrypt(inputLine)
                     traitements(inputLine);
                 }
+              
             } catch (Exception e) {
                 screenOut.println("ya un bug dans un thread reception message "+e);
             }
+            
             deco();
         }catch(IOException e){
             screenOut.println("ya un bug dans un thread (bug général)");
@@ -61,6 +65,7 @@ class PokerClientThread extends Thread {
     }
 
 
+  
     
          /**
      * @author benjamin Maurin
@@ -129,9 +134,9 @@ class PokerClientThread extends Thread {
     public void deco(){
         try{
             lecture = false;
+            socket.close();	
             in.close();
             out.close();
-            socket.close();	
             if(partie!=null){
                 partie.deleteClient(this);
             }
@@ -267,7 +272,7 @@ class PokerClientThread extends Thread {
                 lecture=false;
                 return 1;
             }
-                //Creer une partie
+                //Creer une partie // IF CONNECTE
                if(cmd.equals("CREATP"))
             {
                 screenOut.println("creation de partie en cours...\n");
@@ -277,7 +282,7 @@ class PokerClientThread extends Thread {
                     //rejoindre une partie
                if(cmd.equals("REJP"))
             {
-                screenOut.println("tentative de rejoindre une aprtie...\n");
+                screenOut.println("tentative de rejoindre une partie...\n");
                     send(PokerServer.rejoindrePartie(this, st.nextToken()));
                 return 1;
             }

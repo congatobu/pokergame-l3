@@ -3,6 +3,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -22,7 +24,7 @@ class CommandReader extends Thread{
     }
 
     /**
-     * Fonction qui lit les commandes
+     * Fonction qui lit et traite les commandes
      * @author Benjamin Maurin
      */
     @Override
@@ -38,7 +40,7 @@ class CommandReader extends Thread{
                     for (int i=0;i<PokerServer.clientList.size();++i){
                         foo= (PokerClientThread) PokerServer.clientList.get(i);
                         foo.deco();
-                    }												
+                    }
                     PokerServer.serverSocket.close();
                     System.exit(0);
                 }
@@ -54,12 +56,32 @@ class CommandReader extends Thread{
                     PokerServer.listParties();
                     screenOut.println("");
                 }
+                if (command.startsWith("KILL ")){
+
+                    try{
+                        int i = Integer.parseInt(command.substring(5));
+                        valid = true;
+                        if(PokerServer.clientList.size()>=i)
+                        {
+                             PokerClientThread foo;
+                           foo = (PokerClientThread) PokerServer.clientList.get(i-1);
+                                    foo.deco();
+                            screenOut.println("\n Client "+i+" deconnecte.");
+                        }
+                        else{screenOut.println("\n Ce numero de client n'existe pas.");}
+                    }
+                    catch(Exception e){
+                    screenOut.println("\n Erreur syntaxe KILL.");
+                    e.printStackTrace();
+                    }
+                }
                 if (command.compareTo("HELP")==0){
                     valid = true;
-                    screenOut.println("\n LIST  - liste des clients connectes");
-                    screenOut.println(" LISTP - liste des parties");
-                    screenOut.println(" HELP  - liste des commandes");
-                    screenOut.println(" QUIT  - deconnecte les clients et quitte le serveur \n");
+                    screenOut.println("\n LIST   - liste des clients connectes");
+                    screenOut.println(" LISTP  - liste des parties");     
+                    screenOut.println(" KILL i - deconnecte le client numero i");
+                    screenOut.println(" HELP   - liste des commandes");
+                    screenOut.println(" QUIT   - deconnecte les clients et quitte le serveur \n");
                 }
                 if (!valid){
                     screenOut.println("\nError: tapez 'HELP' pour voir les commandes supportees\n");
