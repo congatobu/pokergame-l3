@@ -81,7 +81,32 @@ class CommandReader extends Thread{
                     screenOut.println(" LISTP  - liste des parties");     
                     screenOut.println(" KILL i - deconnecte le client numero i");
                     screenOut.println(" HELP   - liste des commandes");
+                    screenOut.println(" CREDIT - credits du projet");
                     screenOut.println(" QUIT   - deconnecte les clients et quitte le serveur \n");
+                }
+                    if (command.compareTo("CREDIT")==0){
+                    valid = true;
+                    screenOut.println("\n Projet poker (2012) : \n");
+                    screenOut.println("        **Serveur:**");  
+                    screenOut.println("");
+                    screenOut.println("          Maurin Benjamin"); 
+                    screenOut.println("          Giner Steve");
+                     screenOut.println("");
+                    screenOut.println("        **Client android:**");
+                     screenOut.println("");
+                    screenOut.println("          Bonotte Jessy"); 
+                    screenOut.println("          Polizzi Mathieu");
+                     screenOut.println("");
+                    screenOut.println("        **Client C++:**");
+                     screenOut.println("");
+                    screenOut.println("          Agret Clement"); 
+                    screenOut.println("          Legoc Renaud");
+                     screenOut.println("");
+                    screenOut.println("        **Client JS:**");
+                     screenOut.println("");
+                    screenOut.println("          Mura Paul"); 
+                    screenOut.println("          Lamsec Yohann");
+                    screenOut.println("");
                 }
                 if (!valid){
                     screenOut.println("\nError: tapez 'HELP' pour voir les commandes supportees\n");
