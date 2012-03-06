@@ -23,6 +23,7 @@ class PokerClientThread extends Thread {
     private boolean connecte = false;
     private int[] jetons = new int[2];
     private int[] cartes = new int[2];
+    private int attente = 0;
     
     public PokerClientThread(Socket socket){
         super("PokerClientThread");
@@ -65,7 +66,21 @@ class PokerClientThread extends Thread {
     }
 
 
-  
+     /**
+     * @author benjamin Maurin
+     * @return attente
+     */
+    public int getAttente(){ 
+        return this.attente;
+    }
+    
+       /**
+     * @author benjamin Maurin
+     * @return attente
+     */
+    public void setAttente(int a){ 
+       this.attente = a;
+    }
     
          /**
      * @author benjamin Maurin
@@ -93,7 +108,7 @@ class PokerClientThread extends Thread {
      * @author benjamin Maurin
      * @return Jetons posés du joueur
      */
-    public int getJetonsPosés(){ 
+    public int getJetonsPoses(){ 
         return this.jetons[1];
     }
     
@@ -107,7 +122,7 @@ class PokerClientThread extends Thread {
      /**
      * @author benjamin Maurin
      */
-    public void setJetonsPosés(int a){ 
+    public void setJetonsPoses(int a){ 
        this.jetons[1] = a;
     }
 
@@ -220,7 +235,7 @@ class PokerClientThread extends Thread {
      * Fonction qui traite le message en fonction de ses balises
      * @author benjamin Maurin
      * @param inputLine : le message à traiter
-     * @param   *1 : message traité *0: type de message inconnu *-1 : erreur dans le traitement
+     * @param   *1 : message traite *0: type de message inconnu *-1 : erreur dans le traitement
      */
     private int traitements(String inputLine){
         try{
