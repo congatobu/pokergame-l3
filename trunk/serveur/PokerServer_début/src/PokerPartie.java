@@ -11,7 +11,7 @@ import java.util.concurrent.Semaphore;
  */
 public class PokerPartie {
 		
-    private Vector clientList= new Vector();
+    private Vector<PokerClientThread> clientList= new Vector<PokerClientThread>();
     private PrintWriter screenOut = new PrintWriter(System.out, true);
     private int enCours = 0;
     private int maxPlayers = 8;
@@ -158,5 +158,239 @@ public class PokerPartie {
         finally {
             super.finalize();
         } 
-    }											
+    }
+    
+    
+    /**
+    * procedure permettant le deroulement d'un tournoi
+    * @author steve giner
+    */
+    public int tournoi(){
+    	int i=0;
+    	int g=-1;
+    	while(g==-1){
+    		
+    		if(i==getNbJ())i=0;
+    		else if(i>getNbJ())i=1;
+    			
+    		deroulement(i);
+    		i=i+2;
+    		g=gagnant();
+    		
+    	}
+    	
+    	return g;
+    }
+    
+    
+    private int gagnant() {
+		
+    	int cpt=0;int j=-1;
+    	for(int i=0;i<getNbJ();i++){
+    	
+    		if(clientList.elementAt(i).getJetonsTotaux()==0)cpt++;
+    		else j=i;
+    	}
+    	if(cpt==getNbJ()-1)
+		return j;
+    	else return -1;
+	}
+
+	/**
+    * procedure permettant le deroulement d'une partie
+    * @author steve giner
+    */
+    public void deroulement(int b){
+    	
+    	//initialisation du paquet de cartes
+    	Jeu j=new Jeu();
+    	int jetons;//variable contenant les jetons poses max
+    	int nbJ=getNbJ();
+    	//envoi de 2 cartes a chaque joueurs et init des jetons
+    	for(int i=0;i<getNbJ();i++){
+	    	clientList.elementAt(i).setCartes(j.tireUneCarte(),j.tireUneCarte());
+	    	clientList.elementAt(i).setJetonsTotaux(50);
+	    	clientList.elementAt(i).setJetonsPoses(0);
+    	}
+    	
+    	
+    	
+    	//j0 mise la blind et j1 la surblind
+    	mise(b,5);
+    	
+    	if(b+1<getNbJ())mise(b+1,10);
+    	else mise(0,10);
+    	
+    	jetons=10;
+    	
+    	//premiere enchère (choix: passer(1), suivre le joueur précédent(2) ou relancer(3))
+    	
+    	int dernierRelance=b+1;
+    	
+    	enchere(b+2,dernierRelance,jetons,nbJ);
+    	
+    	//fin du premier tour d'enchere
+    	
+    	
+		int[] table=new int[5];
+		table[0]=j.tireUneCarte();
+		table[1]=j.tireUneCarte();
+		table[2]=j.tireUneCarte();
+		
+		//envoi de la table aux clients
+		
+		//debut deuxieme tour
+		
+		//envoi de leur choix possibles (passer(1),ouvrir(2))
+		
+		int joueur=b;
+		boolean bool=true;
+		int jetMis=0;
+		int cpt=0;
+		
+		while(bool && cpt<getNbJ()){
+			
+			if(joueur==getNbJ())joueur=0;
+			
+			if(clientList.elementAt(joueur).getAttente()==0){
+				
+	   			if(choix(jetMis)==2){
+	   				mise(joueur,jetMis);
+	   				jetons=clientList.elementAt(joueur).getJetonsPoses(); 
+	   				dernierRelance=joueur;
+	   				bool=false;
+	   			}	
+		   	}
+			joueur++;cpt++;	
+		}
+		
+		if(bool){
+		//debut 2nd phase
+			enchere(joueur,dernierRelance,jetons,nbJ);
+		//fin 2nd phase
+		}
+		//fin 2e enchere
+		table[3]=j.tireUneCarte();
+		
+		//debut 3e enchere
+		
+		joueur=b;
+		bool=true;
+		
+		cpt=0;
+		
+		while(bool && cpt<getNbJ()){
+			
+			if(joueur==getNbJ())joueur=0;
+			
+			if(clientList.elementAt(joueur).getAttente()==0){
+				
+	   			if(choix(jetMis)==2){
+	   				mise(joueur,jetMis);
+	   				jetons=clientList.elementAt(joueur).getJetonsPoses(); 
+	   				dernierRelance=joueur;
+	   				bool=false;
+	   			}	
+		   	}
+			joueur++;cpt++;	
+		}
+		
+		if(bool){
+			//debut 2nd phase
+				enchere(joueur,dernierRelance,jetons,nbJ);
+			//fin 2nd phase
+			}
+		
+		//debut 4e enchere
+		
+		table[4]=j.tireUneCarte();
+		
+		if(nbJ>2){
+			
+			
+			
+			
+		}
+		
+    }
+    
+	/**
+     * fonction qui retournera le choix du joueur
+     * @author steve giner
+	 * @param jetMis jetons mise par le joueur
+     */
+    private int choix(int jetMis) {
+		
+    	
+    	
+    	
+    	
+		return 0;
+	}
+
+	/**
+    * procedure permettant de changer les jetons d'un joueurs
+    * @author steve giner
+    */
+	private void mise(int joueur, int jetons) {
+		
+		clientList.elementAt(joueur).setJetonsTotaux(clientList.elementAt(joueur).getJetonsTotaux()-jetons);
+		clientList.elementAt(joueur).setJetonsPoses(clientList.elementAt(joueur).getJetonsPoses()+jetons);
+		
+		
+	}
+    
+
+	/**
+	* procedure permettant d'effectuer un tour d'enchere
+	* @author steve giner
+	 * @param nbJ nombre de joueurs qu'il reste
+	*/
+	private void enchere(int joueur,int dernierRelance,int jetons, int nbJ) {
+    
+		
+    	int jetMis=0;
+		if(joueur==getNbJ())joueur=0;
+		else if(joueur>getNbJ())joueur=1;
+		boolean bool=true;
+		int rel=0;//nombre de relances
+		
+		
+		while(bool && nbJ>2)
+    	{
+    		if(joueur==getNbJ())joueur=0;
+    			
+    		//envoi d'un message pour dire au joueur de jouer
+    		
+    		
+    		if(clientList.elementAt(joueur).getAttente()==0){
+		    	
+    			switch(choix(jetMis)){
+		    	case 1:
+		    		if(joueur==dernierRelance)bool=false;
+		    		else clientList.elementAt(joueur).setAttente(1);nbJ--;
+		    		break;
+		    	
+		    	case 2:
+		    		if(joueur!=dernierRelance)
+			    		mise(joueur,jetons-clientList.elementAt(joueur).getJetonsPoses());
+		    		else bool=false;
+		    		break;
+		    	
+		    	case 3:
+		    		mise(joueur,jetMis);
+		    		rel++;
+		    		jetons=clientList.elementAt(joueur).getJetonsPoses();
+		    		dernierRelance=joueur;
+		    		if(rel==3){
+		    			//envoyer un message pour dire qu'ils ne peuvent plus relancer 
+		    		}	    	
+			    	break;		
+		    	}
+    		}
+    		joueur++;
+    	}
+		
+	}
+    
 }
