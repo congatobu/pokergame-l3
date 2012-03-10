@@ -76,12 +76,17 @@ class PokerClientThread extends Thread {
     
        /**
      * @author benjamin Maurin
-     * @return attente
      */
     public void setAttente(int a){ 
        this.attente = a;
     }
     
+       /**
+     * @author benjamin Maurin
+     */
+    public void setPartie(PokerPartie a){ 
+       this.partie = a;
+    }
          /**
      * @author benjamin Maurin
      * @return cartes du joueur
@@ -253,14 +258,18 @@ class PokerClientThread extends Thread {
                     test1=st.nextToken();    
                     cmd=PokerServer.bd.verifPassword(test1,st.nextToken());
                     send(cmd);
-                    if(!cmd.equals("CONNECTOK")) lecture=false;
+                    if(!cmd.equals("CONNECTOK")){ 
+                        lecture=false;      
+                    }
                     else  {connecte = true;pseudo = test1;}
                     return 1;
             }
             //Demandes des parties en cours
-            if(cmd.equals("GETPARTIE")){
-                    screenOut.println("Liste des parties envoyés à un joueur\n");
+            if(cmd.equals("GETLISTEPARTIE")){
+                    screenOut.println("Liste des parties envoyes a un joueur\n");
+                    if(connecte)
                     send(PokerServer.listClientParties());
+                    else {send("NCON"); }
                     return 1;
             }
             //Creation de compte
@@ -288,17 +297,29 @@ class PokerClientThread extends Thread {
                 return 1;
             }
                 //Creer une partie // IF CONNECTE
-               if(cmd.equals("CREATP"))
+               if(cmd.equals("CREATEPARTIE"))
             {
                 screenOut.println("creation de partie en cours...\n");
+                 if(connecte){
+                     if(partie==null){
                     send(PokerServer.creerPartie(this, st.nextToken(),Integer.parseInt(st.nextToken())));
+                     }
+                     else {send("AIP"); }
+                 }
+                 else {send("NCON"); }
                 return 1;
             }
                     //rejoindre une partie
                if(cmd.equals("REJP"))
             {
                 screenOut.println("tentative de rejoindre une partie...\n");
+                if(connecte){
+                    if(partie==null){
                     send(PokerServer.rejoindrePartie(this, st.nextToken()));
+                    }
+                     else {send("AIP"); }
+                }
+                else {send("NCON"); }
                 return 1;
             }
                 return 0;

@@ -48,7 +48,7 @@ public class PokerPartie {
      * @return nombre joueurs dans la partie
      */
     public String getEtat(){ 
-        return clientList.size()+"/"+maxPlayers+" joueurs dans la partie";
+        return "    "+nomP+" : "+clientList.size()+"/"+maxPlayers+" joueurs dans la partie";
     }
     
     /**
@@ -134,8 +134,11 @@ public class PokerPartie {
      * @return 0 si c'est possible -1 sinon
      */
     public int addPlayer(PokerClientThread np){
-    if(clientList.size()<maxPlayers){
-    clientList.add(np);	return 0;}
+    if(clientList.size()<maxPlayers){       
+    clientList.add(np);	
+    np.setPartie(this);
+    return 0;
+    }
     else return -1;
                                              }
 
@@ -223,7 +226,7 @@ public class PokerPartie {
     	
     	jetons=10;
     	
-    	//premiere enchère (choix: passer(1), suivre le joueur précédent(2) ou relancer(3))
+    	//premiere enchre (choix: passer(1), suivre le joueur prcdent(2) ou relancer(3))
     	
     	int dernierRelance=b+1;
     	
