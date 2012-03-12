@@ -1,0 +1,22 @@
+<html>
+
+<head>
+	<title>Modifier mot de passe</title>
+	<script type="text/javascript">
+		function submit(){
+			window.parent.opener.test();
+		}
+		
+	</script>
+</head>
+
+<body>
+	<form name="form" onSubmit="javascript:submit(); window.close();">
+		Ancien mdp : <input type="text" name="pseudo">
+		Nouveau mdp :<input type="password" name="pass">
+		Confirmation :<input type="password" name="pass2">
+		<input type="submit" value="Valider">
+	</form>
+</body>
+
+</html>
