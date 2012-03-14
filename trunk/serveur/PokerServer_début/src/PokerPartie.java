@@ -226,7 +226,7 @@ public class PokerPartie {
     	
     	jetons=10;
     	
-    	//premiere enchre (choix: passer(1), suivre le joueur prcdent(2) ou relancer(3))
+    	//premiere enchre (choix: passer(1), suivre(2) ou relancer(3))
     	
     	int dernierRelance=b+1;
     	
@@ -308,15 +308,85 @@ public class PokerPartie {
 		
 		table[4]=j.tireUneCarte();
 		
-		if(nbJ>2){
+		while(bool && cpt<getNbJ()){
 			
+			if(joueur==getNbJ())joueur=0;
+			
+			if(clientList.elementAt(joueur).getAttente()==0){
+				
+	   			if(choix(jetMis)==2){
+	   				mise(joueur,jetMis);
+	   				jetons=clientList.elementAt(joueur).getJetonsPoses(); 
+	   				dernierRelance=joueur;
+	   				bool=false;
+	   			}	
+		   	}
+			joueur++;cpt++;	
+		}
+		
+		if(bool){
+			//debut 2nd phase
+				enchere(joueur,dernierRelance,jetons,nbJ);
+			//fin 2nd phase
+			}
+		
+		int nbjoueurs=0;
+		int[][] cartes=new int[getNbJ()][2];
+		PokerClientThread[] cl=new PokerClientThread[getNbJ()];
+		
+		for(int i=0;i<getNbJ();i++){
+			
+			if(clientList.elementAt(i).getAttente()!=1){
+				cartes[nbjoueurs]=clientList.elementAt(i).getCartes();
+				cl[nbjoueurs]=clientList.elementAt(i);
+				nbjoueurs++;
+			}
+			
+		}
+		
+		
+		if(nbjoueurs>1){
+			float[] g=j.gagnant(cartes,table,nbjoueurs);
 			
 			
 			
 		}
+		else{
+			if(cl[0].getAttente()==0)
+			cl[0].setJetonsTotaux(cl[0].getJetonsTotaux()+jetons);
+			else{
+				for(int i=0;i<getNbJ();i++){
+					
+					cl[0].setJetonsTotaux(cl[0].getJetonsTotaux()+(min(clientList.elementAt(i).getJetonsPoses(),cl[0].getJetonsPoses())));
+					clientList.elementAt(i).setJetonsTotaux(clientList.elementAt(i).getJetonsTotaux()+clientList.elementAt(i).getJetonsPoses()-cl[0].getJetonsPoses());
+					
+					
+				}
+				
+				
+			}
+		}
+		
+		
+		
 		
     }
     
+    
+	private int min(int a, int b) {
+		
+		if(a<b)return a;else return b;
+		
+		
+	}
+
+	private void repartionDesGains(int jetons, float[] fs) {
+		
+		
+	}
+
+	
+	
 	/**
      * fonction qui retournera le choix du joueur
      * @author steve giner
@@ -324,7 +394,8 @@ public class PokerPartie {
      */
     private int choix(int jetMis) {
 		
-    	
+    	//envoi min et max jetons possible de miser
+    	//envoi de la demande de choix
     	
     	
     	
@@ -339,7 +410,7 @@ public class PokerPartie {
 		
 		clientList.elementAt(joueur).setJetonsTotaux(clientList.elementAt(joueur).getJetonsTotaux()-jetons);
 		clientList.elementAt(joueur).setJetonsPoses(clientList.elementAt(joueur).getJetonsPoses()+jetons);
-		
+		if(clientList.elementAt(joueur).getJetonsTotaux()==0)clientList.elementAt(joueur).setAttente(2);
 		
 	}
     
@@ -347,7 +418,7 @@ public class PokerPartie {
 	/**
 	* procedure permettant d'effectuer un tour d'enchere
 	* @author steve giner
-	 * @param nbJ nombre de joueurs qu'il reste
+	* @param nbJ nombre de joueurs qu'il reste
 	*/
 	private void enchere(int joueur,int dernierRelance,int jetons, int nbJ) {
     
@@ -362,12 +433,10 @@ public class PokerPartie {
 		while(bool && nbJ>2)
     	{
     		if(joueur==getNbJ())joueur=0;
-    			
-    		//envoi d'un message pour dire au joueur de jouer
-    		
-    		
+    			    		
     		if(clientList.elementAt(joueur).getAttente()==0){
 		    	
+    			 //envoi d'un message pour dire au joueur de jouer
     			switch(choix(jetMis)){
 		    	case 1:
 		    		if(joueur==dernierRelance)bool=false;
