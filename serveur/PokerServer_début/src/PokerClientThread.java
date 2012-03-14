@@ -23,7 +23,7 @@ class PokerClientThread extends Thread {
     private boolean connecte = false;
     private int[] jetons = new int[2];
     private int[] cartes = new int[2];
-    private int attente = 0;
+    private int attente = 0;//0=tjr en jeu, 1=t'es plus en jeu, 2=tapis
     
     public PokerClientThread(Socket socket){
         super("PokerClientThread");
