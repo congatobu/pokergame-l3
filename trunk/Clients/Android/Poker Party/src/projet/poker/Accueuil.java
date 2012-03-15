@@ -5,14 +5,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -33,6 +31,7 @@ public class Accueuil extends Activity{
     public static CreateurTram      sender;
     
     // Gestion des éléments graphiques
+    private Button                  param;
     private Button                  connection;
     private Button                  creerCompte;
     private CheckBox                retenir;
@@ -66,12 +65,20 @@ public class Accueuil extends Activity{
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        Log.v("starting", "create");
+        //i = new Intent (getApplicationContext(), projet.poker.SplashScreen.class);
+      	//startActivity(i);
         setContentView(R.layout.main);
         
         messageHandler = new Handler() {
             @Override
             public void handleMessage(android.os.Message msg) {
-                Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
+                if(msg.obj.toString().equals("Connexion etabli")){
+                    i = new Intent (getApplicationContext(), ListePartie.class);
+                    startActivity(i);
+                }else{
+                    Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
+                }
             }
         };
 
@@ -87,11 +94,17 @@ public class Accueuil extends Activity{
         if(!initObjet()){
             Toast.makeText(this, "Problème a l'initialisation des objets", Toast.LENGTH_SHORT).show();
         }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.GINGERBREAD_MR1) {
+            param.setEnabled(false);
+            param.setVisibility(View.INVISIBLE);
+        }
         initZone();
     }
     
     /**
+     * Fonction appelé lors du cherchement de l'appli.
      * 
+     * @author Jessy Bonnotte
      */
     @Override
     public void onResume(){
@@ -99,15 +112,33 @@ public class Accueuil extends Activity{
         connect.setActivity(Connection.ACCUEUIL);
     }
     
+    /**
+     * Deroutement des fonctions de base du bouton MENU.
+     * 
+     * @author Jessy Bonnotte
+     * 
+     * @param keyCode le code de la touche pressé
+     * @param event l'evenement a faire de la touche pressé
+     * 
+     * @return boolean - si la touche est a prendre en compte
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_MENU) && (Build.VERSION.SDK_INT < Build.VERSION_CODES.GINGERBREAD_MR1)) {
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+    
     /** 
      * Surcharge de la fonction onCreateOptionsMenu() afin de créer le menu au clique<br/>
      * de l'utilisateur sur la touche menu
      * 
+     * @author Jessy Bonnotte
+     * 
      * @param menu - le menu qui est demandé
      * 
-     * @return true - l'affichage est terminé
-     * 
-     * @author Jessy Bonnotte
+     * @return boolean - resultat de l'affichage
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -124,11 +155,11 @@ public class Accueuil extends Activity{
      * Surcharge de la fonction onOptionsItemSelected() afin d'effectuer les actions<br/>
      * sur lesquels l'utilisateur clique.
      * 
+     * @author Jessy Bonnotte
+     * 
      * @param item - l'élément sur lequel l'utilisateur a cliqué.
      * 
      * @return boolean - retourne true si le parametre existe ou false sinon.
-     * 
-     * @author Jessy Bonnotte
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -148,6 +179,13 @@ public class Accueuil extends Activity{
         return false;
     }
     
+    /**
+     * Fonction permettant de lier le code avec le fichier xml de l'interface.
+     * 
+     * @author Jessy Bonnotte
+     * 
+     * @return boolean - resultat de la liaison avec le XML
+     */
     private boolean liaisonXML(){
         try{
             pass = (EditText) findViewById(R.id.mdp);
@@ -155,12 +193,21 @@ public class Accueuil extends Activity{
             connection = (Button) findViewById(R.id.connect);
             creerCompte = (Button) findViewById(R.id.createcpt);
             retenir = (CheckBox) findViewById(R.id.memorize); 
+            param = (Button) findViewById(R.id.param);
         }catch(Exception e){
             return false;
         }
         return true;
     }
     
+    /**
+     * Fonction permettant d'initialiser la boite de dialoque pour la création
+     * d'un compte.
+     * 
+     * @author Jessy bonnotte
+     * 
+     * @return boolean - resultat de l'initialisation de la dialogBox
+     */
     private boolean initDialog(){
         try{
             //On instancie notre layout en tant que View
@@ -228,6 +275,13 @@ public class Accueuil extends Activity{
         return true;
     }
     
+    /**
+     * Fonction permattant d'initialiser l'action des objets de l'interface
+     * 
+     * @author Jessy bonnotte
+     * 
+     * @return boolean - resultat de l'initialisation des objets
+     */
     private boolean initObjet(){
         try{
             connection.setOnClickListener(new View.OnClickListener() {
@@ -262,6 +316,13 @@ public class Accueuil extends Activity{
                 }
             });
             
+            param.setOnClickListener(new View.OnClickListener() {
+
+                public void onClick(View arg0) {
+                    Accueuil.this.openOptionsMenu();
+                }
+            });
+            
             creerCompte.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View arg0) {  
@@ -276,13 +337,29 @@ public class Accueuil extends Activity{
         return true;
     }
     
+    /**
+     * Fonction permettant de mettre a jour l'interface depuis la classe connexion.
+     * 
+     * @author Jessy Bonnotte
+     * 
+     * @param message - le message a afficher 
+     */
     public static void finCreatCompte(String message){
         Message msg = new Message();
         msg.obj = message;
         messageHandler.sendMessage(msg);
-        connect.dispose();
+        Accueuil.connect.dispose();
     }
     
+    /**
+     * Fonction permettant a l'analyseur de tram d'actualiser la fenetre pour une demande de connexion.
+     * Prends en parametre un boolean qui renseigne si la connexion est effective ou non et le message a afficher.
+     * 
+     * @author Jessy Bonnotte
+     * 
+     * @param message - le message a afficher a l'ecran
+     * @param co - statut de la connexion
+     */
     public static void finConnectCompte(String message, boolean co){
         if(co){
             Message msg = new Message();
@@ -292,11 +369,17 @@ public class Accueuil extends Activity{
             Message msg = new Message();
             msg.obj = message;
             messageHandler.sendMessage(msg);
+            Accueuil.connect.dispose();
         }   
     }
     
     /**
-     * Fonction permettant de se connecter.
+     * Fonction permettant de verifier les informations de connexions.
+     * Verifie le format du pseudo et du mot de pass.
+     * 
+     * @author Jessy Bonnotte
+     * 
+     * @return boolean - si le format est le bon ou non
      */
     private boolean connexion(){
         String pseudo = user.getText().toString();
@@ -308,9 +391,7 @@ public class Accueuil extends Activity{
     }
     
     /** 
-     * Fonction permettant de récupérer le texte stocké dans le système de préférences<br/>
-     * et de l'insérer dans la zone de texte. Si lors de la premiere utilisation le <br/>
-     * système ne comprend aucun texte, on l'initialise avec une valeur par défault.
+     * Fonction permettant de récupérer le texte stocké dans le système de préférences et de l'insérer dans la zone de texte. Si lors de la premiere utilisation le système ne comprend aucun texte, on l'initialise avec une valeur par défault.
      * 
      * @author Jessy Bonnotte
      */
@@ -324,8 +405,7 @@ public class Accueuil extends Activity{
     }
     
     /** 
-     * Fonction permettant d'enregistrer le texte de la zone de texte dans le systeme<br/>
-     * de préférences d'android.
+     * Fonction permettant d'enregistrer le texte de la zone de texte dans le systeme de préférences d'android.
      * 
      * @author Jessy Bonnotte
      */
@@ -338,6 +418,9 @@ public class Accueuil extends Activity{
         editor.commit();
     }
     
+    /**
+     * Fonction permettant de réinitialiser la sauvegarde de mot de pass et du pseudo.
+     */
     private void ereaseZone(){
         SharedPreferences settings = getSharedPreferences(PREFS_CONNECT, 0);        
         SharedPreferences.Editor editor = settings.edit();

@@ -49,6 +49,34 @@ public class AnalyseurEnvoi {
     }
     
     /**
+     * Fonction servant a vérifier les caractères du pseudo.
+     * 
+     * @author Jessy Bonnotte
+     * 
+     * @param pseudo
+     * 
+     * @return 
+     */
+    public boolean analyseNomPartie(String partie){
+        boolean retour = true;
+        if(partie.length() > 1){
+            for (int i = 0; i < partie.length() && retour; i++) {
+                for (int j = 0; j < nbCar; j++) {
+                    if (partie.charAt(i) == caracChaine.charAt(j)) {
+                        retour = true;
+                        break;
+                    }else{
+                        retour = false;
+                    }
+                }
+            }
+        }else{
+            retour = false;
+        }
+        return retour;
+    }
+    
+    /**
      * Fonction servant a vérifier les caractères du mot de passe.
      * 
      * @author Jessy Bonnotte;

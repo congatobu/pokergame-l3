@@ -6,7 +6,10 @@ package projet.GestionConnexion;
 
 import android.util.Log;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import projet.poker.Accueuil;
+import projet.poker.ListePartie;
 import projet.poker.Parametre;
 
 /**
@@ -37,7 +40,7 @@ public class AnalyseurTram {
             }else if(tram.equals("CONNECTOK")){
                 Accueuil.finConnectCompte("Connexion etabli", true);
             }else if(tram.equals("CREATOK")){
-                Accueuil.finConnectCompte("Connexion etabli", true);
+                Accueuil.finConnectCompte("Creation faite", true);
             }else if(tram.equals("WPSEUDO")){
                 Accueuil.finConnectCompte("Pseudo inexistant", false);
             }else if(tram.equals("WPASS")){
@@ -49,7 +52,7 @@ public class AnalyseurTram {
             }else if(tram.equals("WFPASS")){
                 Accueuil.finConnectCompte("Mauvais format password", false);
             }else if(tram.equals("ERREURBDD")){
-                Accueuil.finConnectCompte("Ajout impossible", false);
+                Accueuil.finConnectCompte("Ajout impossible", false);  
             }else if(tram.equals("CONNEXION CLOSE")){
                 Accueuil.connect.dispose();
             }
@@ -74,6 +77,51 @@ public class AnalyseurTram {
                 Parametre.finOperation("Ajout impossible");
             }else if(tram.equals("CONNEXION CLOSE")){
                 Accueuil.connect.dispose();
+            }
+        }else if(currentActivity == Connection.LISTE_PARTIE){
+            int index1 = 0;
+            int index2 = tram.indexOf("@");
+            
+            List<String[]> listeArguments = new ArrayList<String[]>();
+            //String[] argumentCourant = new String[3]; 
+            
+            String typeTram;
+            
+            if(index2 != -1){
+                typeTram = tram.substring(index1, index2);
+            }else{
+                typeTram = new String(tram);
+            }
+            
+            if(typeTram.equals("LISTEPARTIE") && index2 != -1){
+                String tmp;
+                do{
+                    String[] argumentCourant = new String[3];
+                    index1 = new Integer(index2);
+                    index2 = tram.indexOf("@", index1 + 1);
+                    System.out.println(index1+"  "+index2);
+                    if(index2 == -1){
+                        tmp = tram.substring(index1 + 1, tram.length());
+                    }else{
+                        tmp = tram.substring(index1 + 1, index2);
+                    }
+                    System.out.println(tmp);
+                    int ind1 = 0;
+                    int ind2 = 0;
+                    for (int i = 0; i < 3; i++) {
+                        ind2 = tmp.indexOf("/", ind1 +1);
+                        if(ind2 != -1){
+                            argumentCourant[i] = tmp.substring(ind1, ind2);
+                        }else{
+                            argumentCourant[i] = tmp.substring(ind1, tmp.length());
+                        }
+                        ind1 = new Integer(ind2 + 1);
+                    }
+                    listeArguments.add(argumentCourant.clone());
+                }while(index2 != -1);
+                ListePartie.MAJList(listeArguments);
+            }else if(typeTram.equals("ERROR")){
+                ListePartie.afficheMessage("Erreur de chargement");
             }
         }        
     }

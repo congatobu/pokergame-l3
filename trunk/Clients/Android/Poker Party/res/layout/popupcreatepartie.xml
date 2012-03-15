@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/popupcreateparty"
+android:orientation="horizontal"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:padding="10dp"
+>
+    <TextView
+    android:id="@+id/TextView1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:text="Nom de la partie  : "
+    />       
+    
+    <EditText
+    android:id="@+id/partyName"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_toRightOf="@+id/TextView1"
+    android:layout_marginLeft="5mm"
+    android:layout_marginRight="5mm"
+    />
+    
+    <TextView
+    android:id="@+id/TextView2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Joueurs max : "
+    android:layout_below="@+id/partyName"
+    />
+    
+    <SeekBar  
+    android:id="@+id/nbPlayers"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:layout_marginLeft="5mm"
+    android:layout_marginRight="5mm"
+    android:layout_toRightOf="@+id/TextView1"
+    android:layout_below="@+id/partyName"
+    android:max="8"
+    />
+
+
+</RelativeLayout>

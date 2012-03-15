@@ -1,10 +1,77 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
-
-
-<root>
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/first"
+android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+>
     
-</root>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/second"
+    android:orientation="vertical"
+    android:layout_width="30mm"
+    android:layout_height="match_parent"       
+    android:layout_alignParentLeft="true"
+    android:layout_marginLeft="3mm"
+    android:layout_marginRight="3mm"
+    >
+
+        <Button
+        android:id="@+id/create"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="créer"
+        android:textColor="#ffff0000"
+        android:gravity="center"
+        android:textStyle="bold|italic"
+
+        />
+
+        <Button
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="Rafraichir"
+        android:layout_below="@+id/create"
+        android:textColor="#ffff0000"
+        android:gravity="center"
+        android:textStyle="bold|italic"
+
+        />
+
+        <EditText
+        android:id="@+id/findParty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/refresh"
+        android:text="Nom de partie"
+        android:textSize="18sp"
+        />
+
+        <Button
+        android:id="@+id/disconnect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:text="Déconnecter"
+        android:textColor="#ffff0000"
+        android:gravity="center"
+        android:textStyle="bold|italic"
+        />
+
+    </RelativeLayout>
+
+    <ListView
+    android:id="@+id/listviewpartie"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@+id/second"
+    android:layout_alignParentRight="true"
+    android:layout_marginRight="3mm"
+    />
+
+</RelativeLayout>

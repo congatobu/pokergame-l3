@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import java.io.*;
-import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.concurrent.FutureTask;
 import java.util.logging.Level;
@@ -22,6 +21,8 @@ public class Connection implements Runnable{
     // Activity courante
     public static final int     ACCUEUIL = 1;
     public static final int     PARAMETRE = 2;
+    public static final int     LISTE_PARTIE = 3;
+    
     private int                 currentActivity = 0;
     
     // Propriétés de comunication
@@ -79,10 +80,10 @@ public class Connection implements Runnable{
         };
         
         try {
-
-            sock = new Socket();
+            sock = new Socket(adresse, port);
             Log.v("Parametre", "avant socket");
-            sock.connect(new InetSocketAddress(adresse, port), 3000);
+            
+            //sock.connect(new InetSocketAddress(adresse, port), 3000);
             Log.v("Parametre", "apres socket");
             if(!sock.isConnected()){
                 msgvaleur = new Message();
@@ -110,13 +111,19 @@ public class Connection implements Runnable{
     
     public boolean dispose(){
         try {
-            br.close();
-            bw.close();
             sock.close();
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             return false;
         }
         return true;
+    }
+    
+    public boolean isConnected(){
+        if(sock.isConnected()){
+            return true;
+        }else{
+            return false;
+        }
     }
     
     private void start(){
