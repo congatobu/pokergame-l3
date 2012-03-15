@@ -3,7 +3,6 @@ package projet.poker;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -176,9 +175,9 @@ public class ListePartie extends Activity{
             //On instancie notre layout en tant que View
             LayoutInflater factory = LayoutInflater.from(this);
             final View alertDialogView = factory.inflate(R.layout.popupcreatepartie, null);
+            
+            
 
-            
-            
             //Liaison du xml
             final EditText nomPartie = (EditText) alertDialogView.findViewById(R.id.partyName);
             final SeekBar nbPlayer = (SeekBar) alertDialogView.findViewById(R.id.nbPlayers);
