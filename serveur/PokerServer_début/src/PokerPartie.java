@@ -332,13 +332,13 @@ public class PokerPartie {
 		
 		int nbjoueurs=0;
 		int[][] cartes=new int[getNbJ()][2];
-		PokerClientThread[] cl=new PokerClientThread[getNbJ()];
+		int[] cl=new int[getNbJ()];
 		
 		for(int i=0;i<getNbJ();i++){
 			
 			if(clientList.elementAt(i).getAttente()!=1){
 				cartes[nbjoueurs]=clientList.elementAt(i).getCartes();
-				cl[nbjoueurs]=clientList.elementAt(i);
+				cl[nbjoueurs]=i;
 				nbjoueurs++;
 			}
 			
@@ -347,18 +347,20 @@ public class PokerPartie {
 		
 		if(nbjoueurs>1){
 			float[] g=j.gagnant(cartes,table,nbjoueurs);
+			repartionDesGains(jetons,g);
+				
 			
 			
 			
 		}
 		else{
-			if(cl[0].getAttente()==0)
-			cl[0].setJetonsTotaux(cl[0].getJetonsTotaux()+jetons);
+			if(clientList.elementAt(cl[0]).getAttente()==0)
+				clientList.elementAt(cl[0]).setJetonsTotaux(clientList.elementAt(cl[0]).getJetonsTotaux()+jetons);
 			else{
 				for(int i=0;i<getNbJ();i++){
 					
-					cl[0].setJetonsTotaux(cl[0].getJetonsTotaux()+(min(clientList.elementAt(i).getJetonsPoses(),cl[0].getJetonsPoses())));
-					clientList.elementAt(i).setJetonsTotaux(clientList.elementAt(i).getJetonsTotaux()+clientList.elementAt(i).getJetonsPoses()-cl[0].getJetonsPoses());
+					clientList.elementAt(cl[0]).setJetonsTotaux(clientList.elementAt(cl[0]).getJetonsTotaux()+(min(clientList.elementAt(i).getJetonsPoses(),clientList.elementAt(cl[0]).getJetonsPoses())));
+					clientList.elementAt(i).setJetonsTotaux(clientList.elementAt(i).getJetonsTotaux()+clientList.elementAt(i).getJetonsPoses()-clientList.elementAt(cl[0]).getJetonsPoses());
 					
 					
 				}
@@ -380,9 +382,43 @@ public class PokerPartie {
 		
 	}
 
-	private void repartionDesGains(int jetons, float[] fs) {
+	private void repartionDesGains(int jetons, float[] g) {
 		
+		if(g.length<4){
+			
+			if(clientList.elementAt((int)g[2]).getAttente()==0){
+				clientList.elementAt((int)g[2]).setJetonsTotaux(clientList.elementAt((int)g[2]).getJetonsTotaux()+jetons);
+			}
+			else{
+				for(int i=0;i<getNbJ();i++){
+					
+					clientList.elementAt((int)g[2]).setJetonsTotaux(clientList.elementAt((int)g[2]).getJetonsTotaux()+(min(clientList.elementAt(i).getJetonsPoses(),clientList.elementAt((int)g[2]).getJetonsPoses())));
+					clientList.elementAt(i).setJetonsTotaux(clientList.elementAt(i).getJetonsTotaux()+clientList.elementAt(i).getJetonsPoses()-clientList.elementAt((int)g[2]).getJetonsPoses());
+					
+					
+				}
+			
+			}
 		
+		}
+		else{
+			// a reflechir...
+			for(int j=2;j<g.length;j++){
+				if(clientList.elementAt((int)g[j]).getAttente()==0){
+					clientList.elementAt((int)g[j]).setJetonsTotaux(clientList.elementAt((int)g[j]).getJetonsTotaux()+jetons);
+				}
+				else{
+					for(int i=0;i<getNbJ();i++){
+						
+						clientList.elementAt((int)g[j]).setJetonsTotaux(clientList.elementAt((int)g[j]).getJetonsTotaux()+(min(clientList.elementAt(i).getJetonsPoses(),clientList.elementAt((int)g[j]).getJetonsPoses())));
+						clientList.elementAt(i).setJetonsTotaux(clientList.elementAt(i).getJetonsTotaux()+clientList.elementAt(i).getJetonsPoses()-clientList.elementAt((int)g[j]).getJetonsPoses());
+						
+						
+					}
+				}
+			}	
+			
+		}
 	}
 
 	
