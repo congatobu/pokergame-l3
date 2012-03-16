@@ -18,7 +18,7 @@ public class PokerPartie {
     private Semaphore available = new Semaphore(1, true);
     private String nomP = "";
     private Jeu jeu;
-
+    private PokerClientThread createur;
     /**
     *Constructeur
     * @author benjamin Maurin
@@ -30,6 +30,7 @@ public class PokerPartie {
     public PokerPartie(String nom,int max,PokerClientThread createur){
         this.nomP = nom;
         this.maxPlayers= max;
+        this.createur=createur;
         addPlayer(createur);
     }
 	
@@ -114,7 +115,8 @@ public class PokerPartie {
             num=clientList.indexOf(deadClient);
             if(num!=-1){
                 clientList.remove(num);                         
-            }                       
+            }               
+            broadcastClientsPartie("REMOVEPAYER@"+deadClient.getPseudo());
             if(clientList.size()<1){
                 PokerServer.deletePartie(this);
             }
@@ -137,6 +139,7 @@ public class PokerPartie {
     if(clientList.size()<maxPlayers){       
     clientList.add(np);	
     np.setPartie(this);
+    broadcastClientsPartie("NEWPLAYER@"+np.getPseudo());
     return 0;
     }
     else return -1;

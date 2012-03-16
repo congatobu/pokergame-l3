@@ -322,6 +322,16 @@ class PokerClientThread extends Thread {
                 else {send("NCON"); }
                 return 1;
             }
+                       //avoir les infos d'un joueur
+               if(cmd.equals("GETINFO"))
+            {
+                screenOut.println("demande d'infos d'un joueur...\n");
+                 if(connecte){  
+                    send(PokerServer.getInfoJoueur(st.nextToken()));
+                 }
+                 else {send("NCON"); }
+                return 1;
+            }
                 return 0;
                 
         }catch(Exception e){

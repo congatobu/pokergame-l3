@@ -126,7 +126,7 @@ public class ClientBDD {
      * 
      * retourne :<br>
      * <ul>
-     * <li> <b>tab[0]</b> : numero unique du joueur </li>
+     * <li> <b>tab[0]</b> : numero unique du joueur (0 si le joueur n'existe pas) </li>
      * <li> <b>tab[1]</b> : date d'inscription du joueur </li>
      * <li> <b>tab[2]</b> : nombre de partie gagné par le joueur </li>
      * <li> <b>tab[3]</b> : nombre de partie perdu par le joueur </li>
