@@ -303,8 +303,7 @@ class PokerClientThread extends Thread {
                  if(connecte){
                      if(partie==null){
                     send(PokerServer.creerPartie(this, st.nextToken(),Integer.parseInt(st.nextToken())));
-                     }
-                     else {send("AIP"); }
+                     } else {send("AIP"); }
                  }
                  else {send("NCON"); }
                 return 1;
@@ -316,9 +315,23 @@ class PokerClientThread extends Thread {
                 if(connecte){
                     if(partie==null){
                     send(PokerServer.rejoindrePartie(this, st.nextToken()));
+                      if(partie!=null)
+                        partie.broadcastClientsPartie(partie.listeJoueursPartie());   
                     }
                      else {send("AIP"); }
                 }
+                else {send("NCON"); }
+                return 1;
+            }
+                    //avoir les joueurs dans une partie
+               if(cmd.equals("GETPLAYERPARTY"))
+            {
+                screenOut.println("demande liste des joueurs dans la partie...\n");
+                if(connecte){
+                      if(partie!=null)
+                        send(partie.listeJoueursPartie());   
+                      else send("NIP");
+                             }
                 else {send("NCON"); }
                 return 1;
             }

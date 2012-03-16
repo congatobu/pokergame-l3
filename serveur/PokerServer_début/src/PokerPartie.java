@@ -116,7 +116,7 @@ public class PokerPartie {
             if(num!=-1){
                 clientList.remove(num);                         
             }               
-            broadcastClientsPartie("REMOVEPAYER@"+deadClient.getPseudo());
+          broadcastClientsPartie(listeJoueursPartie());  
             if(clientList.size()<1){
                 PokerServer.deletePartie(this);
             }
@@ -128,6 +128,20 @@ public class PokerPartie {
         }
     }
 
+       /**
+     * Fonction pour donner les joueurs d'une partie
+     * @author Benjamin Maurin
+     * @return le string de la liste des joueurs dans la partie
+     */
+    public String listeJoueursPartie(){
+        String s = "LISTEJOUEURSPARTIE";
+        for(int i=0; i <clientList.size();i++)
+        {
+            s+="@"+clientList.get(i).getPseudo();     
+        }
+        return s;
+                                             }
+    
 
     /**
      * Fonction pour ajouter un client à la partie
@@ -139,7 +153,6 @@ public class PokerPartie {
     if(clientList.size()<maxPlayers){       
     clientList.add(np);	
     np.setPartie(this);
-    broadcastClientsPartie("NEWPLAYER@"+np.getPseudo());
     return 0;
     }
     else return -1;
