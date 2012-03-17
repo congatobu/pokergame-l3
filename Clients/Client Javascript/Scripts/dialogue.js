@@ -1,7 +1,7 @@
 
 var action="";
 
-function traiter_message(message){
+function on_socket_get(message){
 	if(action=="CONNECT"){
 		if(message == 'WPSEUDO')
 			alert("Pseudo introuvable, connexion impossible.");
