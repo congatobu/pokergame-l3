@@ -154,13 +154,13 @@ class PokerClientThread extends Thread {
      */
     public void deco(){
         try{
+            if(partie!=null){
+                partie.deleteClient(this);
+            }
             lecture = false;
             socket.close();	
             in.close();
             out.close();
-            if(partie!=null){
-                partie.deleteClient(this);
-            }
             PokerServer.deleteClient(this);
         }catch(IOException e){
             screenOut.println("ya un bug dans un thread deco"+e);
@@ -297,13 +297,16 @@ class PokerClientThread extends Thread {
                 lecture=false;
                 return 1;
             }
-                //Creer une partie // IF CONNECTE
+                   //Creer une partie // IF CONNECTE
                if(cmd.equals("CREATEPARTIE"))
             {
                 screenOut.println("creation de partie en cours...\n");
                  if(connecte){
                      if(partie==null){
                     send(PokerServer.creerPartie(this, st.nextToken(),Integer.parseInt(st.nextToken())));
+                    if(partie!=null)
+                        partie.broadcastClientsPartie(partie.listeJoueursPartie());   
+                    
                      } else {send("AIP"); }
                  }
                  else {send("NCON"); }
@@ -334,6 +337,21 @@ class PokerClientThread extends Thread {
                       else send("NIP");
                              }
                 else {send("NCON"); }
+                return 1;
+            }
+			  //EXITPARTIE
+                  if(cmd.equals("EXITPARTIE"))
+            {
+                screenOut.println("un client quitte sa partie...\n");
+                 if(connecte){  
+                  if(partie!=null)
+                  {
+                      partie.deleteClient(this);
+                        send("EXITOK");
+                  }
+                      else send("ERROR");
+                 }
+                 else {send("ERROR"); }
                 return 1;
             }
                        //avoir les infos d'un joueur

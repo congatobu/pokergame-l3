@@ -116,6 +116,7 @@ public class PokerPartie {
             if(num!=-1){
                 clientList.remove(num);                         
             }               
+			   deadClient.setPartie(null);
           broadcastClientsPartie(listeJoueursPartie());  
             if(clientList.size()<1){
                 PokerServer.deletePartie(this);
@@ -430,7 +431,7 @@ public class PokerPartie {
 			}
 		
 		}
-		else{//si cas d'egalité
+		else{//si cas d'egali
 			// a reflechir...
 			
 			int gain=jetons/(g.length-2);
