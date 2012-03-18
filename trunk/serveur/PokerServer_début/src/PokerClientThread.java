@@ -24,6 +24,7 @@ class PokerClientThread extends Thread {
     private int[] jetons = new int[2];
     private int[] cartes = new int[2];
     private int attente = 0;//0=tjr en jeu, 1=t'es plus en jeu, 2=tapis
+    private int pot=0;//jetons que le joueur ne peut pas gagner a cause d'un tapis
     
     public PokerClientThread(Socket socket){
         super("PokerClientThread");
@@ -356,4 +357,25 @@ class PokerClientThread extends Thread {
         }
     }
     
+    
+    public int getPot(){
+    	
+    	return pot;
+    	
+    }
+    
+    
+    public void setPot(int jetons){
+    	
+    	
+    	pot=jetons;
+    }
+    
+    
+    public void ajoutePot(int jetons){
+    	
+    	pot=pot+jetons;
+    	
+    }
+
 }
