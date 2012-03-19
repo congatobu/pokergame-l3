@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<title>POKER</title>
+	
+	<div><applet id="JavaSocketBridge" archive="JavaSocketBridge.jar" code="JavaSocketBridge.class" width="0" height="0"></applet></div>
+	
+	<script type="text/javascript" src="Scripts/java_socket_bridge.js"></script>
+	<script type="text/javascript" src="Scripts/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="Scripts/dialogue.js"></script>
+	<script type="text/javascript" src="Scripts/gestion.js"></script>
+	
+</head>
+<body>
+	<button onclick="connexion_serveur()">Run!</button>
+	
+	<div id="acceuil"></div>
+
+	<form id="formcon" onSubmit="javascript:connexion(this.pseudo, this.pass); return false;">
+		Pseudo : <input type="text" name="pseudo" id="pseudocon">
+		Mot de passe :<input type="password" name="pass" id="passcon">
+		<input type="submit" value="Connexion">
+	</form>
+
+	<form id="formcreat" onSubmit="javascript:creation(this.pseudo, this.pass, this.pass2); return false;">
+		Pseudo : <input type="text" name="pseudo" id="pseudo">
+		Mot de passe :<input type="password" name="pass" id="pass">
+		Confirmation :<input type="password" name="pass2" id="pass2">
+		<input type="submit" value="Créer compte">
+	</form>
+	
+	<form id="chmtmdp" onSubmit="javascript:changer_mdp(this.ancien, this.nouveau, this.nouveau2); return false;">
+		Ancien mdp : <input type="password" name="ancien">
+		Nouveau mdp :<input type="password" name="nouveau">
+		Confirmation :<input type="password" name="nouveau2">
+		 <input type="submit" value="Valider">
+	</form>	
+	
+	<form id="chmtpsd" onSubmit="javascript:changer_psd(this.pseudo, this.pass); return false;">
+		Nouveau pseudo: <input type="text" name="pseudo">
+		Mot de passe :<input type="password" name="pass" id="pass">
+		<input type="submit" value="Valider">
+	</form>
+	
+	<ul id="menu">
+		<li>
+			<a href="#">Compte</a>
+			<ul>
+				<li><a href="javascript:affiche('formcon');">Connexion</a></li>
+				<li><a href="javascript:affiche('formcreat');">Créer un compte</a></li>
+				<li><a href="javascript:affiche('chmtpsd');">Changer pseudo</a></li>
+				<li><a href="javascript:affiche('chmtmdp');">Changer mot de passe</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="#">Jeu</a>
+			<ul>
+				<li><a href="javascript:affiche('creerpartie');">Créer une partie</a></li>
+				<li><a href="javascript:lister_parties();">Parties en cours</a></li>
+			</ul>
+		</li>
+	</ul>
+	
+	<form id="creerpartie" onSubmit="javascript:creer_partie(this.nompartie, this.nbjoueurs); return false;">
+		Nom partie: <input type="text" name="nompartie" id="nompartie">
+		Joureurs maximun :<input type="text" name="nbjoueurs" id="nbjoueurs">
+		<input type="submit" value="Créer partie">
+	</form>
+	
+	<div id="listeparties"></div>
+
+</body>
+	
+</html>
