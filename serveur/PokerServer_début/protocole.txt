@@ -1,0 +1,98 @@
+ 
+
+
+
+-------------------------------------------------------------
+CONNECT@pseudo@mdp -> demande de connection , retour :
+      * <li> <b>CONNECTOK</b> : opération effectué </li>
+     * <li> <b>WPASS</b> : mauvais password utilisé, connexion impossible </li>
+     * <li> <b>WPSEUDO</b> : pseudo introuvable, connexion impossible </li>
+-------------------------------------------------------------
+          
+   GETLISTEPARTIE   : Demandes des parties en cours (doit être connecté)
+  
+retour : LISTEPARTIE@partie1/nbjouer/nbmaxjouer@partie2/nbjouer/nbmaxjouer   ...
+             	NCON si pas connecté
+
+-------------------------------------------------------------
+CREATCPT@nomcompte@mdp    : Creation de compte
+
+retour :
+  * <li> <b>CREATOK</b> : opération effectué </li>
+     * <li> <b>AUPSEUDO</b> : pseudo déjà utilisé, ajout impossible </li>
+     * <li> <b>ERREURBDD</b> : erreur a l'ajout, veuillez recommencer </li>
+     * <li> <b>WFPSEUDO</b> : mauvais format de pseudo </li>
+     * <li> <b>WFPASS</b> : mauvais format de password </li>
+
+-------------------------------------------------------------
+            
+ACTPSEUDO@ancienpseudo@mdp@nouveaupseudo : Changer de pseudo
+
+retour :
+
+     * <li> <b>OK</b> : opération effectué </li>
+     * <li> <b>WPASS</b> : mauvais password utilisé, changement impossible </li>
+     * <li> <b>WPSEUDO</b> : pseudo introuvable </li>
+     * <li> <b>AUPSEUDO</b> : pseudo déjà utilisé </li>
+     * <li> <b>WFPSEUDO</b> : mauvais format de pseudo </li>
+
+-------------------------------------------------------------
+
+              //Changer de mot de passe
+              ACTPASS@pseudo@ancienmdp@nouveaumdp
+
+retour
+     * <li> <b>OK</b> : opération effectué </li>
+     * <li> <b>WPASS</b> : mauvais password utilisé, changement impossible </li>
+     * <li> <b>WPSEUDO</b> : pseudo introuvable, changement impossible </li>
+     * <li> <b>WFPASS</b> : mauvais format de nouveau password </li>
+
+
+-------------------------------------------------------------
+                //Creer une partie // IF CONNECTE
+   CREATEPARTIE@nompartie@nbjoueursmax
+retour:
+	CREATPOK si c'eest bon
+	PAU nom de partie deja utilisé
+	WFP mauvais format nom de partie
+	AIP le joueur est deja dans une partie
+	NCON si pas connecté
+
++ envoi des joueurs dans la partie de la forme LISTEJOUEURSPARTIE@pseudo1@pseudo2....
+-------------------------------------------------------------
+                //rejoindre une partie // IF CONNECTE
+   REJP@nompartie
+retour:
+	REJOK si c'est bon
+	PNE nom de partie n'existe pas
+	TOOMANY trop de joueurs dans la partie
+	AIP le joueur est deja dans une partie
+	NCON si pas connecté
+
++ envoi des joueurs dans la partie de la forme LISTEJOUEURSPARTIE@pseudo1@pseudo2....
+-------------------------------------------------------------
+                //demande des joueurs dans la partie
+   GETPLAYERPARTY
+retour:
+	LISTEJOUEURSPARTIE@pseudo1@pseudo2...
+	NIP le joueur n'est pas dans une partie
+	NCON si pas connecté
+
++ envoi des joueurs dans la partie de la forme LISTEJOUEURSPARTIE@pseudo1@pseudo2....
+-------------------------------------------------------------
+                //quitter la partie
+   EXITPARTIE
+retour:
+	EXITOK client a bien quitté la partie
+	ERROR erreur quelquconque
+
+-------------------------------------------------------------
+                //demande les infos sur un joueur
+  GETINFO@pseudo
+retour:
+	SETINFO@pseudo@partie gagné@partieperdu@dateinscription
+	PI pseudo introuvable
+	NCON si pas connecté
+
+-------------------------------------------------------------
+	retour si erreur syntaxe :    ERROR
