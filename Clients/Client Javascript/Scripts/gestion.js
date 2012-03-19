@@ -8,6 +8,7 @@ function tout_cacher(){
 	$("#chmtmdp").hide();
 	$("#chmtpsd").hide();
 	$("#creerpartie").hide();
+	$("#listeparties").hide();
 }
 	
 function affiche(division){

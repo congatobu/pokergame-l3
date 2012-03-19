@@ -83,13 +83,24 @@ function on_socket_get(message){
 	else if(action=="GETLISTEPARTIE"){
 		if(message=="NCON")
 			alert("Vous devez être connecté pour voir la liste des parties en cours");
-		else
-			document.getElementById("listeparties").innerHTML += message;
+		else{
+			affiche("listeparties");
+			var liste = message.split("@");
+			var partie;
+			for(i=1;i<liste.length;i++){
+				partie = liste[i].split("/");
+				$("#tableparties").append("<TR>");
+				for(j=0;j<partie.length;j++){
+					$("#tableparties").append("<TD>"+partie[j]+"</TD>");
+				}
+				$("#tableparties").append("</TR>");
+			}
+		}
 	}
 }
 
 function connexion_serveur(){
-	socket_connect('88.167.230.145', 6667);
+	socket_connect('192.168.43.76', 6667);
 }
 
 function changer_psd(nouveau, pass){
@@ -110,7 +121,7 @@ function changer_psd(nouveau, pass){
 function changer_mdp(ancien, nouveau, nouveau2){
 	if (ancien.value==''){
 		alert("Veuillez entrer votre ancien mot de passe dans le premier champ.")
-		pseudo.focus()
+		ancien.focus()
 	}
    
 	else if (nouveau.value==''){
@@ -158,12 +169,13 @@ function creation(psd, pass, pass2){
 
 	else{
 		action = "CREACPT";
+		pseudo = psd.value;
 		socket_send("CREATCPT@"+psd.value+"@"+pass.value);
 	}
 }
 
 function connexion(psd, pass){
-	pseudo = psd;
+	pseudo = psd.value;
 	action = "CONNECT";
 	socket_send("CONNECT@"+psd.value+"@"+pass.value);
 	document.getElementById("pseudocon").value = '';
