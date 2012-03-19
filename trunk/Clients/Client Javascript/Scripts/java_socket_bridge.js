@@ -37,7 +37,7 @@ function socket_send(message){
 }
 
 // Get something from the socket
-function on_socket_get(message){}
+//function on_socket_get(message){}
 
 // Report an error
 function on_socket_error(message){
