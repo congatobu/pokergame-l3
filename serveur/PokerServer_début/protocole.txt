@@ -9,7 +9,7 @@ CONNECT@pseudo@mdp -> demande de connection , retour :
      * <li> <b>WPSEUDO</b> : pseudo introuvable, connexion impossible </li>
 -------------------------------------------------------------
           
-   GETLISTEPARTIE   : Demandes des parties en cours (doit être connecté)
+   GETLISTEPARTIE   : Demandes des parties qui ne sont pas en cours (doit être connecté)
   
 retour : LISTEPARTIE@partie1/nbjouer/nbmaxjouer@partie2/nbjouer/nbmaxjouer   ...
              	NCON si pas connecté
@@ -67,6 +67,7 @@ retour:
 	PNE nom de partie n'existe pas
 	TOOMANY trop de joueurs dans la partie
 	AIP le joueur est deja dans une partie
+	PEC la partie est en cours
 	NCON si pas connecté
 
 + envoi des joueurs dans la partie de la forme LISTEJOUEURSPARTIE@pseudo1@pseudo2....
@@ -93,6 +94,92 @@ retour:
 	SETINFO@pseudo@partie gagné@partieperdu@dateinscription
 	PI pseudo introuvable
 	NCON si pas connecté
+
+
+-------------------------------------------------------------
+                //lancement de la partie par le createur (met encours à 1)
+	DEBUTPARTIE
+retour:
+	NC n'est pas le createur de la partie
+	PAJ pas assez de joueurs pour lancer la partie
+	NIP n'est pas dans une partie
+	PEC partie est deja en cours
+	NCON n'est pas connecté
+
+Envoi à toute la partie : DEBUTPARTIE pour dire de changer de fenetre en fenetre partie
+
+-------------------------------------------------------------
+                //jetons de tous les joueurs de la partie
+
+Envoi à toute la partie : JETONJ@pseudo1/jetonsTotal/jetonsPosés@pseudo2/jetonsTotal/jetonsPosés ....
+
+-------------------------------------------------------------
+                //envoi des cartes de la main
+
+Envoi à un joueur : CARTEM@carte1@carte2 ...
+
+-------------------------------------------------------------
+
+                //envoi des cartes de la table
+
+Envoi à toute la partie : CARTET@nombreCarte@carte1@carte2 ...
+
+-------------------------------------------------------------
+		//envoi joue et les parametres de savoir ses choix
+
+Envoi à un client: JOUE@JetonsMin@JetonsMAx
+
+-------------------------------------------------------------
+		//envoi la valeur que doit prendre le bouton relancer (on ou off)
+
+
+Envoi à toute la partie : RELANCER@boolean
+
+-------------------------------------------------------------
+                //le client envoie son choix au serveur
+	CHOIX@numeroDeChoix@NombreJetons
+
+numeroDeChoix:
+1:se coucher (mettre NombreJetons a 0)
+2:suivre (mettre NombreJetons a 0)
+3:relancer
+
+retour:
+	PAT pas au tour de se client de jouer
+	MJET mauvais nombre de jetons
+	MNC mauvais numero de choix
+	JOK ca s'est bien passé et ce n'est plus a lui de jouer
+	NIP n'est pas dans une partie
+	NCON n'est pas connecté
+
+-------------------------------------------------------------
+		//envoi des jetons de la table
+
+
+Envoi à toute la partie : JETONT@nombreJetons
+-------------------------------------------------------------
+		//envoi des cartes de ceux qui ne sont pas couchés
+
+
+Envoi à toute la partie : MONTREC@pseudo1/carte1/carte2@pseudo2/carte1/carte2 ...
+
+-------------------------------------------------------------
+		//envoi le gagnant du tour (celui qui ramasse des jetons)
+
+
+Envoi à toute la partie : GAGNANTT@pseudo1@pseudo2 ...
+
+-------------------------------------------------------------
+		//envoi le gagnant de la partie (celui qui gagne une victoire++)
+
+
+Envoi à toute la partie : GAGNANTP@pseudo
+
+-------------------------------------------------------------
+		//envoi un perdant de la partie (celui qui gagne une defaite++)
+
+
+Envoi à toute la partie : PERDU@pseudo
 
 -------------------------------------------------------------
 	retour si erreur syntaxe :    ERROR
