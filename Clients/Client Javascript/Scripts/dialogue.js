@@ -4,8 +4,10 @@ var pseudo="";
 
 function on_socket_get(message){
 	if(action=="CONNECT"){
-		if(message == 'CONNECTOK')
+		if(message == 'CONNECTOK'){
 			document.getElementById("acceuil").innerHTML = "Bonjour "+pseudo;
+			tout_cacher();
+		}
 			
 		else if(message == 'WPSEUDO')
 			alert("Pseudo introuvable, connexion impossible.");
@@ -97,6 +99,10 @@ function on_socket_get(message){
 			}
 		}
 	}
+}
+
+function deconnexion(){
+	socket_disconnect();
 }
 
 function connexion_serveur(){
