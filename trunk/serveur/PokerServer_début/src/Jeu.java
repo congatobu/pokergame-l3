@@ -4,7 +4,7 @@ import java.util.*;
 public class Jeu {
 
 	private Stack<Integer> tas = new Stack<Integer>();
-	private int[][] vc=new int[2][52];
+	static private int[][] vc=new int[2][52];
 	
 	Jeu(){
 		
@@ -55,6 +55,7 @@ public class Jeu {
 	protected void finalize() throws Throwable{
 	 try {
 	 tas =null;
+         vc=null;
     } catch(Exception e) {e.printStackTrace();}
     finally {
 		  super.finalize();

@@ -25,6 +25,7 @@ class PokerClientThread extends Thread {
     private int[] cartes = new int[2];
     private int attente = 0;//0=tjr en jeu, 1=t'es plus en jeu, 2=tapis
     private int pot=0;//jetons que le joueur ne peut pas gagner a cause d'un tapis
+    private int joue = 0; // 0 pas ton tour, 1 ton tour
     
     public PokerClientThread(Socket socket){
         super("PokerClientThread");
@@ -73,6 +74,14 @@ class PokerClientThread extends Thread {
      */
     public int getAttente(){ 
         return this.attente;
+    }
+    
+    
+       /**
+     * @author benjamin Maurin
+     */
+    public void setJoue(int a){ 
+       this.joue = a;
     }
     
        /**
@@ -184,7 +193,7 @@ class PokerClientThread extends Thread {
             crypt = null;
             jetons =null;
             cartes = null;
-            screenOut=null;
+            //screenOut=null;
         } catch(Exception e) {
         
         }
@@ -293,7 +302,7 @@ class PokerClientThread extends Thread {
                if(cmd.equals("ACTPASS"))
             {
                 screenOut.println("mot de passe actualisé\n");
-                send(PokerServer.bd.changePseudo(st.nextToken(), st.nextToken(), st.nextToken()));
+                send(PokerServer.bd.changeMotDePasse(st.nextToken(), st.nextToken(), st.nextToken()));
                 lecture=false;
                 return 1;
             }
@@ -317,7 +326,7 @@ class PokerClientThread extends Thread {
             {
                 screenOut.println("tentative de rejoindre une partie...\n");
                 if(connecte){
-                    if(partie==null){
+                    if(partie==null){        
                     send(PokerServer.rejoindrePartie(this, st.nextToken()));
                       if(partie!=null)
                         partie.broadcastClientsPartie(partie.listeJoueursPartie());   
@@ -360,6 +369,23 @@ class PokerClientThread extends Thread {
                 screenOut.println("demande d'infos d'un joueur...\n");
                  if(connecte){  
                     send(PokerServer.getInfoJoueur(st.nextToken()));
+                 }
+                 else {send("NCON"); }
+                return 1;
+            }
+                                //avoir les infos d'un joueur
+               if(cmd.equals("CHOIX"))
+            {
+                screenOut.println("choix de jeu d'un joueur...\n");
+                 if(connecte){  
+                     if(partie!=null){
+                         if(joue!=0)
+                         {
+                             send(partie.jouage(Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()),this));
+                         }
+                         else{send("PAT"); return 1;}
+                     }
+                     else{ send("NIP"); return 1;}
                  }
                  else {send("NCON"); }
                 return 1;
