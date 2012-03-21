@@ -1,12 +1,30 @@
+var pseudo="";
+
 $(function(){
 	tout_cacher();
 	$("#lidecon").hide();
 	$("#gestionjeu").hide();
 });
 
+function con(){
+	direbonjour();
+	effform("formcon");
+	$("#formcon").hide();
+	$("#licon").hide();
+	$("#licreat").hide();
+	$("#lipsd").hide();
+	$("#limdp").hide();
+	$("#lidecon").show();
+	$("#gestionjeu").show();
+}
+
 function decon(){
 	tout_cacher();
 	$("#acceuil").text('');
+	$("#licon").show();
+	$("#licreat").show();
+	$("#lipsd").show();
+	$("#limdp").show();
 	$("#lidecon").hide();
 	$("#gestionjeu").hide();
 }
@@ -41,4 +59,12 @@ function effform(id){
 	$('#'+id).children(':input')
 		.not(':button, :submit, :reset, :hidden')
 		.val('');
+}
+
+function setpseudo(psd){
+	pseudo = psd;
+}
+
+function direbonjour(){
+	$("#acceuil").text("Bonjour "+pseudo);
 }
