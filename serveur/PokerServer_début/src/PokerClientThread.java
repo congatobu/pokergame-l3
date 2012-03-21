@@ -23,7 +23,7 @@ class PokerClientThread extends Thread {
     private boolean connecte = false;
     private int[] jetons = new int[2];
     private int[] cartes = new int[2];
-    private int attente = 0;//0=tjr en jeu, 1=t'es plus en jeu, 2=tapis
+    private int attente = 0;//0=tjr en jeu, 1=t'es plus en jeu(coucher), 2=tapis, -1 tu as perdu
     private int pot=0;//jetons que le joueur ne peut pas gagner a cause d'un tapis
     private int joue = 0; // 0 pas ton tour, 1 ton tour
     
