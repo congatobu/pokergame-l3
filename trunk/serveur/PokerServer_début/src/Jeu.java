@@ -7,8 +7,20 @@ public class Jeu {
 	static private int[][] vc=new int[2][52];
 	
 	Jeu(){
+		int cpt=0;
+		int cpt2=1;
 		
-		initTasDe52cartes();	
+		for(int i=0;i<52;i++){
+			
+			if(cpt>3){cpt=0;cpt2++;}
+			vc[0][i]=cpt2;
+			vc[1][i]=cpt;
+			cpt++;
+		}
+		
+		for(int i=0;i<4;i++)vc[0][i]=14;
+		
+		//initTasDe52cartes();	
 		
 		
 	}
@@ -22,18 +34,15 @@ public class Jeu {
 		int[] tab=new int[52];
 		int random;
 		int tp;
-		int cpt=0;
-		int cpt2=1;
+		tas=null;
 		
 		for(int i=0;i<52;i++){
 			tab[i]=i;
-			if(cpt>3){cpt=0;cpt2++;}
-			vc[0][i]=cpt2;
-			vc[1][i]=cpt;
-			cpt++;
+
+			
 		}
 		
-		for(int i=0;i<4;i++)vc[0][i]=14;
+
 		
 		for(int i=0;i<52;i++)
 		{
