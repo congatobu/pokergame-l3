@@ -46,6 +46,15 @@ public class PokerPartie {
         return clientList;
     }
     
+        /**
+     * accesseur
+     * @author benjamin Maurin
+     * @return createur
+     */
+    public PokerClientThread getCreateur(){
+        return createur;
+    }
+    
       /**
      * accesseur
      * @author benjamin Maurin
@@ -54,6 +63,16 @@ public class PokerPartie {
     public int getEnCours(){
         return enCours;
     }
+    
+        /**
+     * accesseur
+     * @author benjamin Maurin
+     */
+    public void setEnCours(int a){
+       enCours = a;
+    }
+    
+    
     /**
      * accesseur
      * @author benjamin Maurin
