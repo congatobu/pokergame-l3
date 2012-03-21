@@ -202,32 +202,6 @@ class PokerClientThread extends Thread {
         }
     }
 
-    /**
-     * Tente de rejoindre une partie, sinon envoi un message d'erreur au client
-     * @author benjamin Maurin
-     * @param nomP : nom de la partie à rejoindre
-     */
-    public void rejoindrePartie(String nomP){	
-        int existe = 0;
-        PokerPartie foo = null;
-        for (int i=0;i<PokerServer.partiesList.size();++i){
-            foo = (PokerPartie)PokerServer.partiesList.get(i);
-            if(foo.getNom().equals(nomP)){
-                existe=1;break;
-            }
-        }
-
-        if(existe==1){
-            if(foo.addPlayer(this)==-1){
-                existe = 0;
-            }else{
-                partie=foo;
-            }
-        }
-        if(existe==0){
-            send("probleme partie trop de joueurs ou partie inconnue");
-        }
-    }
 
     /**
      * Envoi un message au client
@@ -373,7 +347,7 @@ class PokerClientThread extends Thread {
                  else {send("NCON"); }
                 return 1;
             }
-                                //avoir les infos d'un joueur
+                                //recevoir le choix de l'action d'un joueur en jeu
                if(cmd.equals("CHOIX"))
             {
                 screenOut.println("choix de jeu d'un joueur...\n");
@@ -384,6 +358,34 @@ class PokerClientThread extends Thread {
                              send(partie.jouage(Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()),this));
                          }
                          else{send("PAT"); return 1;}
+                     }
+                     else{ send("NIP"); return 1;}
+                 }
+                 else {send("NCON"); }
+                return 1;
+            }
+               
+                   // recevoir la demande du lancement de la partie par son créateur
+               if(cmd.equals("DEBUTPARTIE"))
+            {
+                screenOut.println("lancement d'une partie en cours...\n");
+                 if(connecte){  
+                     if(partie!=null){
+                         if(partie.getEnCours()==0)
+                         {
+                              if(partie.getCreateur()==this)
+                            {
+                                if(partie.getNbJ()>1)
+                                {
+                                    partie.setEnCours(1);
+                                    partie.tournoi();
+                                    partie.broadcastClientsPartie("DEBUTPARTIE");
+                                }
+                                else{send("PAJ");return 1;}
+                            }
+                         else{send("NC"); return 1;}    
+                         }
+                         else{send("PEC"); return 1;}
                      }
                      else{ send("NIP"); return 1;}
                  }
