@@ -157,6 +157,28 @@ class PokerClientThread extends Thread {
         return this.pseudo;
     }
 
+        
+    public int getPot(){
+    	
+    	return pot;
+    	
+    }
+    
+    
+    public void setPot(int jetons){
+    	
+    	
+    	pot=jetons;
+    }
+    
+    
+    public void ajoutePot(int jetons){
+    	
+    	pot=pot+jetons;
+    	
+    }
+    
+    
     /**
      * Fonction pour une deconnection propre
      * @author benjamin Maurin
@@ -239,7 +261,10 @@ class PokerClientThread extends Thread {
             //Demande de connection
             if(cmd.equals("CONNECT")){
                     screenOut.println("demande de connection\n");
-                    test1=st.nextToken();    
+                     test1=st.nextToken();
+                     
+                    if(PokerServer.testJconnect(test1)){send("PDC"); lecture=false; return 1;}
+                    
                     cmd=PokerServer.bd.verifPassword(test1,st.nextToken());
                     send(cmd);
                     if(!cmd.equals("CONNECTOK")){ 
@@ -402,26 +427,6 @@ class PokerClientThread extends Thread {
             return -1;
         }
     }
-    
-    
-    public int getPot(){
-    	
-    	return pot;
-    	
-    }
-    
-    
-    public void setPot(int jetons){
-    	
-    	
-    	pot=jetons;
-    }
-    
-    
-    public void ajoutePot(int jetons){
-    	
-    	pot=pot+jetons;
-    	
-    }
+   
 
 }

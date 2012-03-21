@@ -175,7 +175,10 @@ public class PokerPartie {
         String s = "LISTEJOUEURSPARTIE";
         for(int i=0; i <clientList.size();i++)
         {
-            s+="@"+clientList.get(i).getPseudo();     
+            if(clientList.get(i)!=createur)
+            s+="@"+clientList.get(i).getPseudo();  
+            else
+            s+="@$"+clientList.get(i).getPseudo(); 
         }
         return s;
                                              }
@@ -329,7 +332,7 @@ public class PokerPartie {
     
     
     /**
-     *  envoi des cartes de ceux qui ne sont pas couchés
+     *  envoi des cartes de ceux qui ne sont pas couchï¿½s
      * @author steve giner
      */
     private void envoiMontreC() {
@@ -389,7 +392,7 @@ public class PokerPartie {
   }
   
   /**
-   * détermine si il ya un gagnant et donc si le tournoi et terminé
+   * dï¿½termine si il ya un gagnant et donc si le tournoi et terminï¿½
    * @author steve giner
    */
 	private int gagnant() {
