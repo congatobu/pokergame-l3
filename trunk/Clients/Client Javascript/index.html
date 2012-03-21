@@ -34,7 +34,8 @@
 		<input type="button" value="Annuler" onclick="javascript:annuler('formcreat');">
 	</form>
 	
-	<form id="chmtmdp" onSubmit="javascript:changer_mdp(this.ancien, this.nouveau, this.nouveau2); return false;">
+	<form id="chmtmdp" onSubmit="javascript:changer_mdp(this.pseudo, this.ancien, this.nouveau, this.nouveau2); return false;">
+		Pseudo : <input type="text" name="pseudo">
 		Ancien mdp : <input type="password" name="ancien">
 		Nouveau mdp :<input type="password" name="nouveau">
 		Confirmation :<input type="password" name="nouveau2">
@@ -42,8 +43,9 @@
 		 <input type="button" value="Annuler" onclick="javascript:annuler('chmtmdp');">
 	</form>	
 	
-	<form id="chmtpsd" onSubmit="javascript:changer_psd(this.pseudo, this.pass); return false;">
-		Nouveau pseudo: <input type="text" name="pseudo">
+	<form id="chmtpsd" onSubmit="javascript:changer_psd(this.pseudo, this.npseudo, this.pass); return false;">
+		Pseudo: <input type="text" name="pseudo">
+		Nouveau pseudo: <input type="text" name="npseudo">
 		Mot de passe :<input type="password" name="pass" id="pass">
 		<input type="submit" value="Valider">
 		<input type="button" value="Annuler" onclick="javascript:annuler('chmtpsd');">
@@ -55,9 +57,9 @@
 			<ul>
 				<li id="licon"><a href="javascript:affiche('formcon');">Connexion</a></li>
 				<li id="lidecon"><a href="javascript:deconnexion();">Déconnexion</a></li>
-				<li><a href="javascript:affiche('formcreat');">Créer un compte</a></li>
-				<li><a href="javascript:affiche('chmtpsd');">Changer pseudo</a></li>
-				<li><a href="javascript:affiche('chmtmdp');">Changer mot de passe</a></li>
+				<li id="licreat"><a href="javascript:affiche('formcreat');">Créer un compte</a></li>
+				<li id="lipsd"><a href="javascript:affiche('chmtpsd');">Changer pseudo</a></li>
+				<li id="limdp"><a href="javascript:affiche('chmtmdp');">Changer mot de passe</a></li>
 			</ul>
 		</li>
 		<li id="gestionjeu">
