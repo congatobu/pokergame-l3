@@ -7,6 +7,7 @@ CONNECT@pseudo@mdp -> demande de connection , retour :
       * <li> <b>CONNECTOK</b> : opération effectué </li>
      * <li> <b>WPASS</b> : mauvais password utilisé, connexion impossible </li>
      * <li> <b>WPSEUDO</b> : pseudo introuvable, connexion impossible </li>
+	PDC  : compte deja connecté
 -------------------------------------------------------------
           
    GETLISTEPARTIE   : Demandes des parties qui ne sont pas en cours (doit être connecté)
@@ -75,7 +76,7 @@ retour:
                 //demande des joueurs dans la partie
    GETPLAYERPARTY
 retour:
-	LISTEJOUEURSPARTIE@pseudo1@pseudo2...
+	LISTEJOUEURSPARTIE@pseudo1@$pseudoCreateur... 	($ devant le pseudo du createur)		
 	NIP le joueur n'est pas dans une partie
 	NCON si pas connecté
 
