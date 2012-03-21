@@ -9,19 +9,21 @@
 	
 	<script type="text/javascript" src="Scripts/java_socket_bridge.js"></script>
 	<script type="text/javascript" src="Scripts/jquery-1.7.1.min.js"></script>
-	<script type="text/javascript" src="Scripts/dialogue.js"></script>
+	<script type="text/javascript" src="Scripts/emission_compte.js"></script>
+	<script type="text/javascript" src="Scripts/emission_partie.js"></script>
+	<script type="text/javascript" src="Scripts/reception.js"></script>
 	<script type="text/javascript" src="Scripts/gestion.js"></script>
 	
 </head>
 <body>
-	<button onclick="connexion_serveur()">Run!</button>
-	
+
 	<div id="acceuil"></div>
 
 	<form id="formcon" onSubmit="javascript:connexion(this.pseudo, this.pass); return false;">
 		Pseudo : <input type="text" name="pseudo" id="pseudocon">
 		Mot de passe :<input type="password" name="pass" id="passcon">
 		<input type="submit" value="Connexion">
+		<input type="button" value="Annuler" onclick="javascript:annuler('formcon');">
 	</form>
 
 	<form id="formcreat" onSubmit="javascript:creation(this.pseudo, this.pass, this.pass2); return false;">
@@ -29,6 +31,7 @@
 		Mot de passe :<input type="password" name="pass" id="pass">
 		Confirmation :<input type="password" name="pass2" id="pass2">
 		<input type="submit" value="Créer compte">
+		<input type="button" value="Annuler" onclick="javascript:annuler('formcreat');">
 	</form>
 	
 	<form id="chmtmdp" onSubmit="javascript:changer_mdp(this.ancien, this.nouveau, this.nouveau2); return false;">
@@ -36,26 +39,28 @@
 		Nouveau mdp :<input type="password" name="nouveau">
 		Confirmation :<input type="password" name="nouveau2">
 		 <input type="submit" value="Valider">
+		 <input type="button" value="Annuler" onclick="javascript:annuler('chmtmdp');">
 	</form>	
 	
 	<form id="chmtpsd" onSubmit="javascript:changer_psd(this.pseudo, this.pass); return false;">
 		Nouveau pseudo: <input type="text" name="pseudo">
 		Mot de passe :<input type="password" name="pass" id="pass">
 		<input type="submit" value="Valider">
+		<input type="button" value="Annuler" onclick="javascript:annuler('chmtpsd');">
 	</form>
 	
 	<ul id="menu">
 		<li>
 			<a href="#">Compte</a>
 			<ul>
-				<li><a href="javascript:affiche('formcon');">Connexion</a></li>
-				<li><a href="javascript:deconnexion();">Déconnexion</a></li>
+				<li id="licon"><a href="javascript:affiche('formcon');">Connexion</a></li>
+				<li id="lidecon"><a href="javascript:deconnexion();">Déconnexion</a></li>
 				<li><a href="javascript:affiche('formcreat');">Créer un compte</a></li>
 				<li><a href="javascript:affiche('chmtpsd');">Changer pseudo</a></li>
 				<li><a href="javascript:affiche('chmtmdp');">Changer mot de passe</a></li>
 			</ul>
 		</li>
-		<li>
+		<li id="gestionjeu">
 			<a href="#">Jeu</a>
 			<ul>
 				<li><a href="javascript:affiche('creerpartie');">Créer une partie</a></li>
@@ -68,6 +73,7 @@
 		Nom partie: <input type="text" name="nompartie" id="nompartie">
 		Joureurs maximun :<input type="text" name="nbjoueurs" id="nbjoueurs">
 		<input type="submit" value="Créer partie">
+		<input type="button" value="Annuler" onclick="javascript:annuler('creerpartie');">
 	</form>
 	
 	<div id="listeparties">
