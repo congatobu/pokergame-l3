@@ -12,7 +12,7 @@ function socket_connect(url, port){
 		return get_java_socket_bridge().connect(url, port);
 	}
 	else{
-		on_socket_error("Java Socket Bridge cannot connect until the applet has loaded");
+		on_socket_error("Vous devez charger l'application Java pour pouvoir vous connecter.");
 	}
 }
 
@@ -22,7 +22,7 @@ function socket_disconnect(){
 		return get_java_socket_bridge().disconnect();
 	}
 	else{
-		on_socket_error("Java Socket Bridge cannot disconnect until the applet has loaded");
+		on_socket_error("Vous ne pouvez pas vous déconnecter tant que l'application Java n'a pas été chargée.");
 	}
 }
 
@@ -32,7 +32,7 @@ function socket_send(message){
 		return get_java_socket_bridge().send(message);
 	}
 	else{
-		on_socket_error("Java Socket Bridge cannot send a message until the applet has loaded");
+		on_socket_error("Communication avec le serveur impossible tant que l'application Java n'a pas été chargée.");
 	}
 }
 
