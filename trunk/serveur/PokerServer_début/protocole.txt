@@ -128,13 +128,9 @@ Envoi à toute la partie : CARTET@nombreCarte@carte1@carte2 ...
 -------------------------------------------------------------
 		//envoi joue et les parametres de savoir ses choix
 
-Envoi à un client: JOUE@JetonsMin@JetonsMAx
+Envoi à un client: JOUE@JetonsMin@JetonsMAx@boolean
 
--------------------------------------------------------------
-		//envoi la valeur que doit prendre le bouton relancer (on ou off)
-
-
-Envoi à toute la partie : RELANCER@boolean
+le boolean correspond savoir si relancer est dispo
 
 -------------------------------------------------------------
                 //le client envoie son choix au serveur
