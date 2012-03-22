@@ -1,16 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Joueurs>
-  <joueur numero="1" pseudo="Shyzkanzo">
-    <password>sniff</password>
-    <dateInscription>Lundi 13 Février 2012</dateInscription>
+  <joueur numero="1" pseudo="Shyzkanza">
+    <password>plop</password>
+    <dateInscription>Jeudi 23 Février 2012</dateInscription>
     <partieGagne>0</partieGagne>
     <partiePerdu>0</partiePerdu>
   </joueur>
-  <joueur numero="3" pseudo="Mathieu">
-    <password>sniff</password>
-    <dateInscription>Lundi 13 Février 2012</dateInscription>
-    <partieGagne>1</partieGagne>
-    <partiePerdu>1</partiePerdu>
+  <joueur numero="2" pseudo="test">
+    <password>test</password>
+    <dateInscription>Samedi 25 Février 2012</dateInscription>
+    <partieGagne>0</partieGagne>
+    <partiePerdu>0</partiePerdu>
+  </joueur>
+  <joueur numero="3" pseudo="ben">
+    <password>123456</password>
+    <dateInscription>Samedi 25 Février 2012</dateInscription>
+    <partieGagne>0</partieGagne>
+    <partiePerdu>0</partiePerdu>
+  </joueur>
+  <joueur numero="4" pseudo="yui">
+    <password>yui</password>
+    <dateInscription>Mardi 28 Février 2012</dateInscription>
+    <partieGagne>0</partieGagne>
+    <partiePerdu>0</partiePerdu>
+  </joueur>
+  <joueur numero="5" pseudo="ezr">
+    <password>gtg</password>
+    <dateInscription>Mardi 28 Février 2012</dateInscription>
+    <partieGagne>0</partieGagne>
+    <partiePerdu>0</partiePerdu>
+  </joueur>
+  <joueur numero="6" pseudo="jessy">
+    <password>toto</password>
+    <dateInscription>Mardi 6 Mars 2012</dateInscription>
+    <partieGagne>0</partieGagne>
+    <partiePerdu>0</partiePerdu>
+  </joueur>
+  <joueur numero="7" pseudo="math">
+    <password>toto</password>
+    <dateInscription>Mardi 6 Mars 2012</dateInscription>
+    <partieGagne>0</partieGagne>
+    <partiePerdu>0</partiePerdu>
+  </joueur>
+  <joueur numero="8" pseudo="plop">
+    <password>plop</password>
+    <dateInscription>18 Mars 2012</dateInscription>
+    <partieGagne>0</partieGagne>
+    <partiePerdu>0</partiePerdu>
+  </joueur>
+  <joueur numero="9" pseudo="bilbokis">
+    <password>clement</password>
+    <dateInscription>Mercredi 21 Mars 2012</dateInscription>
+    <partieGagne>0</partieGagne>
+    <partiePerdu>0</partiePerdu>
+  </joueur>
+  <joueur numero="10" pseudo="paul">
+    <password>paul</password>
+    <dateInscription>Mercredi 21 Mars 2012</dateInscription>
+    <partieGagne>0</partieGagne>
+    <partiePerdu>0</partiePerdu>
+  </joueur>
+  <joueur numero="11" pseudo="clem">
+    <password>leplusbeau</password>
+    <dateInscription>Mercredi 21 Mars 2012</dateInscription>
+    <partieGagne>0</partieGagne>
+    <partiePerdu>0</partiePerdu>
+  </joueur>
+  <joueur numero="12" pseudo="juju">
+    <password>lilo</password>
+    <dateInscription>Mercredi 21 Mars 2012</dateInscription>
+    <partieGagne>0</partieGagne>
+    <partiePerdu>0</partiePerdu>
   </joueur>
 </Joueurs>
 
