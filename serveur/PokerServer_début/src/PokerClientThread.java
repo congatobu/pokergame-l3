@@ -6,6 +6,7 @@ import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 /**
  * Classe du thread par client qui gère les messages avec son client
  * @author Benjamin Maurin
@@ -17,7 +18,7 @@ class PokerClientThread extends Thread {
     private BufferedWriter out;
     private BufferedReader in;
     private PokerPartie partie= null;
-    private String pseudo = "";
+    private String pseudo = "<>";
     private Crypt crypt;
     private boolean lecture = true;
     private boolean connecte = false;
@@ -76,6 +77,13 @@ class PokerClientThread extends Thread {
         return this.attente;
     }
     
+     /**
+     * @author benjamin Maurin
+     * @return partie
+     */
+    public PokerPartie getPartie(){ 
+        return this.partie;
+    }
     
        /**
      * @author benjamin Maurin
