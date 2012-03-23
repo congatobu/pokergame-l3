@@ -16,17 +16,22 @@
 	
 </head>
 <body>
+	
+	<form id="test_reception" onSubmit="javascript:test(this.message.value); return false;">
+		Message reçu : <input type="text" name="message">
+		<input type="submit" value="Test">
+	</form>
 
 	<div id="acceuil"></div>
 
-	<form id="formcon" onSubmit="javascript:connexion(this.pseudo, this.pass); return false;">
+	<form id="formcon" class="cache" onSubmit="javascript:connexion(this.pseudo, this.pass); return false;">
 		Pseudo : <input type="text" name="pseudo" id="pseudocon">
 		Mot de passe :<input type="password" name="pass" id="passcon">
 		<input type="submit" value="Connexion">
 		<input type="button" value="Annuler" onclick="javascript:annuler('formcon');">
 	</form>
 
-	<form id="formcreat" onSubmit="javascript:creation(this.pseudo, this.pass, this.pass2); return false;">
+	<form id="formcreat" class="cache" onSubmit="javascript:creation(this.pseudo, this.pass, this.pass2); return false;">
 		Pseudo : <input type="text" name="pseudo" id="pseudo">
 		Mot de passe :<input type="password" name="pass" id="pass">
 		Confirmation :<input type="password" name="pass2" id="pass2">
@@ -34,7 +39,7 @@
 		<input type="button" value="Annuler" onclick="javascript:annuler('formcreat');">
 	</form>
 	
-	<form id="chmtmdp" onSubmit="javascript:changer_mdp(this.pseudo, this.ancien, this.nouveau, this.nouveau2); return false;">
+	<form id="chmtmdp" class="cache" onSubmit="javascript:changer_mdp(this.pseudo, this.ancien, this.nouveau, this.nouveau2); return false;">
 		Pseudo : <input type="text" name="pseudo">
 		Ancien mdp : <input type="password" name="ancien">
 		Nouveau mdp :<input type="password" name="nouveau">
@@ -43,7 +48,7 @@
 		 <input type="button" value="Annuler" onclick="javascript:annuler('chmtmdp');">
 	</form>	
 	
-	<form id="chmtpsd" onSubmit="javascript:changer_psd(this.pseudo, this.npseudo, this.pass); return false;">
+	<form id="chmtpsd" class="cache" onSubmit="javascript:changer_psd(this.pseudo, this.npseudo, this.pass); return false;">
 		Pseudo: <input type="text" name="pseudo">
 		Nouveau pseudo: <input type="text" name="npseudo">
 		Mot de passe :<input type="password" name="pass" id="pass">
@@ -55,14 +60,14 @@
 		<li>
 			<a href="#">Compte</a>
 			<ul>
-				<li id="licon"><a href="javascript:affiche('formcon');">Connexion</a></li>
-				<li id="lidecon"><a href="javascript:deconnexion();">Déconnexion</a></li>
-				<li id="licreat"><a href="javascript:affiche('formcreat');">Créer un compte</a></li>
-				<li id="lipsd"><a href="javascript:affiche('chmtpsd');">Changer pseudo</a></li>
-				<li id="limdp"><a href="javascript:affiche('chmtmdp');">Changer mot de passe</a></li>
+				<li id="licon" class="deconnecte"><a href="javascript:affiche('formcon');">Connexion</a></li>
+				<li id="lidecon" class="connecte"><a href="javascript:deconnexion();">Déconnexion</a></li>
+				<li id="licreat" class="deconnecte"><a href="javascript:affiche('formcreat');">Créer un compte</a></li>
+				<li id="lipsd" class="deconnecte"><a href="javascript:affiche('chmtpsd');">Changer pseudo</a></li>
+				<li id="limdp" class="deconnecte"><a href="javascript:affiche('chmtmdp');">Changer mot de passe</a></li>
 			</ul>
 		</li>
-		<li id="gestionjeu">
+		<li id="gestionjeu" class="connecte">
 			<a href="#">Jeu</a>
 			<ul>
 				<li><a href="javascript:affiche('creerpartie');">Créer une partie</a></li>
@@ -71,14 +76,14 @@
 		</li>
 	</ul>
 	
-	<form id="creerpartie" onSubmit="javascript:creer_partie(this.nompartie, this.nbjoueurs); return false;">
+	<form id="creerpartie" class="cache" onSubmit="javascript:creer_partie(this.nompartie, this.nbjoueurs); return false;">
 		Nom partie: <input type="text" name="nompartie" id="nompartie">
 		Joureurs maximun :<input type="text" name="nbjoueurs" id="nbjoueurs">
 		<input type="submit" value="Créer partie">
 		<input type="button" value="Annuler" onclick="javascript:annuler('creerpartie');">
 	</form>
 	
-	<div id="listeparties">
+	<div id="listeparties"  class="cache">
 		<TABLE BORDER="1" id="tableparties">
 			<CAPTION>Parties en cours</CAPTION>
 			<TR>
@@ -89,6 +94,18 @@
 		</TABLE> 
 	</div>
 
+	<div id="partie"  class="cache">
+	<h3></h3>
+	<h4>Liste des joueurs</h4>
+	<ul id="listejoueurs"></ul>
+	<button id="bdebut" onclick="debuter_partie()">Démarrer partie</button>
+	<button onclick="quitter_partie()">Quitter partie</button>
+	</div>
+	
+	<div id="infos_joueur"  class="cache">
+		<h3>Infos joueur</h3>
+	</div>
+	
 </body>
 	
 </html>
