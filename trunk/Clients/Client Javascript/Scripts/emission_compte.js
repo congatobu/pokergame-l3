@@ -1,3 +1,4 @@
+var domaine = "EM_CMPT";
 
 function connexion_serveur(){
 	socket_connect('88.167.230.145', 6667);
@@ -24,7 +25,7 @@ function changer_psd(pseudo, nouveau, pass){
 		pass.focus()
 	}
 	else{
-		setaction("ACTPSEUDO");
+		set_reception(domaine, "ACTPSEUDO");
 		connexion_serveur();
 		socket_send("ACTPSEUDO@"+pseudo.value+"@"+pass.value+"@"+nouveau.value);
 	}
@@ -57,7 +58,7 @@ function changer_mdp(pseudo, ancien, nouveau, nouveau2){
 	}
 
 	else{
-		setaction("ACTPASS");
+		set_reception(domaine, "ACTPASS");
 		connexion_serveur();
 		socket_send("ACTPASS@"+pseudo+"@"+ancien.value+"@"+nouveau.value);
 	}
@@ -86,7 +87,7 @@ function creation(psd, pass, pass2){
 	}
 
 	else{
-		setaction("CREACPT");
+		set_reception(domaine, "CREACPT");
 		pseudo = psd.value;
 		connexion_serveur();
 		socket_send("CREATCPT@"+psd.value+"@"+pass.value);
@@ -94,10 +95,19 @@ function creation(psd, pass, pass2){
 }
 
 function connexion(psd, pass){
-	setpseudo(psd.value);
-	setaction("CONNECT");
-	connexion_serveur();
-	socket_send("CONNECT@"+psd.value+"@"+pass.value);
-	document.getElementById("pseudocon").value = '';
-	document.getElementById("passcon").value = '';
+	if (psd.value==''){
+		alert("Veuillez entrer votre pseudo dans le premier champ.")
+		psd.focus()
+	}
+   
+	else if (pass.value==''){
+		alert("Veuillez entrer votre mot de passe dans le second champ.")
+		pass.focus()
+	}
+	else{
+		setpseudo(psd.value);
+		set_reception(domaine, "CONNECT");
+		connexion_serveur();
+		socket_send("CONNECT@"+psd.value+"@"+pass.value);
+	}
 }
