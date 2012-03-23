@@ -1,7 +1,3 @@
- 
-
-
-
 -------------------------------------------------------------
 CONNECT@pseudo@mdp -> demande de connection , retour :
       * <li> <b>CONNECTOK</b> : opération effectué </li>
