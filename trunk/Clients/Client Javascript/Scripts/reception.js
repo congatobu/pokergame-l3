@@ -15,8 +15,8 @@ function set_reception(dr, act){
 }
 
 function traiter_message(message){
-	//if(message=="ERROR") alert("Erreur de syntaxe");
-	/*else*/ if(domaine=="EM_CMPT"){
+	if(message=="ERROR") alert("Erreur de syntaxe");
+	else if(domaine=="EM_CMPT"){
 		if(action=="CONNECT"){
 			connect(message);
 		}

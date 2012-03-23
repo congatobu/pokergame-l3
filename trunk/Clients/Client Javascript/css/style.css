@@ -1,0 +1,160 @@
+body{background: black url(../Images/poker-fond-noir.jpg) no-repeat 50% 10%;}
+
+#menu, #menu ul {
+        padding : 0; /* pas de marge intérieure */
+        margin : 0; /* ni extérieure */
+        list-style : none; /* on supprime le style par défaut de la liste */
+        line-height : 21px; /* on définit une hauteur pour chaque élément */
+        text-align : center; /* on centre le texte qui se trouve dans la liste */
+}
+
+#menu{
+        font-weight : bold; /* on met le texte en gras */
+        font-family : Arial; /* on utilise Arial, c'est plus beau ^^ */
+        font-size : 12px; /* hauteur du texte : 12 pixels */
+		width:300px;
+		height : 130px;
+		overflow : hidden;
+		position : absolute;
+		top : 10px;
+		right : 10px;
+		font-variant: small-caps;
+		letter-spacing:1px;
+}
+
+#menu a {
+        display : block; /* on change le type d'élément, les liens deviennent des balises de type block */
+        padding : 0; /* aucune marge intérieure */
+        background : #fff; /* couleur de fond */        
+        color : #000; /* couleur du texte */
+        text-decoration : none; /* on supprime le style par défaut des liens (la plupart du temps = souligné) */
+        width : 144px; /* largeur */
+		border-radius : 30px 30px 30px 30px;
+}
+
+#menu li{ 
+        float : right;
+        /* pour IE qui ne reconnaît pas "transparent" */
+        border-right : 1px solid #fff; /* on met une bordure blanche à droite de chaque élément */
+		border-radius : 30px 30px 30px 30px;
+}
+
+html>body #menu li{
+        border-right: 1px solid transparent ; /* on met une bordure transparente à droite de chaque élément */
+}
+
+#menu li ul{ 
+	position: absolute; /* Position absolue */
+	width: 145px;
+	height:0px;
+	overflow:hidden;
+	margin-left : 100px;
+	opacity : 0;
+	padding-top:5px;
+
+}
+
+#menu li ul li{
+        /* pour IE qui ne reconnaît pas "transparent" (comme précédemment) */
+        border-top : 1px solid #fff; /* on met une bordure blanche en haut de chaque élément d'une sous liste */
+}
+
+html>body #menu li ul li {
+        border-top : 1px solid transparent; /* on met une bordure transparente en haut de chaque élément */
+}
+
+#menu li ul ul{
+        margin    : -22px 0 0 144px ; /* On décale les sous-sous-listes pour qu'elles ne soient pas au dessus des sous-listes */ 
+        /* pour IE qui ne reconnaît pas "transparent" (comme précédemment) */
+        border-left     : 1px solid #fff ; /* Petite bordure à gauche pour ne pas coller ... */      
+}
+
+html>body #menu li ul ul{
+        border-left     : 1px solid transparent ; /* on met une bordure transparente sur la gauche de chaque élément */
+}
+
+#menu a:hover{
+        color: #fff; /* On passe le texte en noir... */
+        background: #000; /* ... et au contraire, le fond en blanc */
+}
+
+#menu li:hover ul {
+	height:100px;
+	margin-left : 0px;
+	opacity : 1;
+}
+
+#menu ul, #menu li, #menu ul:hover, #menu li:hover{
+	-ms-transition: all 0.5s ease-in;
+	-webkit-transition: all 0.5s ease-in;
+	-moz-transition: all 0.5s ease-in;
+	-sand-transition: all 0.5s ease-in;
+	-o-transition: all 0.5s ease-in;
+	transition: all 0.5s ease-in;
+}
+
+.form{
+	width:300px;
+	height:500px;
+	position:absolute;
+	left:50%;
+	top:55%;
+	margin-left:-150px;
+	margin-top:-170px;
+}
+
+form {
+	text-align:center;
+	margin:auto;
+	border-radius:10px 40px 10px 40px;
+	background-color:RGBA(20,80,40,0.9);
+	padding:10px;
+ 
+ }
+
+legend {
+width:100%;
+font-variant: small-caps;
+letter-spacing:2px;
+font-size:25px;
+ color:white;
+ font-weight:bold
+}
+
+label {
+letter-spacing:1px;
+line-height:35px;
+text-align:left;
+margin-left:20px;
+color : #CCC;
+ margin-top:10px;
+ display:block;
+}
+
+input, textarea, select, option {
+ background-color:#FFF3F3;
+}
+
+input, textarea, select {
+ padding:3px;
+ border:1px solid #F5C5C5;
+ border-radius:5px;
+ width:200px;
+ box-shadow:1px 1px 2px #C0C0C0 inset;
+}
+
+input[type=submit], input[type=button] {
+margin-top:30px;
+ width:100px;
+ margin-left:5px;
+ box-shadow:1px 1px 1px #D83F3D;
+ cursor:pointer;
+}
+
+#tableparties{
+	color:white;
+}
+
+.ligne_partie{
+	border : none;
+}
