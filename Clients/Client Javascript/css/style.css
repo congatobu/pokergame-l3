@@ -104,6 +104,7 @@ html>body #menu li ul ul{
 }
 
 form {
+	font-family : Arial;
 	text-align:center;
 	margin:auto;
 	border-radius:10px 40px 10px 40px;
@@ -147,14 +148,75 @@ input[type=submit], input[type=button] {
 margin-top:30px;
  width:100px;
  margin-left:5px;
- box-shadow:1px 1px 1px #D83F3D;
+
  cursor:pointer;
+color:#ffffff;
+
+-moz-border-radius: 10px;
+-webkit-border-radius: 10px;
+border-radius: 10px;
+border: 1px solid #013300;
+background:#680100;
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="680100", endColorstr="330001"); /* Pour IE seulement et mode gradient à linear */
+background-image: -webkit-gradient(linear, left top, left bottom, from(#680100), to(#330001));
+background-image: -moz-linear-gradient(top center, #680100, #330001);
+background-image: -o-linear-gradient(top, #680100, #330001); /*uniquement en mode linear*/ 
+}
+
+input:hover[type=submit], input:hover[type=button] {
+background-image: -webkit-gradient(linear, left top, left bottom, from(#800100), to(#800100));
+background-image: -moz-linear-gradient(top center, #800100, #800100);
+background-image: -o-linear-gradient(top, #800100, #800100); /*uniquement en mode linear*/ 
+}
+
+#listeparties{
+	position:absolute;
+	left:50%;
+	top:40%;
+	margin-left:-375px;
 }
 
 #tableparties{
+	font-family : Arial;
+	width:750px;
 	color:white;
+	border-radius:7px 7px 7px 7px;
+	background-color:RGBA(255,255,255,0.5);
+	text-shadow: black 0.1em 0.1em 0.2em;
+}
+
+.titre{
+	border-bottom:dashed thin;
+	line-height:45px;
+	font-variant: small-caps;
+	letter-spacing:1px;
 }
 
 .ligne_partie{
 	border : none;
+	height : 35px;
+}
+
+.ligne_partie:first-letter{
+	text-transform: uppercase;
+}
+
+.ligne_partie a{
+	color:RGBA(255,100,100,0.9);
+	-ms-transition: all 0.5s ease-in;
+	-webkit-transition: all 0.5s ease-in;
+	-moz-transition: all 0.5s ease-in;
+	-sand-transition: all 0.5s ease-in;
+	-o-transition: all 0.5s ease-in;
+	transition: all 0.5s ease-in;
+}
+
+.ligne_partie a:hover{
+	color:RGBA(255,0,0,1);
+	-ms-transition: all 0.5s ease-in;
+	-webkit-transition: all 0.5s ease-in;
+	-moz-transition: all 0.5s ease-in;
+	-sand-transition: all 0.5s ease-in;
+	-o-transition: all 0.5s ease-in;
+	transition: all 0.5s ease-in;
 }

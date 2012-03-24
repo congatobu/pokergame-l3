@@ -37,14 +37,16 @@ function affiche_liste(message){
 	var html='';
 	var liste = message.split("@");
 	var partie;
+	html += "<TR id=\'titretable\'>"+$("#titretable").html()+"</TR>";
 	for(i=1;i<liste.length;i++){
 		partie = liste[i].split("/");
-		html +='<TR><TD class=\'ligne_partie\'><a href=\"javascript:rejoindre_partie(\''+partie[0]+'\');\">'+partie[0]+'</a></TD>'
+		html +='<TR><TD class=\'ligne_partie\' align=\'center\'><a style=\'display : block; text-decoration : none;\' href=\"javascript:rejoindre_partie(\''+partie[0]+'\');\">'+partie[0]+'</a></TD>'
 		for(j=1;j<partie.length;j++){
-			html +='<TD class=\'ligne_partie\'>'+partie[j]+'</TD>';
+			html +='<TD class=\'ligne_partie\' align=\'center\'>'+partie[j]+'</TD>';
 		}
 		html +='</TR>';
 	}
+	$("#tableparties").text("");
 	$("#tableparties").append(html);
 	$("#listeparties").show("slow");
 }
