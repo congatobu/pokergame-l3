@@ -19,7 +19,7 @@
 </head>
 <body>
 	
-	<form id="test_reception" onSubmit="javascript:test(this.message.value); return false;">
+	<form id="test_reception" class="cache" onSubmit="javascript:test(this.message.value); return false;">
 		Message reçu : <input type="text" name="message">
 		<input type="submit" value="Test">
 	</form>
@@ -103,12 +103,11 @@
 	</ul>
 	
 	<div id="listeparties"  class="cache">
-		<TABLE BORDER="1" id="tableparties">
-			<CAPTION>Parties en cours</CAPTION>
-			<TR>
-				<TH align="center">Nom partie </TH>
-				<TH align="center">Nombre joueurs</TH>
-				<TH align="center">Joueurs max</TH>
+		<TABLE BORDER="0" id="tableparties">
+			<TR id="titretable">
+				<TH align="center" class="titre"> Nom partie </TH>
+				<TH align="center" class="titre">Nombre joueurs</TH>
+				<TH align="center" class="titre">Joueurs max</TH>
 			</TR>
 		</TABLE> 
 	</div>
