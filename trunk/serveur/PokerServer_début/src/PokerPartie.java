@@ -22,6 +22,10 @@ public class PokerPartie {
     private String nomP = "";
     private Jeu je=new Jeu();
     private PokerClientThread createur;
+    private int choixJ=0;
+    private int jetJ=0;
+    
+    
     /**
     *Constructeur
     * @author benjamin Maurin
@@ -307,8 +311,8 @@ public class PokerPartie {
      *  envoi joue et les parametres pour savoir ses choix
      * @author steve giner
      */
-    private void envoiJoue(int joueur,int jetonsMin,int jetonsMax) {
-    	clientList.get(joueur).send("JOUE@"+jetonsMin+"@"+jetonsMax);
+    private void envoiJoue(int joueur,int jetonsMin,int jetonsMax,String bool) {
+    	clientList.get(joueur).send("JOUE@"+jetonsMin+"@"+jetonsMax+"@"+bool);
     }
     
     /**
@@ -392,7 +396,7 @@ public class PokerPartie {
   }
   
   /**
-   * d�termine si il ya un gagnant et donc si le tournoi et termin�
+   * determine si il ya un gagnant et donc si le tournoi et termine
    * @author steve giner
    */
 	private int gagnant() {
@@ -450,6 +454,8 @@ public class PokerPartie {
     	int dernierRelance=b+1;
     	
     	enchere(b+2,dernierRelance,jetons,jetTable);
+    	
+  
     	
     	//fin du premier tour d'enchere
     	
@@ -516,7 +522,7 @@ public class PokerPartie {
 		
 		for(int i=0;i<getNbJ();i++){
 			
-			if(clientList.get(i).getAttente()!=1){
+			if(clientList.get(i).getAttente()!=1 && clientList.get(i).getAttente()!=-1){
 				cartes[nbjoueurs]=clientList.get(i).getCartes();
 				cl[nbjoueurs]=i;
 				nbjoueurs++;
@@ -670,27 +676,57 @@ public class PokerPartie {
 	 * @param jetMis jetons mise par le joueur
 	 * @param joueur 
 	 * @param jetons jetons max pose sur la table par un joueur
+	 * @param relancer true si droit de relancer, false sinon
      */
-    private int choix(int jetons, int jetMis, int joueur) {
+    private int choix(int jetons, int jetMis, int joueur,boolean relancer) {
         
          //envoi min et max jetons possible de miser pour relancer
             //envoi de la demande de choix
+    	
+    	
+    	int min=jetons-clientList.get(joueur).getJetonsPoses();
+    	int max=clientList.get(joueur).getJetonsTotaux();
+    	
+    	if(min>=max)
+    		envoiJoue(joueur, min, max, "false");
+    	else envoiJoue(joueur, min, max, ""+relancer);
+    	
+    	clientList.get(joueur).setJoue(1);
+    	
         try {
             attenteDeChoix.acquire();
         } catch (InterruptedException ex) {
             Logger.getLogger(PokerPartie.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        if(choixJ==3 && relancer){
+        	choixJ=2;
+        	
+        	
+        }
         
-    	int min=jetons-clientList.get(joueur).getJetonsPoses();
-    	int max=clientList.get(joueur).getJetonsTotaux();
+        if(choixJ==1){
+        	
+        	jetMis=0;
+        	
+        }
+        else{
+        	if(choixJ==2){
+        		
+        		jetMis=min;
+        		
+        		
+        	}
+        	else{
+        		
+        		jetMis=jetJ;
+        		
+        	}
+        	
+        	
+        }
     	
-    	if(min>=max)
-    	clientList.get(joueur).send("CHOIX:1/2:"+max);
-    	else clientList.get(joueur).send("CHOIX:1/2/3:"+min/max);
-    	//se mettre en mode reception de message, j'attend 1, 2 ou 3
-    	
-		return 0;
+		return choixJ;
 	}
 
     
@@ -704,12 +740,31 @@ public class PokerPartie {
  */
     public String jouage(int choix,int jetons,PokerClientThread client)
     { // ne pas oublier les tests
-        
-        //return "MJET";
-        //return "MNC";
+        String retour;
+    	if(choix<0 || choix>3){
+    		choixJ=1;
+    		jetJ=0;
+    		retour= "MNC";
+    		
+    	}
+    	else{
+    		if(jetons<0 || jetons>client.getJetonsTotaux()){
+    			
+    			retour= "MJET";
+    		}
+
+    	
+    	else{
+    		choixJ=choix;
+    		jetJ=jetons;
+
+	        retour= "JOK";
+	    	}
+    	}
+    	
         attenteDeChoix.release();
         client.setJoue(0);
-        return "JOK";
+        return retour;
     }
     
 	/**
@@ -750,7 +805,7 @@ public class PokerPartie {
 				
 				if(clientList.get(joueur).getAttente()==0){
 					
-		   			if(choix(jetons,jetMis, joueur)==3){
+		   			if(choix(jetons,jetMis, joueur, true)==3){
 		   				mise(joueur,jetMis,jetTable);
 		   				jetons=clientList.get(joueur).getJetonsPoses(); 
 		   				majPot(joueur,jetMis);
@@ -778,6 +833,7 @@ public class PokerPartie {
 		if(joueur==getNbJ())joueur=0;
 		else if(joueur>getNbJ())joueur=1;
 		boolean bool=true;
+		boolean relan=true;
 		int rel=0;//nombre de relances
 		String m="";
 		
@@ -790,13 +846,13 @@ public class PokerPartie {
 	    		if(clientList.get(joueur).getAttente()==0){
 			    	m="JOUES";
 	    			 clientList.get(joueur).send(m);
-	    			switch(choix(jetons,jetMis,joueur)){
+	    			switch(choix(jetons,jetMis,joueur, relan)){
 			    	case 1:
 			    		clientList.get(joueur).setAttente(1);
 			    		break;
 			    	
 			    	case 2:			    		
-				    		mise(joueur,jetons-clientList.get(joueur).getJetonsPoses(),jetTable);
+				    		mise(joueur,jetMis,jetTable);
 				    		majPot(joueur,jetMis);
 			    			break;
 			    	
@@ -807,7 +863,7 @@ public class PokerPartie {
 			    		majPot(joueur,jetMis);
 			    		dernierRelance=joueur;
 			    		if(rel==3){
-			    			//envoyer un message pour dire qu'ils ne peuvent plus relancer 
+			    			relan =false;
 			    		}	    	
 				    	break;		
 			    	}
