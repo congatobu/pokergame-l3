@@ -5,9 +5,9 @@
 <head>
 	<title>POKER</title>
 	
-	<div><applet id="JavaSocketBridge" archive="JavaSocketBridge.jar" code="JavaSocketBridge.class" width="0" height="0"></applet></div>
+	<div style="width:0; height:0;"><applet id="JavaSocketBridge" archive="JavaSocketBridge.jar" code="JavaSocketBridge.class" style="width:0; height:0;"></applet></div>
 	
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css"></link>
 	
 	<script type="text/javascript" src="Scripts/java_socket_bridge.js"></script>
 	<script type="text/javascript" src="Scripts/jquery-1.7.1.min.js"></script>
@@ -17,16 +17,23 @@
 	<script type="text/javascript" src="Scripts/gestion.js"></script>
 	
 </head>
+
 <body>
-	
-	<form id="test_reception" class="cache" onSubmit="javascript:test(this.message.value); return false;">
+	<div class="wrapper">
+		<div id="background"></div>
+	</div>
+	<form id="test_reception" class="test" onSubmit="javascript:test(this.message.value); return false;">
 		Message reçu : <input type="text" name="message">
+		<input type="submit" value="Test">
+	</form>
+	<form id="test_reception3" class="test" onSubmit="javascript:test3(this.message.value); return false;">
+		action : <input type="text" name="message">
 		<input type="submit" value="Test">
 	</form>
 
 	<div id="acceuil"></div>
 	
-	<div class="form">
+	<div id="formtaille1" class="form cache">
 		<form id="formcon" class="cache" onSubmit="javascript:connexion(this.pseudo, this.pass); return false;">
 			<legend>Connexion</legend>
 			<label for="pseudo" class="inline">Pseudo :</label>
@@ -36,10 +43,21 @@
 			<input type="submit" value="Connexion">
 			<input type="button" value="Annuler" onclick="javascript:annuler('formcon');">
 		</form>
+		<form id="creerpartie" class="cache" onSubmit="javascript:creer_partie(this.nompartie, this.nbjoueurs); return false;">
+			<legend>Créer une Partie</legend>
+			<label for="nompartie" class="inline">Nom Partie : </label>
+			<input type="text" name="nompartie" id="nompartie">
+			<label for="nbjoueurs" class="inline">Joueurs Maximun :</label>
+			<input type="text" name="nbjoueurs" id="nbjoueurs">
+			<input type="submit" value="Créer partie">
+			<input type="button" value="Annuler" onclick="javascript:annuler('creerpartie');">
+		</form>
+	</div>
+	<div id="formtaille2" class="form cache">
 		<form id="formcreat" class="cache" onSubmit="javascript:creation(this.pseudo, this.pass, this.pass2); return false;">
 			<legend>Création de Compte</legend>
 			<label for="pseudo" class="inline">Pseudo :</label>
-			<input type="text" name="pseudo" id="pseudo">
+			<input type="text" name="pseudo" id="pseudocreat">
 			<label for="pass" class="inline">Mot de Passe :</label>
 			<input type="password" name="pass" id="pass">
 			<label for="pass2" class="inline">Comfirmation :</label>
@@ -47,10 +65,23 @@
 			<input type="submit" value="Créer compte">
 			<input type="button" value="Annuler" onclick="javascript:annuler('formcreat');">
 		</form>
+		<form id="chmtpsd" class="cache" onSubmit="javascript:changer_psd(this.pseudo, this.npseudo, this.pass); return false;">
+			<legend>Modifier Pseudo</legend>
+			<label for="pseudo" class="inline">Pseudo Actuel :</label>
+			<input type="text" name="pseudo" id="pseudochmt">
+			<label for="npseudo" class="inline">Nouveau Pseudo :</label>
+			<input type="text" name="npseudo">
+			<label for="pass" class="inline">Mot de Passe :</label>
+			<input type="password" name="pass" id="pass">
+			<input type="submit" value="Valider">
+			<input type="button" value="Annuler" onclick="javascript:annuler('chmtpsd');">
+		</form>
+	</div>
+	<div id="formtaille3" class="form cache">
 		<form id="chmtmdp" class="cache" onSubmit="javascript:changer_mdp(this.pseudo, this.ancien, this.nouveau, this.nouveau2); return false;">
 			<legend>Modifier Mot de Passe</legend>
 			<label for="pseudo" class="inline">Pseudo :</label>
-			<input type="text" name="pseudo">
+			<input type="text" name="pseudo" id="pseudochmt2">
 			<label for="ancien" class="inline">Ancien Mot de Passe :</label>
 			<input type="password" name="ancien">
 			<label for="nouveau" class="inline">Nouveau Mot de Passe :</label>
@@ -60,58 +91,44 @@
 			<input type="submit" value="Valider">
 			<input type="button" value="Annuler" onclick="javascript:annuler('chmtmdp');">
 		</form>
-		<form id="chmtpsd" class="cache" onSubmit="javascript:changer_psd(this.pseudo, this.npseudo, this.pass); return false;">
-			<legend>Modifier Pseudo</legend>
-			<label for="pseudo" class="inline">Pseudo Actuel :</label>
-			<input type="text" name="pseudo">
-			<label for="npseudo" class="inline">Nouveau Pseudo :</label>
-			<input type="text" name="npseudo">
-			<label for="pass" class="inline">Mot de Passe :</label>
-			<input type="password" name="pass" id="pass">
-			<input type="submit" value="Valider">
-			<input type="button" value="Annuler" onclick="javascript:annuler('chmtpsd');">
-		</form>
-		<form id="creerpartie" class="cache" onSubmit="javascript:creer_partie(this.nompartie, this.nbjoueurs); return false;">
-			<legend>Créer une Partie</legend>
-			<label for="nompartie" class="inline">Nom Partie: </label>
-			<input type="text" name="nompartie" id="nompartie">
-			<label for="nbjoueurs" class="inline">Joueurs Maximun :</label>
-			<input type="text" name="nbjoueurs" id="nbjoueurs">
-			<input type="submit" value="Créer partie">
-			<input type="button" value="Annuler" onclick="javascript:annuler('creerpartie');">
-		</form>
 	</div>
 
 	<ul id="menu">
 		<li id="gestionjeu" class="connecte">
 			<a href="#">Jeu</a>
 			<ul>
-				<li><a href="javascript:affiche('creerpartie');">Créer une partie</a></li>
+				<li><a href="javascript:affiche('formtaille1', 'creerpartie','nompartie');">Créer une partie</a></li>
 				<li><a href="javascript:lister_parties();">Parties en cours</a></li>
 			</ul>
 		</li>
 		<li>
 			<a href="#">Compte</a>
-			<ul class="anim">
-				<li id="licon" class="deconnecte"><a href="javascript:affiche('formcon');">Connexion</a></li>
+			<ul>
+				<li id="licon" class="deconnecte"><a href="javascript:affiche('formtaille1','formcon', 'pseudocon');">Connexion</a></li>
 				<li id="lidecon" class="connecte"><a href="javascript:deconnexion();">Déconnexion</a></li>
-				<li id="licreat" class="deconnecte"><a href="javascript:affiche('formcreat');">Créer un compte</a></li>
-				<li id="lipsd" class="deconnecte"><a href="javascript:affiche('chmtpsd');">Changer pseudo</a></li>
-				<li id="limdp" class="deconnecte"><a href="javascript:affiche('chmtmdp');">Changer mot de passe</a></li>
+				<li id="licreat" class="deconnecte"><a href="javascript:affiche('formtaille2','formcreat', 'pseudocreat');">Créer un compte</a></li>
+				<li id="lipsd" class="deconnecte"><a href="javascript:affiche('formtaille2','chmtpsd', 'pseudochmt');">Changer pseudo</a></li>
+				<li id="limdp" class="deconnecte"><a href="javascript:affiche('formtaille3','chmtmdp', 'pseudochmt2');">Changer mot de passe</a></li>
 			</ul>
 		</li>
 	</ul>
 	
-	<div id="listeparties"  class="cache">
-		<TABLE BORDER="0" id="tableparties">
-			<TR id="titretable">
-				<TH align="center" class="titre"> Nom partie </TH>
-				<TH align="center" class="titre">Nombre joueurs</TH>
-				<TH align="center" class="titre">Joueurs max</TH>
-			</TR>
-		</TABLE> 
+	<div id="table" class="cache">
+		<div id="div_titre">
+			<TABLE BORDER="0" id="titre_table">
+				<TR>
+					<TH align="center" class="titre"> Nom partie </TH>
+					<TH align="center" class="titre">Nombre joueurs</TH>
+					<TH align="center" class="titre">Joueurs max</TH>
+				</TR>
+			</TABLE> 
+		</div>
+		<div id="table_defil">
+			<TABLE BORDER="0" id="tableparties">
+			</TABLE> 
+		</div>
 	</div>
-
+	
 	<div id="partie"  class="cache">
 	<h3></h3>
 	<h4>Liste des joueurs</h4>
@@ -121,7 +138,14 @@
 	</div>
 	
 	<div id="infos_joueur"  class="cache">
-		<h3>Infos joueur</h3>
+		<label for="nomjr">Joueur :</label>
+		<p id='info_nom' name='nomjr' class='infosjr'></p>
+		<label for="insc">Date d'Inscription :</label>
+		<p id='info_inscription' name="insc" class='infosjr'></p>
+		<label for="gagn">Parties Gagnée :</label>
+		<p id='info_gagnees' name="gagn" class='infosjr'></p>
+		<label for="perd">Parties Perdues :</label>
+		<p id='info_perdus' name="perd" class='infosjr'></p>
 	</div>
 
 </body>

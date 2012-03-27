@@ -4,23 +4,23 @@ var createur =  false;
 
 $(function(){
 	tout_cacher();
-	$("#lidecon").hide();
-	$("#gestionjeu").hide();
+	/*$("#lidecon").hide();
+	$("#gestionjeu").hide();*/
 });
 
 function con(){
 	direbonjour();
 	effform("formcon");
 	$("#formcon").hide();
-	$(".deconnecte").hide();
-	$(".connecte").show();
+	/*$(".deconnecte").hide();
+	$(".connecte").show();*/
 }
 
 function decon(){
-	tout_cacher("\'slow\'");
+	tout_cacher();
 	$("#acceuil").text('');
-	$(".deconnecte").show();
-	$(".connecte").hide();
+	/*$(".deconnecte").show();
+	$(".connecte").hide();*/
 }
 
 function tout_cacher(){
@@ -28,15 +28,18 @@ function tout_cacher(){
 	$('.cache').hide();
 }
 
-function affiche(division){
+function affiche(division, form, champ){
 	tout_cacher();
-	$("#"+division).show("slow");
+	$("#"+division).show();
+	$("#"+form).show("slow");
+	$("#"+champ).focus()
 }
 
 function affiche_liste(message){
 	var html='';
 	var liste = message.split("@");
 	var partie;
+	
 	html += "<TR id=\'titretable\'>"+$("#titretable").html()+"</TR>";
 	for(i=1;i<liste.length;i++){
 		partie = liste[i].split("/");
@@ -46,9 +49,11 @@ function affiche_liste(message){
 		}
 		html +='</TR>';
 	}
+	
 	$("#tableparties").text("");
 	$("#tableparties").append(html);
-	$("#listeparties").show("slow");
+	$("#table").show("slow");
+	/*$("#table_defil").show("slow");*/
 }
 
 function annuler(id){
@@ -83,7 +88,7 @@ function set_nom_partie(nom){
 function entrer_partie(){
 	$("#partie").children("h3").text(nom_partie);
 	if(!createur) $("#partie").children("#bdebut").hide();
-	tout_cacher("\'show\'");
+	tout_cacher();
 	$("#partie").show("slow");
 }
 
@@ -103,13 +108,11 @@ function set_createur(bool){
 function afficher_infos_joueur(message){
 	var tab = message.split("@");
 	var html = "";
-	html += "<p>Nom du joueur: "+tab[1]+"</p>";
-	html += "<p>Date d'inscription: "+tab[4]+"</p>";
-	html += "<p>Parties gagnées: "+tab[2]+"</p>";
-	html += "<p>Parties perdus: "+tab[3]+"</p>";
 	$("#infos_joueur").hide();
-	$("#infos_joueur").text("");
-	$("#infos_joueur").append(html);
+	$("#info_nom").text(tab[1]);
+	$("#info_inscription").text(tab[4]);
+	$("#info_gagnees").text(tab[2]);
+	$("#info_perdus").text(tab[3]);
 	$("#infos_joueur").show('slow');
 }
 
