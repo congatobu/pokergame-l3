@@ -2,11 +2,13 @@ var domaine="";
 var action="";
 
 function test(input){
-	var tab = input.split(":");
 	effform("test_reception");
-	domaine = tab[0];
-	action = tab[1];
-	traiter_message(tab[2]);
+	traiter_message(input);
+}
+function test3(input2){
+	tab = input2.split(":");
+	domaine=tab[0];
+	action=tab[1];
 }
 
 function set_reception(dr, act){
