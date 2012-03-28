@@ -24,7 +24,7 @@ public class PokerPartie {
     private PokerClientThread createur;
     private int choixJ=0;
     private int jetJ=0;
-    
+    int[] enJeu=new int[getNbJ()];
     
     /**
     *Constructeur
@@ -113,6 +113,8 @@ public class PokerPartie {
         return clientList.size();
     }
     
+
+    
     /**
      * accesseur
      * @author benjamin Maurin
@@ -121,7 +123,18 @@ public class PokerPartie {
     public String getNom(){
         return this.nomP;
     }
-
+    
+    public int getNbJReel(){
+    	int cpt=0;
+    	
+    	for(int i=0;i<getNbJ();i++){
+    		
+    		if(clientList.get(i)!=null)cpt++;
+    		
+    	}
+    	
+    	return cpt;
+    }
 
     /**
      * Fonction pour envoyer un message à tous les clients de la partie
@@ -132,7 +145,9 @@ public class PokerPartie {
         int i;
         PokerClientThread foo;
         for (i=0;i<clientList.size();++i){
+        	
             foo = (PokerClientThread)clientList.get(i);
+            if(foo!=null)
             foo.send(m);
         } 	
     }
@@ -147,21 +162,33 @@ public class PokerPartie {
             available.acquire();
             int num;
             num=clientList.indexOf(deadClient);
+          
             if(num!=-1){
-                clientList.remove(num);                         
+                if(enCours==0)clientList.remove(num);
+                else clientList.set(num, null);
             }               
 	  deadClient.setPartie(null);
-          broadcastClientsPartie(listeJoueursPartie());
-          
-            if(clientList.size()<1){
+         
+         
+            if(getNbJReel()<1){
                 PokerServer.deletePartie(this);
             }
             
             if(deadClient==createur)
             {
-                createur=clientList.get(0);
+            int i=0;
+            	while(i!=-1){
+                
+            		if(clientList.get(i)!=null){
+            			createur=clientList.get(i);
+            			i=-1;
+            		}
+            		else
+            		i++;
+            	}
+            	 
             }
-            
+            broadcastClientsPartie(listeJoueursPartie());   
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -179,10 +206,12 @@ public class PokerPartie {
         String s = "LISTEJOUEURSPARTIE";
         for(int i=0; i <clientList.size();i++)
         {
-            if(clientList.get(i)!=createur)
-            s+="@"+clientList.get(i).getPseudo();  
-            else
-            s+="@$"+clientList.get(i).getPseudo(); 
+        	if(clientList.get(i)!=null){
+	            if(clientList.get(i)!=createur)
+	            s+="@"+clientList.get(i).getPseudo();  
+	            else
+	            s+="@$"+clientList.get(i).getPseudo(); 
+        	}
         }
         return s;
                                              }
@@ -233,32 +262,47 @@ public class PokerPartie {
     	int i=0;
     	int g=-1;
     	//init jetons
+    	enCours=1;
     	for(i=0;i<getNbJ();i++){
 	    	
 	    	clientList.get(i).setJetonsTotaux(200);
 	    	clientList.get(i).setJetonsPoses(0);
 	    	
+	    	
     	}
-    	i=0;
-    	
+    	i=0;//contient le joueur qui pose la blind
+    	boolean bool=true;
     	while(g==-1){
     		je.initTasDe52cartes();
     		
-
-        	
+    		for(int j=0;j<getNbJ();j++){
+    	    	
+    	    	if(clientList.get(j)==null)clientList.remove(j);
+    	    	    	    	
+        	}
+    	       	
         	envoiJetonsJ();
+        	bool=true;
+        	while(bool){//choix du blindeur 
         	
+        		
     		if(i==getNbJ())i=0;
-    		else if(i>getNbJ())i=1;
-    			
+    		
+    		if(clientList.get(i)==null)i++;
+    		
+        	}
+        	
     		deroulement(i);
-    		i=i+2;
+    		i++;
     		g=gagnant();
     		
     	}
     	
+    	if(g!=-2){
     	envoiGagnantP(g);
     	return g;
+    	}
+    	else{screenOut.println("erreur gagnant");return -1;}
     }
     
     /**
@@ -270,7 +314,7 @@ public class PokerPartie {
 		String m="JETONJ";
 		
 		for(int i=0;i<getNbJ();i++){
-			
+			if(clientList.get(i)!=null)
 			m=m+"@"+clientList.get(i).getPseudo()+"/"+clientList.get(i).getJetonsTotaux()+"/"+clientList.get(i).getJetonsPoses();
 			
 		}
@@ -284,8 +328,8 @@ public class PokerPartie {
      * @author steve giner
      */
     private void envoiCarteM(int joueur) {
-     
-    	clientList.get(joueur).send("CARTEM@"+clientList.get(joueur).getCartes()[0]+"@"+clientList.get(joueur).getCartes()[1]);
+    	
+    	if(clientList.get(joueur)!=null)clientList.get(joueur).send("CARTEM@"+clientList.get(joueur).getCartes()[0]+"@"+clientList.get(joueur).getCartes()[1]);
     
     }
     
@@ -308,21 +352,14 @@ public class PokerPartie {
     
    
     /**
-     *  envoi joue et les parametres pour savoir ses choix
+     *  envoi joue et les parametres pour savoir ses choix,bool:envoi la valeur que doit prendre le bouton relancer (on ou off)
      * @author steve giner
      */
     private void envoiJoue(int joueur,int jetonsMin,int jetonsMax,String bool) {
-    	clientList.get(joueur).send("JOUE@"+jetonsMin+"@"+jetonsMax+"@"+bool);
+    	if(clientList.get(joueur)!=null)clientList.get(joueur).send("JOUE@"+jetonsMin+"@"+jetonsMax+"@"+bool);
     }
     
-    /**
-     *  envoi la valeur que doit prendre le bouton relancer (on ou off)
-     * @author steve giner
-     */
-    private void envoiRelancer(String bool) {
-    	broadcastClientsPartie("RELANCER@"+bool);
 
-    }
     
     /**
      *  envoi des jetons de la table
@@ -343,13 +380,13 @@ public class PokerPartie {
     
      String m="MONTREC";
      for(int i=0;i<getNbJ();i++){
-    	 
-    	 if(clientList.get(i).getAttente()!=1){
-    		 
-    		 m=m+"@"+clientList.get(i).getPseudo()+clientList.get(i).getCartes()[0]+clientList.get(i).getCartes()[1];
-    		 
+    	 if(clientList.get(i)!=null){
+	    	 if(clientList.get(i).getAttente()!=1 && clientList.get(i).getAttente()!=-1){
+	    		 
+	    		 m=m+"@"+clientList.get(i).getPseudo()+clientList.get(i).getCartes()[0]+clientList.get(i).getCartes()[1];
+	    		 
+	    	 }
     	 }
-    	 
      }
      
      broadcastClientsPartie(m);
@@ -367,7 +404,7 @@ public class PokerPartie {
 	String m="GAGNANTT";  
 	  
 	for(int i=0;i<t.length;i++)
-		m=m+"@"+clientList.get(t[i]).getPseudo();
+		if(clientList.get(t[i])!=null)m=m+"@"+clientList.get(t[i]).getPseudo();
 	
 	 broadcastClientsPartie(m);
   }
@@ -379,7 +416,7 @@ public class PokerPartie {
    */
   private void envoiGagnantP(int joueur) {
 	  
-	  broadcastClientsPartie("GAGNANTP@"+clientList.get(joueur).getPseudo());
+	  if(clientList.get(joueur)!=null)broadcastClientsPartie("GAGNANTP@"+clientList.get(joueur).getPseudo());
 	  
   
   }
@@ -392,7 +429,7 @@ public class PokerPartie {
    * @author steve giner
    */
   private void envoiPerdu(int joueur) {
-	  broadcastClientsPartie("PERDU@"+clientList.get(joueur).getPseudo());
+	  if(clientList.get(joueur)!=null)broadcastClientsPartie("PERDU@"+clientList.get(joueur).getPseudo());
   }
   
   /**
@@ -404,14 +441,21 @@ public class PokerPartie {
     	int cpt=0;int j=-1;
     	for(int i=0;i<getNbJ();i++){
     	
-    		if(clientList.get(i).getAttente()==-1){
-    			cpt++;
+    		if(clientList.get(i)!=null){
+	    		if(clientList.get(i).getAttente()==0){
+	    			cpt++;
+	    			j=i;
+	    		}
+	    		
     		}
-    		else j=i;
     	}
-    	if(cpt==getNbJ()-1)
-		return j;
+    	
+    	if(cpt<=1){
+    		if(cpt==1)return j;
+    		else return -2;
+    	}
     	else return -1;
+	
 	}
 
 	
@@ -423,27 +467,32 @@ public class PokerPartie {
     	
     	//initialisation du paquet de cartes
     	
-    	int jetons;//variable contenant les jetons poses max
+    	int jetons=0;//variable contenant les jetons poses max
     	int jetTable=0;//jetons au milieu de la table
-    	
+    	int nbJoueur=getNbJ();//nombre de joueurs en jeu (si ==1 faut finir car on a un gagnant)
+    	int joueur=b;
     	
     	
     	//envoi de 2 cartes a chaque joueurs 
     	for(int i=0;i<getNbJ();i++){
-    		if(clientList.get(i).getAttente()!=-1){
-	    	clientList.get(i).setCartes(je.tireUneCarte(),je.tireUneCarte());
-	    	envoiCarteM(i);    	
-                
+    		if(clientList.get(i)!=null){
+	    		if(clientList.get(i).getAttente()!=-1){
+	    			clientList.get(i).setAttente(0);
+	    			clientList.get(i).setJetonsPoses(0);
+			    	clientList.get(i).setCartes(je.tireUneCarte(),je.tireUneCarte());
+			    	envoiCarteM(i);    	
+	                
+	    		}
     		}
     	}
     	
     	
     	
     	//j0 mise la blind et j1 la surblind
-    	mise(b,5,jetTable);
-    	
-    	if(b+1<getNbJ())mise(b+1,10,jetTable);
-    	else mise(0,10,jetTable);
+    	mise(joueur,5,jetTable);
+    	joueur++;
+    	if(joueur<getNbJ()) mise(joueur,10,jetTable);
+    	else{joueur=0; mise(joueur,10,jetTable);}
     	
     	jetons=10;
     	
@@ -452,8 +501,8 @@ public class PokerPartie {
     	//premiere enchere (choix: se coucher(1), suivre(2) ou relancer(3))
     	
     	int dernierRelance=b+1;
-    	
-    	enchere(b+2,dernierRelance,jetons,jetTable);
+    	joueur++;
+    	premiereEnchere(joueur,-1,jetons,jetTable,nbJoueur);
     	
   
     	
@@ -472,17 +521,17 @@ public class PokerPartie {
 		
 		//envoi de leur choix possibles (passer(1),ouvrir(2))
 		
-		int joueur=b;
+		
 		boolean bool=true;
 		//int jetMis=0;
 		//int cpt=0;
 		
 				
-		bool=premPhase(joueur,dernierRelance,jetons, jetTable);
+		bool=premPhase(joueur,dernierRelance,jetons, jetTable,nbJoueur);
 		
-		if(bool){
+		if(!bool){
 		//debut 2nd phase
-			enchere(joueur,dernierRelance,jetons,jetTable);
+			enchere(joueur,dernierRelance,jetons,jetTable, nbJoueur);
 		//fin 2nd phase
 		}
 		//fin 2e enchere
@@ -492,11 +541,11 @@ public class PokerPartie {
 		
 		joueur=b;
 		
-		bool=premPhase(joueur,dernierRelance,jetons,jetTable);
+		bool=premPhase(joueur,dernierRelance,jetons,jetTable, nbJoueur);
 		
-		if(bool){
+		if(!bool){
 			//debut 2nd phase
-				enchere(joueur,dernierRelance,jetons,jetTable);
+				enchere(joueur,dernierRelance,jetons,jetTable, nbJoueur);
 			//fin 2nd phase
 			}
 		
@@ -505,34 +554,34 @@ public class PokerPartie {
 		table[4]=je.tireUneCarte();
 		envoiCarteT(5, table);
 		
-		bool=premPhase(joueur,dernierRelance,jetons, jetTable);
+		bool=premPhase(joueur,dernierRelance,jetons, jetTable, nbJoueur);
 		
-		if(bool){
+		if(!bool){
 			//debut 2nd phase
-				enchere(joueur,dernierRelance,jetons,jetTable);
+				enchere(joueur,dernierRelance,jetons,jetTable, nbJoueur);
 			//fin 2nd phase
 			}
 		
-		int nbjoueurs=0;
-		int[][] cartes=new int[getNbJ()][2];
-		int[] cl=new int[getNbJ()];
 		
+		int[][] cartes=new int[nbJoueur][2];
+		int[] cl=new int[nbJoueur];//indice du joueur
+		int cpt=0;
 		
-		
+		//tu t'es arreter la barbu-----------------------------------------------------------------------------------------
 		
 		for(int i=0;i<getNbJ();i++){
-			
-			if(clientList.get(i).getAttente()!=1 && clientList.get(i).getAttente()!=-1){
-				cartes[nbjoueurs]=clientList.get(i).getCartes();
-				cl[nbjoueurs]=i;
-				nbjoueurs++;
+			if(clientList.get(i)!=null){
+				if(clientList.get(i).getAttente()==0 || clientList.get(i).getAttente()==2){
+					cartes[cpt]=clientList.get(i).getCartes();
+					cl[cpt]=i;
+					
+				}
 			}
-			
 		}
 		
 		
-		if(nbjoueurs>1){
-			float[] g=je.gagnant(cartes,table,nbjoueurs);
+		if(nbJoueur>1){
+			float[] g=je.gagnant(cartes,table,nbJoueur);
 			repartionDesGains(jetons,g);
 				
 			
@@ -543,7 +592,7 @@ public class PokerPartie {
 			if(clientList.get(cl[0]).getAttente()==0)
 				clientList.get(cl[0]).setJetonsTotaux(clientList.get(cl[0]).getJetonsTotaux()+jetTable);
 			else{
-				for(int i=0;i<getNbJ();i++){
+				for(int i=0;i<getNbJ();i++){//si il a fait tapis
 					
 					clientList.get(cl[0]).setJetonsTotaux(clientList.get(cl[0]).getJetonsTotaux()+(min(clientList.get(i).getJetonsPoses(),clientList.get(cl[0]).getJetonsPoses())));
 					clientList.get(i).setJetonsTotaux(clientList.get(i).getJetonsTotaux()+clientList.get(i).getJetonsPoses()-clientList.get(cl[0]).getJetonsPoses());
@@ -564,22 +613,25 @@ public class PokerPartie {
 		
 		for(int i=0;i<getNbJ();i++){
 			
-			if(clientList.get(i).getAttente()!=-1){
-				
-				if(clientList.get(i).getJetonsTotaux()<=10){
+			if(clientList.get(i)!=null){
+				if(clientList.get(i).getAttente()!=-1){
 					
-					clientList.get(i).setAttente(-1);
-					envoiPerdu(i);
+					if(clientList.get(i).getJetonsTotaux()<=10){
+						
+						clientList.get(i).setAttente(-1);
+						envoiPerdu(i);
+					}
+					
 				}
 				
 			}
-			
 		}
-		
 		
     }
     
     
+
+
 	private int min(int a, int b) {
 		
 		if(a<b)return a;else return b;
@@ -770,7 +822,8 @@ public class PokerPartie {
 	/**
     * procedure permettant de changer les jetons d'un joueurs
     * @author steve giner
-    * @param jetons nb de jetons a enlever
+    * @param joueur qui mise
+    * @param jetons nb de jetons a enlever au joueur et a mettre sur la table
 	 * @param jetTable 
     */
 	private void mise(int joueur, int jetons, int jetTable) {
@@ -793,62 +846,140 @@ public class PokerPartie {
 	* @author steve giner
 	* @param nbJ nombre de joueurs qu'il reste
 	*/
-	private boolean premPhase(int joueur,int dernierRelance,int jetons,int jetTable){
+	private boolean premPhase(int joueur,int dernierRelance,int jetons,int jetTable,int nbJoueur){
 		boolean bool=true;
 		int cpt=0;
 		int jetMis=0;
 		
-		//envoi de leur choix possibles (passer(1),ouvrir(2))
-	while(bool && cpt<getNbJ()){
+		
+	while(bool && cpt<getNbJ() && nbJoueur>1){
 				
-				if(joueur==getNbJ())joueur=0;
-				
-				if(clientList.get(joueur).getAttente()==0){
-					
-		   			if(choix(jetons,jetMis, joueur, true)==3){
-		   				mise(joueur,jetMis,jetTable);
-		   				jetons=clientList.get(joueur).getJetonsPoses(); 
-		   				majPot(joueur,jetMis);
-		   				dernierRelance=joueur;
-		   				bool=false;
-		   			}	
-			   	}
+		if(joueur==getNbJ())joueur=0;
+		
+		
+    		if(clientList.get(joueur).getAttente()==0){
+		    	
+
+    			switch(choix(jetons,jetMis,joueur, true)){
+		    	case 1:
+		    		clientList.get(joueur).setAttente(1);
+		    		nbJoueur--;
+		    		break;
+		    	
+		    	case 3:
+		    		mise(joueur,jetMis,jetTable);
+		    		
+		    		jetons=clientList.get(joueur).getJetonsPoses();
+		    		majPot(joueur,jetMis);
+		    		dernierRelance=joueur;
+		    		bool=false;
+			    	break;
+		    	default: break;
+		    	}
+    		}
 				joueur++;cpt++;	
-			}
-	
+			
+		}
 		return bool;
 	}
 	
 	
 	
 	/**
-	* procedure permettant d'effectuer un tour d'enchere
+	* procedure permettant d'effectuer le premier tour d'enchere
 	* @author steve giner
+	 * @param nbJoueur 
 	* @param nbJ nombre de joueurs qu'il reste
 	*/
-	private void enchere(int joueur,int dernierRelance,int jetons,int jetTable) {
-    
-		
+	private void premiereEnchere(int joueur, int dernierRelance, int jetons,int jetTable, int nbJoueur) {
     	int jetMis=0;
+    	int SB=joueur-1;
 		if(joueur==getNbJ())joueur=0;
 		else if(joueur>getNbJ())joueur=1;
 		boolean bool=true;
 		boolean relan=true;
 		int rel=0;//nombre de relances
-		String m="";
 		
-		while(bool)
+		
+		while(bool && nbJoueur>1)
     	{
     		if(joueur==getNbJ())joueur=0;
     		
     		if(joueur==dernierRelance)bool=false;
     		else{
 	    		if(clientList.get(joueur).getAttente()==0){
-			    	m="JOUES";
-	    			 clientList.get(joueur).send(m);
+			    	
+	    			
+	    			switch(choix(jetons,jetMis,joueur, relan)){
+			    	case 1:
+		    			if(dernierRelance==-1 && joueur==SB){
+		    				dernierRelance=SB;
+		    				bool=false;
+		    			}
+			    		clientList.get(joueur).setAttente(1);
+			    		nbJoueur--;
+			    		break;
+			    	
+			    	case 2:	
+			    			if(dernierRelance==-1 && joueur==SB){
+			    				dernierRelance=SB;
+			    				bool=false;
+			    			}
+			    			
+				    		mise(joueur,jetMis,jetTable);
+				    		majPot(joueur,jetMis);
+			    			break;
+			    	
+			    	case 3:
+			    		mise(joueur,jetMis,jetTable);
+			    		rel++;
+			    		jetons=clientList.get(joueur).getJetonsPoses();
+			    		majPot(joueur,jetMis);
+			    		dernierRelance=joueur;
+			    		if(rel==3){
+			    			relan =false;
+			    		}	    	
+				    	break;	
+			    	default: break;
+			    	}
+	    		}
+    		joueur++;
+    		}
+    	}
+		
+	}
+	
+	/**
+	* procedure permettant d'effectuer un tour d'enchere
+	* @author steve giner
+	* @param nbJ nombre de joueurs qu'il reste
+	*/
+	private void enchere(int joueur,int dernierRelance,int jetons,int jetTable,int nbJoueur) {
+    
+		
+    	int jetMis=0;
+    	
+		if(joueur==getNbJ())joueur=0;
+		else if(joueur>getNbJ())joueur=1;
+		boolean bool=true;
+		boolean relan=true;
+		int rel=0;//nombre de relances
+		
+		
+		
+		while(bool && nbJoueur>1)
+    	{
+    		if(joueur==getNbJ())joueur=0;
+    		
+    		if(joueur==dernierRelance)bool=false;
+    		else{
+	    		if(clientList.get(joueur).getAttente()==0){
+			    	
+
 	    			switch(choix(jetons,jetMis,joueur, relan)){
 			    	case 1:
 			    		clientList.get(joueur).setAttente(1);
+			    		nbJoueur--;
 			    		break;
 			    	
 			    	case 2:			    		
@@ -865,7 +996,8 @@ public class PokerPartie {
 			    		if(rel==3){
 			    			relan =false;
 			    		}	    	
-				    	break;		
+				    	break;
+			    	default: break;
 			    	}
 	    		}
     		joueur++;
