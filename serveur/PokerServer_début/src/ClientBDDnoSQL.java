@@ -35,15 +35,14 @@ public class ClientBDDnoSQL {
 Mongo m = null;
         try {
             m = new Mongo( "localhost" , 27017 );
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(ClientBDDnoSQL.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (MongoException ex) {
+        } catch (Exception ex) {
+            ex.printStackTrace();
             Logger.getLogger(ClientBDDnoSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 
         //choix de la bdd
-db = m.getDB( "pokerBDD" );
+db = m.getDB("pokerBDD");
 //choix de la collection (environ table)
  coll = db.getCollection("pokerCollection");
 
@@ -476,7 +475,7 @@ db = m.getDB( "pokerBDD" );
     /**
      * Fonction permettant de générer un identifiant unique pour chaque jours dans la base de données.
      * 
-     * @author Jessy Bonnotte
+     * @author Maurin Benjamin
      * 
      * @return {@code String} retournant le premier numéro libre suivant le dernier dans la base de données.
      */
@@ -517,6 +516,28 @@ db = m.getDB( "pokerBDD" );
             super.finalize();
         }
     }
+    
+    
+     /**
+     * Fonction permettant de retourner la liste des données dans la BDD.
+     * 
+     * @author Maurin Benjamin
+     * 
+     * @return {@code String} retournant liste des données dans la BDD.
+     */
+    public String listeClient(){
+     
+                DBCursor cur; 
+       String s = "Liste des donnees : \n\n";
+        cur = coll.find();
+
+       while(cur.hasNext()) {
+           s+=cur.next()+"\n\n";
+                }
+       
+       return s;
+       }
+    
     
     
 }

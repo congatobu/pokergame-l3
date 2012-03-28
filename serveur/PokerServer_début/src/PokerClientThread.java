@@ -27,6 +27,7 @@ class PokerClientThread extends Thread {
     private int attente = 0;//0=tjr en jeu, 1=t'es plus en jeu(coucher), 2=tapis, -1 tu as perdu
     private int pot=0;//jetons que le joueur ne peut pas gagner a cause d'un tapis
     private int joue = 0; // 0 pas ton tour, 1 ton tour
+    private int pret = 0; // savoir si tu es pret lancement partie
     
     public PokerClientThread(Socket socket){
         super("PokerClientThread");
@@ -68,7 +69,22 @@ class PokerClientThread extends Thread {
         }	
     }
 
-
+ /**
+     * @author benjamin Maurin
+     */
+    public void setPret(int a)
+    {
+        pret=a;
+    }
+    
+     /**
+     * @author benjamin Maurin
+     */
+    public int getPret(int a)
+    {
+      return pret;
+    }
+    
      /**
      * @author benjamin Maurin
      * @return attente
@@ -410,9 +426,10 @@ class PokerClientThread extends Thread {
                             {
                                 if(partie.getNbJ()>1)
                                 {
-                                    partie.setEnCours(1);
-                                    partie.tournoi();
-                                    partie.broadcastClientsPartie("DEBUTPARTIE");
+                                    partie.setEnCours(2);
+                                     partie.pasPret();
+                                    partie.broadcastClientsPartie("AREUREADY");
+                                   
                                 }
                                 else{send("PAJ");return 1;}
                             }
@@ -423,6 +440,16 @@ class PokerClientThread extends Thread {
                      else{ send("NIP"); return 1;}
                  }
                  else {send("NCON"); }
+                return 1;
+            }
+                      // recevoir l'indication que le joueur est pret
+               if(cmd.equals("IAMREADY"))
+            {
+                
+                if(partie!=null && partie.getEnCours()==2){
+                 pret=1;
+                 partie.testPret();
+                }
                 return 1;
             }
                 return 0;

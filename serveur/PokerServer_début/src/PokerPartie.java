@@ -15,17 +15,18 @@ public class PokerPartie {
 		
     private Vector<PokerClientThread> clientList= new Vector<PokerClientThread>();
     private PrintWriter screenOut = new PrintWriter(System.out, true);
-    private int enCours = 0; // 0 non 1 oui
+    private int enCours = 0; // 0 non 1 oui 2 transition
     private int maxPlayers = 8;
     private Semaphore available = new Semaphore(1, true);
     private Semaphore attenteDeChoix = new Semaphore(0, true);
+    private Semaphore availableLancementPartie = new Semaphore(1, true);
     private String nomP = "";
     private Jeu je=new Jeu();
     private PokerClientThread createur;
     private int choixJ=0;
     private int jetJ=0;
-    int[] enJeu=new int[getNbJ()];
-    
+    //int[] enJeu=new int[getNbJ()];
+
     /**
     *Constructeur
     * @author benjamin Maurin
@@ -164,7 +165,7 @@ public class PokerPartie {
             num=clientList.indexOf(deadClient);
           
             if(num!=-1){
-                if(enCours==0)clientList.remove(num);
+                if(enCours==0 || enCours==2)clientList.remove(num);
                 else clientList.set(num, null);
             }               
 	  deadClient.setPartie(null);
@@ -253,6 +254,61 @@ public class PokerPartie {
         } 
     }
     
+       /**
+    * procedure permettant de tester qui sont les joueurs pret avant de lancer la partie
+    * Kick les joueurs pas pret au bout de 5 secondes
+    * @author Maurin Benjamin
+    */
+    public int testPret(){
+        
+        //pour pas que yai plusieurs lancement en même temps
+        try {
+            availableLancementPartie.acquire();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PokerPartie.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        //si quelqu'un a lancé la partie juste avant on abandonne l'idée de la relancer
+        if(enCours==1)return -1;
+        
+        // ca quite si ya un seul pas pret
+              int i;
+        PokerClientThread foo;
+        for (i=0;i<clientList.size();++i){
+        	
+            foo = (PokerClientThread)clientList.get(i);
+            if(foo!=null && foo.getPret(i)==0){
+                availableLancementPartie.release();
+                return -1;
+            }
+        } 	
+        
+        //sinon ca lance
+          broadcastClientsPartie("DEBUTPARTIE");
+          //lancer dans un nouveau thread la partie
+          enCours=1;
+          availableLancementPartie.release();
+        return 1;
+    }
+    
+          
+     /**
+    * Met tous les joueurs à "pas pret" pour être en attente qu'ils envoi un message pour prouver qu'ils sont pret
+    * @author Maurin Benjamin
+    */
+    public void pasPret(){
+               
+             int i;
+        PokerClientThread foo;
+        for (i=0;i<clientList.size();++i){
+        	
+            foo = (PokerClientThread)clientList.get(i);
+            if(foo!=null)
+            foo.setPret(0);
+        } 	
+        
+    }
+    
     
     /**
     * procedure permettant le deroulement d'un tournoi
@@ -262,7 +318,7 @@ public class PokerPartie {
     	int i=0;
     	int g=-1;
     	//init jetons
-    	enCours=1;
+    	
     	for(i=0;i<getNbJ();i++){
 	    	
 	    	clientList.get(i).setJetonsTotaux(200);
