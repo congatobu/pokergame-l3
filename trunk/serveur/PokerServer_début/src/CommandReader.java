@@ -79,10 +79,16 @@ class CommandReader extends Thread{
                     valid = true;
                     screenOut.println("\n LIST   - liste des clients connectes");
                     screenOut.println(" LISTP  - liste des parties");     
+                    screenOut.println(" LISTDB - liste des valeurs dans la BDD");
                     screenOut.println(" KILL i - deconnecte le client numero i");
                     screenOut.println(" HELP   - liste des commandes");
                     screenOut.println(" CREDIT - credits du projet");
                     screenOut.println(" QUIT   - deconnecte les clients et quitte le serveur \n");
+                }
+                       if (command.compareTo("LISTDB")==0){
+                    valid = true;
+                    screenOut.println(PokerServer.bd.listeClient());
+                  
                 }
                     if (command.compareTo("CREDIT")==0){
                     valid = true;

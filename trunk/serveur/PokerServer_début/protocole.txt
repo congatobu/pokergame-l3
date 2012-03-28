@@ -103,7 +103,12 @@ retour:
 	PEC partie est deja en cours
 	NCON n'est pas connecté
 
-Envoi à toute la partie : DEBUTPARTIE pour dire de changer de fenetre en fenetre partie
+Envoi à toute la partie : AREUREADY pour dire de changer de fenetre en fenetre partie et de renvoyer IAMREADY
+-------------------------------------------------------------
+                //le joueur précise qu'il est pret pour la partie
+	IAMREADY
+
+Envoi à toute la partie :  DEBUTPARTIE lorsque tout les joueurs sont pret ou au bout d'un certain temps (kick ceux qui n'ont pas répondu)
 
 -------------------------------------------------------------
                 //jetons de tous les joueurs de la partie
