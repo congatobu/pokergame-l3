@@ -428,6 +428,8 @@ class PokerClientThread extends Thread {
                                 {
                                     partie.setEnCours(2);
                                      partie.pasPret();
+                                     TimerLancePartie t = new TimerLancePartie(partie,partie.getSem());
+                                     t.start();
                                     partie.broadcastClientsPartie("AREUREADY");
                                    
                                 }
