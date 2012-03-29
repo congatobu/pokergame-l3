@@ -1,6 +1,5 @@
 #include "Reseau.h"
 
-
 #pragma comment(lib, "ws2_32.lib")
 
 #define PORT 6667
@@ -280,6 +279,110 @@ int Reseau::changerPseudo()
 	}
 return 0;	
 }
+
+int Reseau::changerMdp()
+{
+	pseudomdp="";
+	ancienmdp="";
+	nouveaumdp="";
+	pseudo="";
+	
+	std::cout << "Entrez votre ancien Pseudo : ";
+	cin>>pseudo;
+
+	std::cout << "Entrez votre mot de passe : ";
+	cin>>ancienmdp;
+
+	std::cout << "Entrez votre nouveau Pseudo : ";
+	cin>>nouveaumdp;
+
+	string tmp="ACTPASS@"+pseudo+"@"+ancienmdp+"@"+nouveaumdp+"\n";
+
+	pseudomdp = tmp.c_str();
+
+	cout<<pseudomdp<<endl;
+
+	if ((send(socketID, pseudomdp, strlen(pseudomdp), 0)) == 0)
+		perror("send");
+	cout<<sizeof(&pseudomdp)<<endl;
+	cout<<"phrase send"<<endl;
+
+	memset(phrase, 0, 255);
+	recv(socketID, phrase, 255, 0);
+
+	cout<<"phrase :"<<phrase<<endl;
+
+	if(strcmp(phrase,"OK")==0)
+	{
+		std::cout << " Mot de passe changé " << std::endl;
+	}
+	else if(strcmp(phrase,"WPASS")==0)
+	{
+		std::cout << " mauvais password utilisé, changement impossible " << std::endl;
+	}
+	else if(strcmp(phrase,"WPSEUDO")==0)
+	{
+		std::cout << " pseudo introuvable " << std::endl;
+	}
+	else if(strcmp(phrase,"WFPASS")==0)
+	{
+		std::cout << " Mot de passe incorect mauvais format " << std::endl; 
+	}
+	else if(strcmp(phrase,"WFPSEUDO")==0)
+	{
+		std::cout << " mauvais format de pseudo " << std::endl;
+	}
+return 0;
+}
+
+int Reseau::creerPartie()
+{
+cout<<"Donnez le nom de la partie"<<endl;
+	cin>>nompartie;
+cout<<"Donnez le nombre max de joueurs"<<endl;
+	cin>>nbjoueursmax;
+
+
+	string tmp="CREATEPARTIE@"+nompartie+"@"+nbjoueursmax+"\n";
+
+	rjp = tmp.c_str();
+
+	cout<<rjp<<endl;
+
+	if ((send(socketID, rjp, strlen(rjp), 0)) == 0)
+		perror("send");
+//	cout<<strlen(&rjp)<<endl;
+	cout<<"phrase send"<<endl;
+
+	memset(phrase, 0, 255);
+	recv(socketID, phrase, 255, 0);
+
+	cout<<"phrase :"<<phrase<<endl;
+
+	if(strcmp(phrase,"CREATPOK")==0)
+	{
+		std::cout << " C'est bon la partie est créée " << std::endl;
+	}
+	else if(strcmp(phrase,"PAU")==0)
+	{
+		std::cout << "  La partie déjà utilisé " << std::endl;
+	}
+	else if(strcmp(phrase,"WFP")==0)
+	{
+		std::cout << " mauvais format nom de partie " << std::endl;
+	}
+	else if(strcmp(phrase,"AIP")==0)
+	{
+		std::cout << "Le joueur est deja dans une partie" << std::endl; 
+	}
+	else if(strcmp(phrase,"NCON")==0)
+	{
+		std::cout << " Il faut se connecter avant " << std::endl;
+	}
+return 0;
+
+}
+
 void Reseau::deconnecterServeur(void)
 {
 	closesocket(socketID);
