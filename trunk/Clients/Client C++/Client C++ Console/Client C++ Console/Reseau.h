@@ -19,8 +19,10 @@ public:
 	int creerCompte();
 	void getlistepartie();
 	int rejoindreUnePartie();
+	int creerPartie();
 	void deconnecterServeur();
 	int changerPseudo();
+	int changerMdp();
 	int communiquerServeur();
 
 private:
@@ -31,9 +33,13 @@ private:
 	const char *rjp;
 	string nomcompte;
 	string nompartie;
+	string nbjoueursmax;
 	string mdp;
+	string pseudo;
 	string ancienpseudo;
 	string nouveaupseudo;
+	string ancienmdp;
+	string nouveaumdp;
 	struct sockaddr_in informations;
 	SOCKET socketID;
 };

@@ -29,14 +29,14 @@ if(choix==1)
 	cin>>choix;
 
 	if(choix==1){mr.getlistepartie();}
-	if(choix==2){}
+	if(choix==2){mr.creerPartie();}
 	if(choix==3){mr.rejoindreUnePartie();}
 
 }
-else if(choix==2){}
+else if(choix==2){} //demande les infos sur un joueur
 else if(choix==3){mr.creerCompte();}
 else if(choix==4){mr.changerPseudo();}
-else if(choix==5){}
+else if(choix==5){mr.changerMdp();}
 else{cout<<"mauvais choix !!!!!!!!!!";}
 //mr.communiquerServeur();
 cout<<"voulez vous vous deconnecter ? 1 oui, 2 non "<<endl;
