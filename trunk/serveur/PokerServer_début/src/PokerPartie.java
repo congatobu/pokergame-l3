@@ -105,6 +105,15 @@ public class PokerPartie {
         return this.maxPlayers;
     }
     
+      /**
+     * accesseur
+     * @author benjamin Maurin
+     * @return availableLancementPartie
+     */
+    public Semaphore getSem(){
+        return this.availableLancementPartie;
+    }
+    
     /**
      * accesseur
      * @author benjamin Maurin
@@ -245,6 +254,7 @@ public class PokerPartie {
             available  =null;
             nomP = null;
            je = null;   
+           availableLancementPartie = null;
            // screenOut.close();
         }catch(Exception e) {
         
@@ -284,9 +294,11 @@ public class PokerPartie {
         } 	
         
         //sinon ca lance
-          broadcastClientsPartie("DEBUTPARTIE");
-          //lancer dans un nouveau thread la partie
           enCours=1;
+          //lancer dans un nouveau thread la partie
+          ExecPartie e = new ExecPartie(this);
+          e.start();
+          broadcastClientsPartie("DEBUTPARTIE");
           availableLancementPartie.release();
         return 1;
     }
