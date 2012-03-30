@@ -165,14 +165,23 @@ else if((strcmp(phrase,"WPSEUDO")==0))
 
 
 
-void Reseau::getlistepartie()
+int Reseau::getlistepartie()
 {
-		getliste="GETLISTEPARTIE";
+		getliste="GETLISTEPARTIE\n";
 		if ((send(socketID, getliste, strlen(getliste), 0)) == 0)
 			perror("send");
 		memset(phrase, 0, 255);
 		recv(socketID, phrase, 255, 0);
-		std::cout << "Nombre de parties : " << phrase << std::endl;
+		if(strcmp(phrase,"NCON")==0)
+		{
+			std::cout << " Il faut se connecter avant " << std::endl;
+		}
+		else
+		{
+			std::cout << "Nombre de parties : " << phrase << std::endl;
+		}
+
+		return 0;
 }
 
 int Reseau::rejoindreUnePartie()
@@ -381,6 +390,29 @@ cout<<"Donnez le nombre max de joueurs"<<endl;
 	}
 return 0;
 
+}
+
+int Reseau::getInfo()
+{
+
+	cout<<"Donnez le nom du joueur"<<endl;
+	cin>>getinfo;
+
+	string getinfo="GETINFO@"+pseudo+"\n";
+
+	rjp = getinfo.c_str();
+
+	cout<<rjp<<endl;
+
+	if ((send(socketID, rjp, strlen(rjp), 0)) == 0)
+		perror("send");
+//	cout<<strlen(&rjp)<<endl;
+	cout<<"phrase send"<<endl;
+
+	memset(phrase, 0, 255);
+	recv(socketID, phrase, 255, 0);
+	std::cout << " C'est bon " << phrase << std::endl;
+	
 }
 
 void Reseau::deconnecterServeur(void)

@@ -18,7 +18,7 @@ Reseau mr;
 mr.connecterServeur();
 while(1)
 {
-	cout<<"\n 1) pour se connecter\n 2) pour avoir les parties\n 3) pour creer un compte\n 4) pour Changer de pseudo\n 5) pour Changer de mot de passe"<<endl;
+	cout<<"\n 1) pour se connecter\n 2) pour avoir les infos sur un joueur \n 3) pour creer un compte\n 4) pour Changer de pseudo\n 5) pour Changer de mot de passe"<<endl;
 	cin>>choix;
 
 if(choix==1)
@@ -33,7 +33,7 @@ if(choix==1)
 	if(choix==3){mr.rejoindreUnePartie();}
 
 }
-else if(choix==2){} //demande les infos sur un joueur
+else if(choix==2){mr.getInfo();} //demande les infos sur un joueur
 else if(choix==3){mr.creerCompte();}
 else if(choix==4){mr.changerPseudo();}
 else if(choix==5){mr.changerMdp();}
