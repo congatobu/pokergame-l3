@@ -332,10 +332,10 @@ public class PokerPartie {
     	//init jetons
     	
     	for(i=0;i<getNbJ();i++){
-	    	
-	    	clientList.get(i).setJetonsTotaux(200);
-	    	clientList.get(i).setJetonsPoses(0);
-	    	
+	    	if(clientList.get(i)!=null){
+		    	clientList.get(i).setJetonsTotaux(200);
+		    	clientList.get(i).setJetonsPoses(0);
+	    	}else clientList.remove(i);
 	    	
     	}
     	i=0;//contient le joueur qui pose la blind
@@ -343,7 +343,7 @@ public class PokerPartie {
     	while(g==-1){
     		je.initTasDe52cartes();
     		
-    		for(int j=0;j<getNbJ();j++){
+    		for(int j=0;j<getNbJ();j++){//suppression des client null
     	    	
     	    	if(clientList.get(j)==null)clientList.remove(j);
     	    	    	    	
@@ -351,18 +351,24 @@ public class PokerPartie {
     	       	
         	envoiJetonsJ();
         	bool=true;
-        	while(bool){//choix du blindeur 
-        	
-        		
-    		if(i==getNbJ())i=0;
-    		
-    		if(clientList.get(i)==null)i++;
-    		
-        	}
-        	
-    		deroulement(i);
-    		i++;
-    		g=gagnant();
+	        	while(bool){//choix du blindeur 
+	        	
+	        		
+		    		if(i==getNbJ())i=0;
+		    		
+		    		if(clientList.get(i)==null)i++;
+		    		else{
+		    			
+		    			if(clientList.get(i).getAttente()!=-1)
+		    			bool=false;
+		    			else i++;
+		    		}
+		    			
+	        	}
+	        	
+	    	deroulement(i);
+	    	i++;
+	    	g=gagnant();
     		
     	}
     	
@@ -537,7 +543,7 @@ public class PokerPartie {
     	
     	int jetons=0;//variable contenant les jetons poses max
     	int jetTable=0;//jetons au milieu de la table
-    	int nbJoueur=getNbJ();//nombre de joueurs en jeu (si ==1 faut finir)
+    	int nbJoueur=getNbJReel();//nombre de joueurs en jeu (si ==1 faut finir)
     	int joueur=b;
     	int nbTapis=0;
     	
@@ -548,9 +554,10 @@ public class PokerPartie {
 	    			clientList.get(i).setAttente(0);
 	    			clientList.get(i).setJetonsPoses(0);
 			    	clientList.get(i).setCartes(je.tireUneCarte(),je.tireUneCarte());
+			    	clientList.get(i).setPot(0);
 			    	envoiCarteM(i);    	
 	                
-	    		}
+	    		}else nbJoueur--;
     		}
     	}
     	
@@ -635,7 +642,7 @@ public class PokerPartie {
 		int[] cl=new int[nbJoueur];//indice du joueur
 		int cpt=0;
 		
-		//tu t'es arreter la barbu-----------------------------------------------------------------------------------------
+		
 		
 		for(int i=0;i<getNbJ();i++){
 			if(clientList.get(i)!=null){
@@ -650,7 +657,7 @@ public class PokerPartie {
 		
 		if(nbJoueur>1){
 			float[] g=je.gagnant(cartes,table,nbJoueur);
-			repartionDesGains(jetTable,g);
+			repartionDesGains(jetTable,g,g.length,true);
 				
 			
 			
@@ -698,30 +705,19 @@ public class PokerPartie {
 		
 	}
 
-	private void repartionDesGains(int jetTable, float[] g) {
+	private void repartionDesGains(int jetTable, float[] g,int taille,boolean testReste) {
 		
-		if(g.length==3){
+		if(taille==3){
 		
 			if(clientList.get((int)g[2]).getAttente()==0){// si il n'a pas fait tapis
 				clientList.get((int)g[2]).setJetonsTotaux(clientList.get((int)g[2]).getJetonsTotaux()+jetTable);
-			}	
-			else{//si il a fait tapis
-				for(int i=0;i<getNbJ();i++){
-					
-					clientList.get((int)g[2]).setJetonsTotaux(clientList.get((int)g[2]).getJetonsTotaux()+(min(clientList.get(i).getJetonsPoses(),clientList.get((int)g[2]).getJetonsPoses())));
-					clientList.get(i).setJetonsTotaux(clientList.get(i).getJetonsTotaux()+clientList.get(i).getJetonsPoses()-clientList.get((int)g[2]).getJetonsPoses());
-					
-					
-				}
-			
 			}
-		
 		}
-		else{//si cas d'egalite
+		else{
 		
 			int reste=jetTable;
 			int gain=0;
-			int jreste=g.length-2;
+			int jreste=taille-2;
 			boolean[] r=new boolean[jreste];//sert a savoir si on lui a donné assez de jetons
 			for(int i=0;i<jreste;i++)r[i]=false;
 				
@@ -734,7 +730,7 @@ public class PokerPartie {
 				
 			
 			
-				for(int i=2;i<g.length;i++){
+				for(int i=2;i<taille;i++){
 					
 					if(clientList.get((int)g[i])!=null && !r[i-2]){
 						
@@ -758,13 +754,42 @@ public class PokerPartie {
 				gain=reste/jreste;
 			}
 			
-			
-			}	
-			
-		
+			if(testReste){
+				
+				if(reste!=0){//on rend ca au(x) perdant(s) pas couché(s)
+					
+					float[] reste1=new float[getNbJ()-taille+2];
+					reste1[0]=0;reste1[1]=0;
+					boolean exist=false;
+					int cpt=2;
+					for(int i=2;i<getNbJ();i++){
+						
+						if(clientList.get(i)!=null){
+							if(clientList.get(i).getAttente()!=1 && clientList.get(i).getAttente()!=-1){
+							
+								for(int j=2;j<taille;j++){
+									
+									if(i==g[j])exist=true;
+									
+								}
+								if(!exist){
+									reste1[cpt]=i;
+									cpt++;
+								}
+							}
+							
+						}
+					
+					}
+					
+					repartionDesGains(reste, reste1, cpt, false);
+					
+				}
+			}
+		}
 	}
 
-	
+
 	
 	/**
      * fonction qui retournera le choix du joueur
