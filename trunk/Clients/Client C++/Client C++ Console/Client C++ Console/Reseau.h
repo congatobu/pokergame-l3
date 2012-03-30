@@ -17,12 +17,13 @@ public:
 	int connecterServeur();
 	int connecterServeurAMdp();
 	int creerCompte();
-	void getlistepartie();
+	int getlistepartie();
 	int rejoindreUnePartie();
 	int creerPartie();
 	void deconnecterServeur();
 	int changerPseudo();
 	int changerMdp();
+	int getInfo();
 	int communiquerServeur();
 
 private:
@@ -31,6 +32,7 @@ private:
 	const char *getliste;
 	const char *pseudomdp;
 	const char *rjp;
+	string getinfo;
 	string nomcompte;
 	string nompartie;
 	string nbjoueursmax;
