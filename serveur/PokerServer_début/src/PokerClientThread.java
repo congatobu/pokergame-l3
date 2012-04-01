@@ -414,6 +414,26 @@ class PokerClientThread extends Thread {
                 return 1;
             }
                
+                                   //un joueur envoi un message a la partie
+               if(cmd.equals("MESSAGE"))
+            {
+                screenOut.println("chat...\n");
+                 if(connecte){  
+                     if(partie!=null){
+                         if(partie.getEnCours()==1)
+                         {
+                            partie.broadcastClientsPartie("MESSAGE@"+st.nextToken()+"@"+st.nextToken());
+                         }
+                         else{send("PNE"); return 1;}
+                     }
+                     else{ send("NIP"); return 1;}
+                 }
+                 else {send("NCON"); }
+                return 1;
+            }
+               
+               
+               
                    // recevoir la demande du lancement de la partie par son créateur
                if(cmd.equals("DEBUTPARTIE"))
             {
@@ -431,7 +451,6 @@ class PokerClientThread extends Thread {
                                      TimerLancePartie t = new TimerLancePartie(partie,partie.getSem());
                                      t.start();
                                     partie.broadcastClientsPartie("AREUREADY");
-                                   
                                 }
                                 else{send("PAJ");return 1;}
                             }
@@ -447,7 +466,6 @@ class PokerClientThread extends Thread {
                       // recevoir l'indication que le joueur est pret
                if(cmd.equals("IAMREADY"))
             {
-                
                 if(partie!=null && partie.getEnCours()==2){
                  pret=1;
                  partie.testPret();
@@ -464,6 +482,5 @@ class PokerClientThread extends Thread {
             return -1;
         }
     }
-   
-
+  
 }
