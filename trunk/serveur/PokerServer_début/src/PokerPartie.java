@@ -718,7 +718,7 @@ public class PokerPartie {
 			int reste=jetTable;
 			int gain=0;
 			int jreste=taille-2;
-			boolean[] r=new boolean[jreste];//sert a savoir si on lui a donné assez de jetons
+			boolean[] r=new boolean[jreste];//sert a savoir si on lui a donn assez de jetons
 			for(int i=0;i<jreste;i++)r[i]=false;
 				
 				
@@ -756,7 +756,7 @@ public class PokerPartie {
 			
 			if(testReste){
 				
-				if(reste!=0){//on rend ca au(x) perdant(s) pas couché(s)
+				if(reste!=0){//on rend ca au(x) perdant(s) pas couch(s)
 					
 					float[] reste1=new float[getNbJ()-taille+2];
 					reste1[0]=0;reste1[1]=0;

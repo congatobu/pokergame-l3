@@ -122,6 +122,15 @@ Envoi à un joueur : CARTEM@carte1@carte2 ...
 
 -------------------------------------------------------------
 
+                //envoi d'un messages aux autres joueurs de la partie
+	MESSAGE@pseudo@message
+retour:
+	NIP  n'est pas dans une partie
+	PNE partie est pas en cours
+	NCON n'est pas connecté
+
+envoi à toute la partie : MESSAGE@pseudo@message
+-------------------------------------------------------------
                 //envoi des cartes de la table
 
 Envoi à toute la partie : CARTET@nombreCarte@carte1@carte2 ...
