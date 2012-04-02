@@ -34,7 +34,7 @@ public class Jeu {
 		int[] tab=new int[52];
 		int random;
 		int tp;
-		tas=null;
+		tas.clear();
 		
 		for(int i=0;i<52;i++){
 			tab[i]=i;
