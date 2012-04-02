@@ -4,7 +4,7 @@ import java.util.*;
 public class Jeu {
 
 	private Stack<Integer> tas = new Stack<Integer>();
-	static private int[][] vc=new int[2][52];
+	private int[][] vc=new int[2][52];
 	
 	Jeu(){
 		int cpt=0;
@@ -186,6 +186,18 @@ public class Jeu {
 			
 		}
 		
+		
+		if(val==0){//pour voir si on a une suite qui commence a As(on regarde donc si il y a une suite qui a 5 comme max)
+			for(int i=0;i<4;i++){
+				if(cpt[0][i]==5 && cpt[1][i]==4 && val==0){
+					for(int j=0;j<7;j++){
+						if(coul[j][0]==14 && coul[j][1]==i){
+							val=5;
+						}
+					}
+				}		
+			}	
+		}
 			
 		
 		return(val);	
@@ -273,9 +285,18 @@ public class Jeu {
 			
 	
 		if(cpt>=4)
-		
 		return(val);		
-		else return 0;
+		else{
+			if(cpt==3 && val==5 && valeur[6]==14){
+				
+				
+				return 5;
+			}
+			else
+			return 0;
+		}
+			
+			
 	}
 	
 	
