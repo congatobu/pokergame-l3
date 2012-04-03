@@ -189,4 +189,14 @@ Envoi à toute la partie : GAGNANTP@pseudo
 Envoi à toute la partie : PERDU@pseudo
 
 -------------------------------------------------------------
+		//envoi le choix du joueur au pseudo "pseudo"
+
+
+Envoi à toute la partie : JCHOIX@pseudo@choix
+
+choix est un entier: 1==se coucher
+		     2==suivre
+		     3==mise
+
+-------------------------------------------------------------
 	retour si erreur syntaxe :    ERROR
