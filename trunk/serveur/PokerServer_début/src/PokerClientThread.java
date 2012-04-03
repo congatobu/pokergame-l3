@@ -404,6 +404,7 @@ class PokerClientThread extends Thread {
                      if(partie!=null){
                          if(joue!=0)
                          {
+                        	 joue=0;
                              send(partie.jouage(Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()),this));
                          }
                          else{send("PAT"); return 1;}

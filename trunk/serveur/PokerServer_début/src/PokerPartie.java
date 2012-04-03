@@ -792,18 +792,18 @@ public class PokerPartie {
 
 	
 	/**
-     * fonction qui retournera le choix du joueur
+     * fonction qui retournera le choix du joueur.
      * @author steve giner
 	 * @param jetMis jetons mise par le joueur
 	 * @param joueur 
 	 * @param jetons jetons max pose sur la table par un joueur
 	 * @param relancer true si droit de relancer, false sinon
      */
-    private int choix(int jetons, int jetMis, int joueur,boolean relancer) {
+	private int choix(int jetons, int jetMis, int joueur,boolean relancer) {
         
          //envoi min et max jetons possible de miser pour relancer
             //envoi de la demande de choix
-    	
+    	choixJ=1;
     	if(clientList.get(joueur)!=null){
 	    	int min=jetons-clientList.get(joueur).getJetonsPoses();
 	    	int max=clientList.get(joueur).getJetonsTotaux();
@@ -814,12 +814,15 @@ public class PokerPartie {
 	    	
 	    	clientList.get(joueur).setJoue(1);
 	    	
+	    	TimerChoixJoueur tcj=new TimerChoixJoueur(this, clientList.get(joueur));
+	    	tcj.start();
 	        try {
 	            attenteDeChoix.acquire();
 	        } catch (InterruptedException ex) {
 	            Logger.getLogger(PokerPartie.class.getName()).log(Level.SEVERE, null, ex);
 	        }
-	        
+	        tcj.stopeux();
+	       
 	        if(choixJ==3 && relancer){
 	        	choixJ=2;
 	        	
@@ -846,12 +849,28 @@ public class PokerPartie {
 	        	
 	        	
 	        }
+	        
+	        envoiChoixJoueur(clientList.get(joueur).getPseudo());
     	}
+    	
+    	
 		return choixJ;
 	}
 
     
     
+	/**
+	 * envoi a tout les joueurs le choix du joueur au pseudo "pseudo".
+	 * @param pseudo
+	 * @author steve giner
+	 */
+private void envoiChoixJoueur(String pseudo) {
+		
+	broadcastClientsPartie("JCHOIX@"+pseudo+"@"+choixJ);
+	
+		
+	}
+
 /**
  * 
  * @param choix  le numero de l'action choisie
@@ -884,8 +903,9 @@ public class PokerPartie {
 	    	}
     	}
     	
+    	
         attenteDeChoix.release();
-        client.setJoue(0);
+        
         return retour;
         }
         else {
