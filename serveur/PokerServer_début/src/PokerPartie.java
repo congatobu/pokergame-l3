@@ -927,7 +927,7 @@ private void envoiChoixJoueur(String pseudo) {
 			clientList.get(joueur).setJetonsPoses(clientList.get(joueur).getJetonsPoses()+jetons);
 			
 			if(clientList.get(joueur).getJetonsTotaux()==0){clientList.get(joueur).setAttente(2);nbTapis++;}
-			clientList.get(joueur).send("JETONS:"+clientList.get(joueur).getJetonsTotaux());
+			//clientList.get(joueur).send("JETONS:"+clientList.get(joueur).getJetonsTotaux());
 			jetTable=jetTable+jetons;
 			
 	    	envoiJetonsJ();
