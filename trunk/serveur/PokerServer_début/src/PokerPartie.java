@@ -516,7 +516,7 @@ public class PokerPartie {
     	for(int i=0;i<getNbJ();i++){
     	
     		if(clientList.get(i)!=null){
-	    		if(clientList.get(i).getAttente()==0){
+	    		if(clientList.get(i).getAttente()!=-1){
 	    			cpt++;
 	    			j=i;
 	    		}
@@ -765,7 +765,7 @@ public class PokerPartie {
 					for(int i=2;i<getNbJ();i++){
 						
 						if(clientList.get(i)!=null){
-							if(clientList.get(i).getAttente()!=1 && clientList.get(i).getAttente()!=-1){
+							if(clientList.get(i).getAttente()!=1 || clientList.get(i).getAttente()!=-1){
 							
 								for(int j=2;j<taille;j++){
 									
@@ -927,7 +927,7 @@ private void envoiChoixJoueur(String pseudo) {
 			clientList.get(joueur).setJetonsPoses(clientList.get(joueur).getJetonsPoses()+jetons);
 			
 			if(clientList.get(joueur).getJetonsTotaux()==0){clientList.get(joueur).setAttente(2);nbTapis++;}
-			//clientList.get(joueur).send("JETONS:"+clientList.get(joueur).getJetonsTotaux());
+			clientList.get(joueur).send("JETONS:"+clientList.get(joueur).getJetonsTotaux());
 			jetTable=jetTable+jetons;
 			
 	    	envoiJetonsJ();
