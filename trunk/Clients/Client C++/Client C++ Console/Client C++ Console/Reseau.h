@@ -1,19 +1,27 @@
 #pragma once
 #include "Reseau.h"
+//#include "stdafx.h"
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <winsock2.h>
+#include <windows.h>
+
+
 #include <errno.h>
 #include <string>
 
 using namespace std;
+
+using namespace System::Threading;
 
 class Reseau
 {
 public:
 	Reseau(void);
 	~Reseau(void);
+	int analTram();
+	 void ecoute();
 	int connecterServeur();
 	int connecterServeurAMdp();
 	int creerCompte();
@@ -24,7 +32,9 @@ public:
 	int changerPseudo();
 	int changerMdp();
 	int getInfo();
-	int communiquerServeur();
+	int lancerPartie();
+	int lancerJeu();
+	int communiquerSessrveur();
 
 private:
 	
