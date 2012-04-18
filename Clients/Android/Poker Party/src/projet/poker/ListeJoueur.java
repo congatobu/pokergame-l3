@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,7 +22,7 @@ import projet.GestionConnexion.AnalyseurEnvoi;
 import projet.GestionConnexion.Connection;
 import projet.GestionConnexion.CreateurTram;
 
-public class ListePartie extends Activity{
+public class ListeJoueur extends Activity{
     /** Called when the activity is first created. */
     
     // Pour la boite de dialog 
@@ -33,60 +32,51 @@ public class ListePartie extends Activity{
     private static Handler              messageHandler;
     private static Handler              resultHandler;
     
-    // Ouverture d'une nouvelle activity
-    private Intent                      i;
-    
     // Gestion des éléments graphiques
-    private Button                      create;
-    private Button                      refresh;
-    private Button                      disconnect;
-    private EditText                    findParty;
-    private ListView                    maList;
-  
-    // Liste des partie de type liste de string
-    private List<String[]>              listPartie;
+    private Button                      start;
+    private Button                      retour;
+    private ListView                    listeJoueurs;
+    
+    private List<String>                listJoueurs;
+    private ArrayAdapter<String>        aa;
+    
+    // Demarrage de la nouvelle activity
+    private Intent                      i;
 
     // Création de la ArrayList qui nous permettra de remplire la listView
-    ArrayList<HashMap<String, String>>  listItem = new ArrayList<HashMap<String, String>>();
+    private ArrayList<String>           listItem = new ArrayList<String>();
            
     // On déclare la HashMap qui contiendra les informations pour un item
-    HashMap<String, String>             map;  
+    private String                      map;  
     
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.listepartie);
+        setContentView(R.layout.attentepartie);
         
-        
-    }
-    
-    @Override
-    public void onResume(){
-        super.onResume();
+        aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listItem);
         
         // on prepare le handler de retour de liste
         messageHandler = new Handler() {
             @Override
             public void handleMessage(android.os.Message msg) {
-                listPartie = new ArrayList<String[]>((List<String[]>)msg.obj);
+                listJoueurs = new ArrayList<String>((List<String>)msg.obj);
                 MAJAffichage();
             }
         };
         
-        // on prepare le handler de retour message
-        resultHandler = new Handler() {
+        resultHandler = new Handler(){
             @Override
             public void handleMessage(android.os.Message msg) {
-                Log.v("rejoindre", msg.obj.toString());
-                if(msg.obj.toString().equals("REJOK")){
-                    i = new Intent (getApplicationContext(), ListeJoueur.class);
+                if(msg.obj.toString().equals("EXITOK")){
+                    finish();
+                }else if(msg.obj.toString().equals("AREUREADY")){
+                    i = new Intent (getApplicationContext(), TableauJeu.class);
                     startActivity(i);
-                }else if(msg.obj.toString().equals("CREATPOK")){
-                    i = new Intent (getApplicationContext(), ListeJoueur.class);
-                    startActivity(i);
+                    finish();
                 }
-                Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT);
+                MAJAffichage();
             }
         };
         
@@ -99,41 +89,24 @@ public class ListePartie extends Activity{
         if(!initObjet()){
             Toast.makeText(this, "Problème a la Création des objets", Toast.LENGTH_SHORT).show();
         }
-          
-        refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                try {
-                    Accueuil.sender.setTram(CreateurTram.GET_LISTE_PARTIE);
-                } catch (IOException ex) {
-                    Logger.getLogger(ListePartie.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-        
-        //Enfin on met un écouteur d'évènement sur notre listView
-        maList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            @SuppressWarnings("unchecked")
-            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-                String tmp[] = new String[1];
-                map = new HashMap<String, String>();
-                map = (HashMap<String, String>)a.getItemAtPosition(position);
-                tmp[0] = map.get("PartyName");
-                try {
-                    Accueuil.sender.setTram(CreateurTram.REJOINDRE_PARTIE, tmp, 1);
-                } catch (IOException ex) {
-                    Logger.getLogger(ListePartie.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-        
-        Accueuil.connect.setActivity(Connection.LISTE_PARTIE);
+    }
+    
+    @Override
+    public void onResume(){
+        super.onResume();
+        Accueuil.connect.setActivity(Connection.LISTE_JOUEUR_PARTIE);
         try {
-            Accueuil.sender.setTram(CreateurTram.GET_LISTE_PARTIE);
+            Accueuil.sender.setTram(CreateurTram.GET_PLAYER);
         } catch (IOException ex) {
             Logger.getLogger(ListePartie.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+
+    @Override
+    public void onStop(){
+        
+        super.onDestroy();
     }
     
     /**
@@ -145,13 +118,11 @@ public class ListePartie extends Activity{
      */
     private boolean liaisonXML(){
         try{
-            create = (Button) findViewById(R.id.create);
-            refresh = (Button) findViewById(R.id.refresh);
-            disconnect = (Button) findViewById(R.id.disconnect);
-            findParty =(EditText) findViewById(R.id.findParty);
-   
+            start = (Button) findViewById(R.id.start);
+            retour = (Button) findViewById(R.id.retour);
+            
             //Récupération de la listview créée dans le fichier main.xml
-            maList = (ListView) findViewById(R.id.listviewpartie);
+            listeJoueurs = (ListView) findViewById(R.id.listviewjoueur);
                          
         }catch(Exception e){
             return false;
@@ -168,24 +139,25 @@ public class ListePartie extends Activity{
      */
     private boolean initObjet(){
         try{
-            create.setOnClickListener(new View.OnClickListener() {
+            start.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View arg0) {  
-                    initDialog();
-                    adb.show();
+                    try {
+                        Accueuil.sender.setTram(CreateurTram.DEBUT_PARTIE);
+                    } catch (IOException ex) {
+                        Logger.getLogger(ListeJoueur.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             });
             
-            disconnect.setOnClickListener(new View.OnClickListener() {
+            retour.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View arg0) {
                     try {
-                        Accueuil.sender.setTram(CreateurTram.DECONNECT);
+                        Accueuil.sender.setTram(CreateurTram.EXIT_PARTIE);
                     } catch (IOException ex) {
                         Logger.getLogger(ListePartie.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    Accueuil.connect.dispose();
-                    finish();
                 }
             });
             
@@ -207,6 +179,8 @@ public class ListePartie extends Activity{
             //On instancie notre layout en tant que View
             LayoutInflater factory = LayoutInflater.from(this);
             final View alertDialogView = factory.inflate(R.layout.popupcreatepartie, null);
+            
+            
 
             //Liaison du xml
             final EditText nomPartie = (EditText) alertDialogView.findViewById(R.id.partyName);
@@ -274,9 +248,9 @@ public class ListePartie extends Activity{
      * @param tabPartie une liste contenant les parties sous forme de tableaux
      *
      */
-    public static void MAJList(List<String[]> tabPartie){
+    public static void MAJList(List<String> tabJoueur){
         Message msg = new Message();
-        msg.obj = tabPartie;
+        msg.obj = tabJoueur;
         messageHandler.sendMessage(msg);
      
     }
@@ -302,19 +276,12 @@ public class ListePartie extends Activity{
      */
     private void MAJAffichage(){
         listItem.clear();
-        Iterator<String[]> iterator = listPartie.iterator();
+        Iterator<String> iterator = listJoueurs.iterator();
         while (iterator.hasNext()) {
-            map = new HashMap<String, String>();
-            String[] temp= iterator.next();
-            //on insère un élément partyname que l'on récupérera dans le textView titre créé dans le fichier displaylist.xml
-            map.put("PartyName", temp[0]);
-            //on insère un élément nbplayers que l'on récupérera dans le textView titre créé dans le fichier displaylist.xml
-            map.put("nbPlayers",temp[1]+"/"+temp[2]);
-            listItem.add(map);
+            listItem.add(iterator.next());
         }
-        SimpleAdapter mSchedule = new SimpleAdapter (this.getBaseContext(), listItem, R.layout.displaylist,
-        new String[] {"nbPlayers", "PartyName"}, new int[] { R.id.nbPlayers, R.id.PartyName});
-        maList.setAdapter(mSchedule);      
+        listeJoueurs.setAdapter(aa);  
+        aa.notifyDataSetChanged();
     }
     
     /**

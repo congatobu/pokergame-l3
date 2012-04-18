@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popupipport"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="10dp">
+        
+    <TextView
+        android:id="@+id/ipView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="IP  : "
+    />       
+    
+    <EditText
+        android:id="@+id/ip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/ipView"
+        android:layout_marginLeft="5mm"
+        android:layout_marginRight="5mm"
+    />
+    
+    <TextView
+        android:id="@+id/portView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Port : "
+        android:layout_below="@+id/ip"
+    />
+    
+    <EditText  
+        android:id="@+id/port"
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content" 
+        android:layout_marginLeft="5mm"
+        android:layout_marginRight="5mm"
+        android:layout_toRightOf="@+id/portView"
+        android:layout_below="@+id/ip"
+        android:max="8"
+    />
+    
+</RelativeLayout>

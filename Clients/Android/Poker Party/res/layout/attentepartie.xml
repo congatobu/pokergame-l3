@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/joueurs"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+ 
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/boutonjoueur"
+    android:orientation="vertical"
+    android:layout_width="30mm"
+    android:layout_height="match_parent"       
+    android:layout_alignParentLeft="true"
+    android:layout_marginLeft="3mm"
+    android:layout_marginRight="3mm"
+    >
+
+        <Button
+        android:id="@+id/start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="Start"
+        android:textColor="#ffff0000"
+        android:gravity="center"
+        android:textStyle="bold|italic"
+
+        />
+
+        <Button
+        android:id="@+id/retour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:text="Retour"
+        android:textColor="#ffff0000"
+        android:gravity="center"
+        android:textStyle="bold|italic"
+        />
+
+    </RelativeLayout>
+
+    <ListView
+    android:id="@+id/listviewjoueur"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@+id/boutonjoueur"
+    android:layout_alignParentRight="true"
+    android:layout_marginRight="3mm"
+    />
+ 
+</RelativeLayout>
