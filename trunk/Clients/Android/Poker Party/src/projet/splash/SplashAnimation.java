@@ -4,10 +4,6 @@
  */
 package projet.splash;
 
-import projet.poker.SplashScreen;
-import android.content.Intent;
-import android.util.Log;
-import android.widget.Toast;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -16,7 +12,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import projet.poker.Parametre;
+import projet.poker.SplashScreen;
 
 /**
  *

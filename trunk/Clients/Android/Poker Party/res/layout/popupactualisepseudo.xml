@@ -53,7 +53,6 @@
         android:layout_marginLeft="5mm"
         android:layout_marginRight="5mm"
         android:layout_toRightOf="@+id/TextView3"
-        android:password="true"
         android:layout_below="@+id/mdppseudo"
     />
 </RelativeLayout>

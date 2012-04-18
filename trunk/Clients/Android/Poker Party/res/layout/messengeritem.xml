@@ -6,7 +6,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 >
 
-    <TextView android:id="@+id/PartyName"
+    <TextView android:id="@+id/pseudomsg"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:textSize="48px"
@@ -14,7 +14,7 @@ android:layout_height="match_parent"
     android:gravity="left"
     />
 
-    <TextView android:id="@+id/nbPlayers"
+    <TextView android:id="@+id/messagemsg"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="right"

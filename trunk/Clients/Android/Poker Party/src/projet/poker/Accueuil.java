@@ -5,16 +5,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.os.*;
 import android.util.Log;
 import android.view.*;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.*;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,22 +43,35 @@ public class Accueuil extends Activity{
     private final int               A_PROPOS = 2;
     private final int               QUITTER = 3;
     
+    // Paratmètres de connexion
+    private String                  ip;
+    private String                  port;
+    
     // Pour la boite de dialog 
     AlertDialog.Builder             adb;
     
     // Handler pour sortir les messages de la partie static
-    private static Handler messageHandler;
+    private static Handler          messageHandler;
     
     /**
      * Référence vers le texte stocké dans le système de préférences
      */
-    public static final String  PREFS_CONNECT = "preferenceConnect"; 
+    public static final String      PREFS_CONNECT = "preferenceConnect";
+    
+    /**
+     * Référence vers la configuration ip pour la connexion
+     */
+    public static final String      PREFS_CONFIG = "preferenceConfig";
     
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        
         Log.v("starting", "create");
         //i = new Intent (getApplicationContext(), projet.poker.SplashScreen.class);
       	//startActivity(i);
@@ -109,7 +116,8 @@ public class Accueuil extends Activity{
     @Override
     public void onResume(){
         super.onResume();
-        connect.setActivity(Connection.ACCUEUIL);
+        connect.setActivity(Connection.ACCUEUIL); 
+        chargerParamReseau();
     }
     
     /**
@@ -128,6 +136,21 @@ public class Accueuil extends Activity{
             return false;
         }
         return super.onKeyDown(keyCode, event);
+    }
+    
+    /**
+     * 
+     */
+    private void chargerParamReseau(){
+        SharedPreferences settings = getSharedPreferences(PREFS_CONFIG, 0);        
+        if(settings.getString("ip", "0").equals("0") || settings.getString("port", "0").equals("0")){
+            initDialogIPPort();
+            adb.show();
+        }
+               
+        ip = settings.getString("ip", "0");
+        port = settings.getString("port", "0");
+        Log.v("connect", ip+" "+port);
     }
     
     /** 
@@ -244,7 +267,7 @@ public class Accueuil extends Activity{
                         arg[0] = pseudoCRT.getText().toString();
                         arg[1] = mdpCRT.getText().toString();
 
-                        if(connect.init("88.167.230.145", "6667")){
+                        if(connect.init(ip, port)){
                             try {
                                 sender.setTram(CreateurTram.CREATECPT, arg, 2);
                             } catch (IOException ex) {
@@ -300,7 +323,7 @@ public class Accueuil extends Activity{
                             String[] arg = new String[2];
                             arg[0] = user.getText().toString();
                             arg[1] = pass.getText().toString();
-                            if(connect.init("88.167.230.145", "6667")){
+                            if(connect.init(ip, port)){
                                 try {
                                     sender.setTram(CreateurTram.CONNECT, arg, 2);
                                 } catch (IOException ex) {
@@ -420,6 +443,8 @@ public class Accueuil extends Activity{
     
     /**
      * Fonction permettant de réinitialiser la sauvegarde de mot de pass et du pseudo.
+     * 
+     * @author Jessy Bonnotte
      */
     private void ereaseZone(){
         SharedPreferences settings = getSharedPreferences(PREFS_CONNECT, 0);        
@@ -428,5 +453,47 @@ public class Accueuil extends Activity{
         editor.putString("password", "0");
         editor.putBoolean("memorise", false);
         editor.commit();
+    }
+    
+     private boolean initDialogIPPort(){
+        try{
+            //On instancie notre layout en tant que View
+            LayoutInflater factory = LayoutInflater.from(this);
+            final View alertDialogView = factory.inflate(R.layout.popupipport, null);                 
+            //Liaison du xml
+            final EditText ip = (EditText) alertDialogView.findViewById(R.id.ip);
+            final EditText port = (EditText) alertDialogView.findViewById(R.id.port);
+            //Création de l'AlertDialog
+            adb = new AlertDialog.Builder(this);
+            //On affecte la vue personnalisé que l'on a crée à notre AlertDialog
+            adb.setView(alertDialogView);
+            //On donne un titre à l'AlertDialog
+            adb.setTitle("Parametrage reseau");
+            //On modifie l'icône de l'AlertDialog pour le fun ;)
+            adb.setIcon(R.drawable.info);
+            final AnalyseurEnvoi verifEnv = new AnalyseurEnvoi();
+            //On affecte un bouton "OK" à notre AlertDialog et on lui affecte un évènement
+            adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    SharedPreferences settings = getSharedPreferences(Accueuil.PREFS_CONFIG, 0);        
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("ip", ip.getText().toString());
+                    editor.putString("port", port.getText().toString());
+                    editor.commit();
+                    dialog.cancel();
+                }
+            });
+
+            //On crée un bouton "Annuler" à notre AlertDialog et on lui affecte un évènement
+            adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    //Lorsque l'on cliquera sur annuler on quittera l'application
+                    dialog.cancel();
+                } 
+            });
+        }catch(Exception e){
+            return false;
+        }
+        return true;
     }
 }

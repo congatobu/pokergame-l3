@@ -1,0 +1,804 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TabHost
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/tabhost"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+            
+             <TabWidget
+            android:id="@android:id/tabs"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="0pt"
+            android:layout_weight="0"/>
+            
+            <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0">
+            
+            <RelativeLayout
+                android:id="@+id/rel1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                >
+
+                    <Button
+                    android:id="@+id/fold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="se coucher"
+                    android:layout_alignParentBottom="true"/>
+
+                    <Button
+                    android:id="@+id/checkfold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/fold"
+                    android:text="parole/se coucher"
+                    android:layout_alignParentBottom="true"/>
+
+                    <Button
+                    android:id="@+id/check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/checkfold"
+                    android:text="parole"
+                    android:layout_alignParentBottom="true"/>
+
+                    <Button
+                    android:id="@+id/call"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/check"
+                    android:text="suivre"
+                    android:layout_alignParentBottom="true"/>
+
+                    <Button
+                    android:id="@+id/bet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/call"
+                    android:text="relancer"
+                    android:layout_alignParentBottom="true"/>   
+
+                    <RelativeLayout
+                    android:id="@+id/first"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_above="@+id/bet"
+                    android:layout_alignParentTop="true">
+
+                        <TableLayout
+                        android:id="@+id/TableLayout01"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentTop="true"
+                        android:shrinkColumns="0,1,2,3,4"
+                        >
+
+                            <TableRow
+                            android:layout_weight="2">
+
+                                <RelativeLayout
+                                android:id="@+id/chat"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_column="0"
+                                android:layout_weight="1"
+                                > 
+
+                                    <Button
+                                    android:id="@+id/chat1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="CHAT"
+                                    />  
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                android:id="@+id/p1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_column="1"
+                                android:layout_weight="1"
+                                android:layout_gravity="center_vertical">
+
+                                <RelativeLayout
+                                    android:id="@+id/cp1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="20pt"
+                                    android:layout_below="@+id/cashp1"
+                                    android:layout_centerHorizontal="true">
+
+                                        <ImageView
+                                        android:id="@+id/c1p1"
+                                        android:layout_width="20pt"
+                                        android:layout_height="fill_parent"
+                                        android:src="@drawable/cards"
+                                        android:layout_alignLeft="@+id/cp1"
+                                        />
+
+                                        <ImageView
+                                        android:id="@+id/c2p1"
+                                        android:layout_width="20pt"
+                                        android:layout_height="fill_parent"
+                                        android:src="@drawable/cards"
+                                        android:layout_toRightOf="@+id/c1p1"
+                                        />
+
+                                    </RelativeLayout>
+
+                                    <TextView
+                                    android:id="@+id/pseudop1"
+                                    android:layout_width="wrap_content"
+                                    android:text="Mathieu"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="12sp"   
+                                    android:layout_centerHorizontal="true"
+                                    />             
+                                    <TextView
+                                    android:id="@+id/cashp1"
+                                    android:layout_width="wrap_content"
+                                    android:text="561169 $"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_below="@id/pseudop1" 
+                                    android:textSize="12sp"
+                                    />
+
+                                    <TextView
+                                    android:id="@+id/betp1"
+                                    android:layout_width="wrap_content"
+                                    android:text=" 1001$"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_below="@id/cp1" 
+                                    android:textSize="12sp"
+
+                                    />
+                                    </RelativeLayout>
+
+                                <RelativeLayout
+                                android:id="@+id/p2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_column="3"
+                                android:layout_weight="2"
+                                android:layout_gravity="center_vertical">
+
+                                <RelativeLayout
+                                    android:id="@+id/cp2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="20pt"
+                                    android:layout_below="@+id/cashp2"
+                                    android:layout_centerHorizontal="true">
+
+                                        <ImageView
+                                        android:id="@+id/c1p2"
+                                        android:layout_width="20pt"
+                                        android:layout_height="fill_parent"
+                                        android:src="@drawable/cards"
+                                        android:layout_alignLeft="@+id/cp2"
+                                        />
+
+                                        <ImageView
+                                        android:id="@+id/c2p2"
+                                        android:layout_width="20pt"
+                                        android:layout_height="fill_parent"
+                                        android:src="@drawable/cards"
+                                        android:layout_toRightOf="@+id/c1p2"
+                                        />
+
+                                    </RelativeLayout>
+
+                                    <TextView
+                                    android:id="@+id/pseudop2"
+                                    android:layout_width="wrap_content"
+                                    android:text="Mathieu"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="12sp"   
+                                    android:layout_centerHorizontal="true"
+                                    />             
+                                    <TextView
+                                    android:id="@+id/cashp2"
+                                    android:layout_width="wrap_content"
+                                    android:text="561169 $"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_below="@id/pseudop2" 
+                                    android:textSize="12sp"
+                                    />
+
+                                    <TextView
+                                    android:id="@+id/betp2"
+                                    android:layout_width="wrap_content"
+                                    android:text=" 1001$"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_below="@id/cp2" 
+                                    android:textSize="12sp"
+
+                                    />
+                                    </RelativeLayout>
+
+                                <RelativeLayout
+                                android:id="@+id/p3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_column="3"
+                                android:layout_weight="1"
+                                android:layout_gravity="center_vertical">
+
+                                <RelativeLayout
+                                    android:id="@+id/cp3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="20pt"
+                                    android:layout_below="@+id/cashp3"
+                                    android:layout_centerHorizontal="true">
+
+                                        <ImageView
+                                        android:id="@+id/c1p3"
+                                        android:layout_width="20pt"
+                                        android:layout_height="fill_parent"
+                                        android:src="@drawable/cards"
+                                        android:layout_alignLeft="@+id/cp3"
+                                        />
+
+                                        <ImageView
+                                        android:id="@+id/c2p3"
+                                        android:layout_width="20pt"
+                                        android:layout_height="fill_parent"
+                                        android:src="@drawable/cards"
+                                        android:layout_toRightOf="@+id/c1p3"
+                                        />
+
+                                    </RelativeLayout>
+
+                                    <TextView
+                                    android:id="@+id/pseudop3"
+                                    android:layout_width="wrap_content"
+                                    android:text="Mathieu"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="12sp"   
+                                    android:layout_centerHorizontal="true"
+                                    />             
+                                    <TextView
+                                    android:id="@+id/cashp3"
+                                    android:layout_width="wrap_content"
+                                    android:text="561169 $"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_below="@+id/pseudop3" 
+                                    android:textSize="12sp"
+                                    />
+
+                                    <TextView
+                                    android:id="@+id/betp3"
+                                    android:layout_width="wrap_content"
+                                    android:text=" 1001$"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_below="@+id/cp3" 
+                                    android:textSize="12sp"
+
+                                    />
+                                    </RelativeLayout>
+
+                                <RelativeLayout
+                                android:id="@+id/quit"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_column="4"
+                                android:layout_weight="1"
+                            >
+
+                                    <Button
+                                    android:id="@+id/quit1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+
+                                    android:text="QUIT"
+                                    android:layout_alignParentRight="true"
+                                />  
+
+                                </RelativeLayout>
+
+                            </TableRow>
+
+                            <TableRow
+
+                            android:layout_weight="2">
+
+                <RelativeLayout
+                                android:id="@+id/p8"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_column="3"
+                                android:layout_weight="1"
+                                android:layout_gravity="center_vertical">
+
+                                <RelativeLayout
+                                    android:id="@+id/cp8"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="20pt"
+                                    android:layout_below="@+id/betp8"
+                                    android:layout_centerHorizontal="true">
+
+                                        <ImageView
+                                        android:id="@+id/c1p8"
+                                        android:layout_width="20pt"
+                                        android:layout_height="fill_parent"
+                                        android:src="@drawable/cards"
+                                        android:layout_alignLeft="@+id/cp8"
+                                        />
+
+                                        <ImageView
+                                        android:id="@+id/c2p8"
+                                        android:layout_width="20pt"
+                                        android:layout_height="fill_parent"
+                                        android:src="@drawable/cards"
+                                        android:layout_toRightOf="@+id/c1p8"
+                                        />
+
+                                    </RelativeLayout>
+
+                                    <TextView
+                                    android:id="@+id/pseudop8"
+                                    android:layout_width="wrap_content"
+                                    android:text="Mathieu"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="12sp"   
+                                    android:layout_below="@+id/cp8" 
+                                    android:layout_centerHorizontal="true"
+                                    />             
+                                    <TextView
+                                    android:id="@+id/cashp8"
+                                    android:layout_width="wrap_content"
+                                    android:text="568869 $"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_below="@id/pseudop8" 
+                                    android:textSize="12sp"
+                                    />
+
+                                    <TextView
+                                    android:id="@+id/betp8"
+                                    android:layout_width="wrap_content"
+                                    android:text=" 1008$"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:textSize="12sp"
+
+                                    />
+                                    </RelativeLayout>
+
+                                <RelativeLayout
+                                android:id="@+id/tapis"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_column="1"
+                                android:layout_weight="3"
+
+                                android:layout_gravity="center_vertical"
+                                >
+                                <RelativeLayout
+                                    android:id="@+id/ct"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="20pt"
+
+                                    android:layout_centerHorizontal="true"
+                                    >
+
+                                        <ImageView
+                                        android:id="@+id/ct1"
+                                        android:layout_width="20pt"
+                                        android:layout_height="fill_parent"
+                                        android:src="@drawable/cards"
+                                        android:layout_alignLeft="@+id/ct"
+                                        />
+
+                                        <ImageView
+                                        android:id="@+id/ct2"
+                                        android:layout_width="20pt"
+                                        android:layout_height="fill_parent"
+                                        android:src="@drawable/cards"
+                                        android:layout_toRightOf="@+id/ct1"
+                                        />
+
+                                        <ImageView
+                                        android:id="@+id/ct3"
+                                        android:layout_width="20pt"
+                                        android:layout_height="fill_parent"
+                                        android:src="@drawable/cards"
+                                        android:layout_toRightOf="@+id/ct2"
+                                        />
+
+                                        <ImageView
+                                        android:id="@+id/ct4"
+                                        android:layout_width="20pt"
+                                        android:layout_height="fill_parent"
+                                        android:src="@drawable/cards"
+                                        android:layout_toRightOf="@+id/ct3"
+                                        />
+
+                                        <ImageView
+                                        android:id="@+id/ct5"
+                                        android:layout_width="20pt"
+                                        android:layout_height="fill_parent"
+                                        android:src="@drawable/cards"
+                                        android:layout_toRightOf="@+id/ct4"
+                                        />
+
+                                    </RelativeLayout>
+                                    <TextView
+                                    android:id="@+id/pot"
+                                    android:layout_width="wrap_content"
+                                    android:text="pot: 0 $"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_below="@id/ct"                   
+                                    />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                android:id="@+id/p4"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_column="3"
+                                android:layout_weight="1"
+                                android:layout_gravity="center_vertical">
+
+                                <RelativeLayout
+                                    android:id="@+id/cp4"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="20pt"
+                                    android:layout_below="@+id/betp4"
+                                    android:layout_centerHorizontal="true">
+
+                                        <ImageView
+                                        android:id="@+id/c1p4"
+                                        android:layout_width="20pt"
+                                        android:layout_height="fill_parent"
+                                        android:src="@drawable/cards"
+                                        android:layout_alignLeft="@+id/cp4"
+                                        />
+
+                                        <ImageView
+                                        android:id="@+id/c2p4"
+                                        android:layout_width="20pt"
+                                        android:layout_height="fill_parent"
+                                        android:src="@drawable/cards"
+                                        android:layout_toRightOf="@+id/c1p4"
+                                        />
+
+                                    </RelativeLayout>
+
+                                    <TextView
+                                    android:id="@+id/pseudop4"
+                                    android:layout_width="wrap_content"
+                                    android:text="Mathieu"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="12sp"   
+                                    android:layout_below="@+id/cp4" 
+                                    android:layout_centerHorizontal="true"
+                                    />             
+                                    <TextView
+                                    android:id="@+id/cashp4"
+                                    android:layout_width="wrap_content"
+                                    android:text="568469 $"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_below="@id/pseudop4" 
+                                    android:textSize="12sp"
+                                    />
+
+                                    <TextView
+                                    android:id="@+id/betp4"
+                                    android:layout_width="wrap_content"
+                                    android:text=" 1008$"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:textSize="12sp"
+
+                                    />
+                                    </RelativeLayout>
+                            </TableRow>
+
+                            <TableRow
+
+                            android:layout_weight="2"
+                            >
+
+                                <RelativeLayout
+                                android:id="@+id/add1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_column="0"
+                                android:layout_weight="1"
+                                >
+
+                                    <Button
+                                    android:id="@+id/add1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="add1"
+                                    /> 
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                android:id="@+id/p7"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_column="1"
+                                android:layout_weight="1"
+
+                                android:layout_gravity="center_vertical">
+
+                                <RelativeLayout
+                                    android:id="@+id/cp7"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="20pt"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_below="@+id/betp7">
+
+                                        <ImageView
+                                        android:id="@+id/c1p7"
+                                        android:layout_width="20pt"
+                                        android:layout_height="fill_parent"
+                                        android:src="@drawable/cards"
+                                        android:layout_alignLeft="@+id/cp7"
+                                        />
+
+                                        <ImageView
+                                        android:id="@+id/c2p7"
+                                        android:layout_width="20pt"
+                                        android:layout_height="fill_parent"
+                                        android:src="@drawable/cards"
+                                        android:layout_toRightOf="@+id/c1p7"
+                                        />
+
+                                    </RelativeLayout>
+                                    <TextView
+                                    android:id="@+id/pseudop7"
+                                    android:layout_width="wrap_content"
+                                    android:text="Mathieu"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="12sp"   
+                                    android:layout_below="@+id/cp7" 
+                                    android:layout_centerHorizontal="true"
+                                    />             
+                                    <TextView
+                                    android:id="@+id/cashp7"
+                                    android:layout_width="wrap_content"
+                                    android:text="568469 $"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_below="@id/pseudop7" 
+                                    android:textSize="12sp"
+                                    />
+
+                                    <TextView
+                                    android:id="@+id/betp7"
+                                    android:layout_width="wrap_content"
+                                    android:text=" 1008$"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:textSize="12sp"
+
+                                    />
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                android:id="@+id/p6"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_column="2"
+                                android:layout_weight="1"
+
+                                android:layout_gravity="center_vertical">
+
+                                <RelativeLayout
+                                    android:id="@+id/cp6"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="20pt"
+                                    android:layout_below="@+id/betp6"
+                                    android:layout_centerHorizontal="true">
+
+                                        <ImageView
+                                        android:id="@+id/c1p6"
+                                        android:layout_width="20pt"
+                                        android:layout_height="fill_parent"
+                                        android:src="@drawable/cards"
+                                        android:layout_alignLeft="@+id/cp6"
+                                        />
+
+                                        <ImageView
+                                        android:id="@+id/c2p6"
+                                        android:layout_width="20pt"
+                                        android:layout_height="fill_parent"
+                                        android:src="@drawable/cards"
+                                        android:layout_toRightOf="@+id/c1p6"
+                                        />
+
+                                    </RelativeLayout>
+
+                                    <TextView
+                                    android:id="@+id/pseudop6"
+                                    android:layout_width="wrap_content"
+                                    android:text="Mathieu"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="12sp"   
+                                    android:layout_below="@+id/cp6" 
+                                    android:layout_centerHorizontal="true"
+                                    />             
+                                    <TextView
+                                    android:id="@+id/cashp6"
+                                    android:layout_width="wrap_content"
+                                    android:text="568469 $"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_below="@id/pseudop6" 
+                                    android:textSize="12sp"
+                                    />
+
+                                    <TextView
+                                    android:id="@+id/betp6"
+                                    android:layout_width="wrap_content"
+                                    android:text=" 1008$"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:textSize="12sp"
+
+                                    />
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                android:id="@+id/p5"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_column="3"
+                                android:layout_weight="1"
+                                android:layout_gravity="center_vertical">
+
+                                <RelativeLayout
+                                    android:id="@+id/cp5"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="20pt"
+                                    android:layout_below="@+id/betp5"
+                                    android:layout_centerHorizontal="true">
+
+                                        <ImageView
+                                        android:id="@+id/c1p5"
+                                        android:layout_width="20pt"
+                                        android:layout_height="fill_parent"
+                                        android:src="@drawable/cards"
+                                        android:layout_alignLeft="@+id/cp5"
+                                        />
+
+                                        <ImageView
+                                        android:id="@+id/c2p5"
+                                        android:layout_width="20pt"
+                                        android:layout_height="fill_parent"
+                                        android:src="@drawable/cards"
+                                        android:layout_toRightOf="@+id/c1p5"
+                                        />
+
+                                    </RelativeLayout>
+
+                                    <TextView
+                                    android:id="@+id/pseudop5"
+                                    android:layout_width="wrap_content"
+                                    android:text="Mathieu"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="12sp"   
+                                    android:layout_below="@+id/cp5" 
+                                    android:layout_centerHorizontal="true"
+                                    />             
+                                    <TextView
+                                    android:id="@+id/cashp5"
+                                    android:layout_width="wrap_content"
+                                    android:text="568469 $"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_below="@id/pseudop5" 
+                                    android:textSize="12sp"
+                                    />
+
+                                    <TextView
+                                    android:id="@+id/betp5"
+                                    android:layout_width="wrap_content"
+                                    android:text=" 1008$"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:textSize="12sp"
+
+                                    />
+
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                android:id="@+id/add2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_column="4"
+                                android:layout_weight="1"
+                        >
+
+                                    <Button
+                                    android:id="@+id/chat1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="ADD2"
+                                    android:layout_alignParentRight="true"
+                                />  
+
+                                </RelativeLayout>
+
+                            </TableRow>
+                        </TableLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+                
+                <RelativeLayout
+                android:id="@+id/rel2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                >
+                    <Button
+                        android:id="@+id/send"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Envoyer"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"/>
+                    
+                    <Button
+                        android:id="@+id/effacer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Effacer"
+                        android:layout_alignParentBottom="true"
+                        android:layout_toRightOf="@+id/send"/>
+                    <Button
+                        android:id="@+id/retour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Retour"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"/>
+                        
+                    <EditText
+                        android:id="@+id/message"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/send"/>
+                        
+                    <ListView
+                        android:id="@+id/listviewmessenger"
+                        android:layout_width="fill_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_height="fill_parent"
+                        android:layout_above="@+id/message"
+                    />
+                    
+                </RelativeLayout>
+            
+            
+            </FrameLayout>
+    </LinearLayout>
+</TabHost>
+        
+        

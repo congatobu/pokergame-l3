@@ -31,7 +31,7 @@ android:padding="10dp"
     android:text="Joueurs max : "
     android:layout_below="@+id/partyName"
     />
-    
+
     <SeekBar  
     android:id="@+id/nbPlayers"
     android:layout_width="fill_parent" 
@@ -41,7 +41,6 @@ android:padding="10dp"
     android:layout_toRightOf="@+id/TextView1"
     android:layout_below="@+id/partyName"
     android:max="8"
+    
     />
-
-
 </RelativeLayout>

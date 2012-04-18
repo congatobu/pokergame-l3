@@ -9,6 +9,7 @@ import android.os.Message;
 import android.util.Log;
 import java.io.*;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.concurrent.FutureTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,6 +23,8 @@ public class Connection implements Runnable{
     public static final int     ACCUEUIL = 1;
     public static final int     PARAMETRE = 2;
     public static final int     LISTE_PARTIE = 3;
+    public static final int     LISTE_JOUEUR_PARTIE = 4;
+    public static final int     PARTIE = 5;
     
     private int                 currentActivity = 0;
     
@@ -50,9 +53,9 @@ public class Connection implements Runnable{
     private AnalyseurTram       analTram;
     
     // Timeout de connexion
-    private FutureTask<?> theTask = null;
-    private long depart = 0;
-    private long arrive = 0;
+    private FutureTask<?>       theTask = null;
+    private long                depart = 0;
+    private long                arrive = 0;
     
     public Connection(){
         
@@ -67,7 +70,7 @@ public class Connection implements Runnable{
         cryptTram = new Crypt();
         port = Integer.parseInt(p);
         analTram = new AnalyseurTram();
-        
+
         hand = new Handler(){
             @Override
             public void handleMessage(Message msg){
@@ -78,12 +81,15 @@ public class Connection implements Runnable{
                 }
             }
         };
-        
+
         try {
+            Log.v("connexion", "avant la socket : "+adresse+"  "+port);
+
             sock = new Socket(adresse, port);
+
             Log.v("Parametre", "avant socket");
-            
-            //sock.connect(new InetSocketAddress(adresse, port), 3000);
+            //sock = new Socket();
+            //sock.connect(new InetSocketAddress(adresse, port), 5000);
             Log.v("Parametre", "apres socket");
             if(!sock.isConnected()){
                 msgvaleur = new Message();
@@ -95,13 +101,29 @@ public class Connection implements Runnable{
             bw = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
             proc = new Thread(this);
             proc.start();                   
-        }catch (Exception e) {
+            /*}catch (IOException e) {
+
+            }*/
+            return true;
+        } catch (UnknownHostException ex) {
+            Log.v("Parametre", "ici");
             msgvaleur = new Message();
             msgvaleur.obj = "ERREUR";
             hand.sendMessage(msgvaleur);
+
+            //Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+
+            return false;
+        } catch (IOException ex) {
+            Log.v("Parametre", ex.getMessage());
+            msgvaleur = new Message();
+            msgvaleur.obj = "ERREUR";
+            hand.sendMessage(msgvaleur);
+
+            //Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+
             return false;
         }
-        return true;
     }
     
     public void say(String message) throws IOException{

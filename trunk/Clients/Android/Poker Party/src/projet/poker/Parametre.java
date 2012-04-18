@@ -7,14 +7,15 @@ package projet.poker;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,13 +34,17 @@ import projet.GestionConnexion.CreateurTram;
  */
 public class Parametre extends Activity{
  
-    private ListView maListViewPerso;
+    private ListView                maListViewPerso;
     
     // Handler pour sortir les messages de la partie static
-    private static Handler messageHandler;
+    private static Handler          messageHandler;
     
     // Pour la boite de dialog 
     AlertDialog.Builder             adb;
+    
+    // Paratmètres de connexion
+    private String                  ipS;
+    private String                  portS;
  
     /** 
      * Fonction appelé lors de la création de l'activity. le super.onCreate()<br/>
@@ -90,6 +95,12 @@ public class Parametre extends Activity{
         map.put("description", "Requiert internet");
         map.put("img", String.valueOf(R.drawable.myspace));
         listItem.add(map);
+        
+        map = new HashMap<String, String>();
+        map.put("titre", "Reglage Reseau");
+        map.put("description", "Parametrage du port et de l'IP");
+        map.put("img", String.valueOf(R.drawable.info));
+        listItem.add(map);
  
         //Création d'un SimpleAdapter qui se chargera de mettre les items présent dans notre list (listItem) dans la vue affichageitem
         SimpleAdapter mSchedule = new SimpleAdapter (this.getBaseContext(), listItem, R.layout.affichageitem,
@@ -112,6 +123,10 @@ public class Parametre extends Activity{
                         initDialogPass();
                         adb.show();
                         break;
+                    case 2:
+                        initDialogIPPort();
+                        adb.show();
+                        break;                  
                 }
                 //on récupère la HashMap contenant les infos de notre item (titre, description, img)
                 //HashMap<String, String> map = (HashMap<String, String>) maListViewPerso.getItemAtPosition(position);
@@ -121,6 +136,22 @@ public class Parametre extends Activity{
                 }
             }
         });
+    }
+    
+    @Override
+    public void onResume(){
+        super.onResume();
+        chargerParamReseau();
+    }
+    
+    /**
+     * 
+     */
+    private void chargerParamReseau(){
+        SharedPreferences settings = getSharedPreferences(Accueuil.PREFS_CONFIG, 0);        
+               
+        ipS = settings.getString("ip", "0");
+        portS = settings.getString("port", "0");
     }
     
     public static void finOperation(String message){
@@ -242,6 +273,52 @@ public class Parametre extends Activity{
                 } 
             });
         }catch(Exception e){
+            return false;
+        }
+        return true;
+    }
+    
+    private boolean initDialogIPPort(){
+        try{
+            //On instancie notre layout en tant que View
+            LayoutInflater factory = LayoutInflater.from(this);
+            final View alertDialogView = factory.inflate(R.layout.popupipport, null);                 
+            //Liaison du xml
+            final EditText ip = (EditText) alertDialogView.findViewById(R.id.ip);
+            final EditText port = (EditText) alertDialogView.findViewById(R.id.port);
+            //Création de l'AlertDialog
+            adb = new AlertDialog.Builder(this);
+            //On affecte la vue personnalisé que l'on a crée à notre AlertDialog
+            adb.setView(alertDialogView);
+            //On donne un titre à l'AlertDialog
+            adb.setTitle("Parametrage reseau");
+            //On modifie l'icône de l'AlertDialog pour le fun ;)
+            adb.setIcon(R.drawable.info);
+            
+            ip.setText(ipS);
+            port.setText(portS);
+            
+            //On affecte un bouton "OK" à notre AlertDialog et on lui affecte un évènement
+            adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    SharedPreferences settings = getSharedPreferences(Accueuil.PREFS_CONFIG, 0);        
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("ip", ip.getText().toString());
+                    editor.putString("port", port.getText().toString());
+                    editor.commit();
+                    dialog.cancel();
+                }
+            });
+
+            //On crée un bouton "Annuler" à notre AlertDialog et on lui affecte un évènement
+            adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    //Lorsque l'on cliquera sur annuler on quittera l'application
+                    dialog.cancel();
+                } 
+            });
+        }catch(Exception e){
+            Log.v("param", e.getMessage());
             return false;
         }
         return true;

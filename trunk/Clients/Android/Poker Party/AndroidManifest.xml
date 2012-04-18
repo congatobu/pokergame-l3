@@ -35,6 +35,16 @@
                   android:screenOrientation="landscape"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
+        <activity android:name="ListeJoueur"
+                  android:label="Liste des joueurs"
+                  android:screenOrientation="landscape"
+                  android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        </activity>
+        <activity android:name="TableauJeu"
+                  android:label="Table de jeu"
+                  android:screenOrientation="landscape"
+                  android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        </activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
 </manifest> 
