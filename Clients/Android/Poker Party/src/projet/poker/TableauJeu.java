@@ -27,6 +27,7 @@ public class TableauJeu extends TabActivity
     public static final int             CARTE_JOUEUR = 2;
     public static final int             CARTE_TABLE = 3;
     public static final int             JETON_TABLE = 4;
+    public static final int             FIN_TOUR = 5;
     
     // variable d'affichage
     private ImageView[][]               cartes;
@@ -46,6 +47,8 @@ public class TableauJeu extends TabActivity
     
     // Le tabhost d'affichage
     private TabHost                     mTabHost;
+    
+    private int                         iVal = 0;
     
     // Contient le message temporaire
     private String[]                    messageCourant = new String[2];
@@ -93,18 +96,24 @@ public class TableauJeu extends TabActivity
                     listDonnees = ((List<String[]>) msg.obj);
                     ActDonneesJoueurs();
                 }else if(msg.arg1 == CARTE_JOUEUR){
-                    carteJoueur[0] = Integer.parseInt(((List<String[]>) msg.obj).get(0)[0]) - 1;
-                    carteJoueur[1] = Integer.parseInt(((List<String[]>) msg.obj).get(0)[1]) - 1;
-                    initManche();
+                    carteJoueur[0] = Integer.parseInt(((List<String[]>) msg.obj).get(0)[0]);
+                    carteJoueur[1] = Integer.parseInt(((List<String[]>) msg.obj).get(0)[1]);
                     ActCartesUtilisateur();
                 }else if(msg.arg1 == CARTE_TABLE){
                     for (int i = 0; i < ((List<String[]>) msg.obj).size(); i++) {
-                        carteTable[i] = Integer.parseInt(((List<String[]>) msg.obj).get(i)[0]) -1;
+                        carteTable[i] = Integer.parseInt(((List<String[]>) msg.obj).get(i)[0]);
+                        Log.v("Transfert","Transfert : "+i+"");
                     }
                     ActCarteTable();
                 }else if(msg.arg1 == JETON_TABLE){
                     potText = Integer.parseInt(((List<String[]>) msg.obj).get(0)[0]);
                     ActPotTable();
+                }else if(msg.arg1 == FIN_TOUR){
+                    Toast.makeText(getApplicationContext(), "Gagnant : "+((List<String[]>) msg.obj).get(0)[0], Toast.LENGTH_SHORT).show();
+                    initManche();
+                    ActCarteTable();
+                    ActPotTable();
+                    ActCartesUtilisateur();
                 }
                 //listPartie = new ArrayList<String[]>((List<String[]>)msg.obj);
                 //MAJAffichage();
@@ -147,6 +156,7 @@ public class TableauJeu extends TabActivity
 
             public void onClick(View arg0) {
                 mTabHost.setCurrentTab(1);
+                getWindow().setBackgroundDrawableResource(R.drawable.fond);
             }
         });
         
@@ -156,6 +166,7 @@ public class TableauJeu extends TabActivity
 
             public void onClick(View arg0) {
                 mTabHost.setCurrentTab(0);
+                getWindow().setBackgroundDrawableResource(R.drawable.table);
             }
         });
         
@@ -209,6 +220,8 @@ public class TableauJeu extends TabActivity
         } catch (IOException ex) {
             Logger.getLogger(TableauJeu.class.getName()).log(Level.SEVERE, null, ex);
         }
+        initManche();
+        maList = (ListView) findViewById(R.id.listviewmessenger);
        
     }
     
@@ -216,6 +229,9 @@ public class TableauJeu extends TabActivity
         for (int i = 0; i < 5; i++) {
             carteTable[i] = -1;
         }
+        potText = 0;
+        carteJoueur[0] = -1;
+        carteJoueur[1] = -1;
     }
     
     /**
@@ -369,15 +385,24 @@ public class TableauJeu extends TabActivity
     }
     
     private void ActCartesUtilisateur(){
-        cartes[posJoueur][0].setImageBitmap(img.getImage(carteJoueur[0] / 4, carteJoueur[0] % 4));
-        cartes[posJoueur][1].setImageBitmap(img.getImage(carteJoueur[1] / 4, carteJoueur[1] % 4));
+        if(carteJoueur[0] > -1 && carteJoueur[1] > -1){
+            cartes[posJoueur][0].setImageBitmap(img.getImage(carteJoueur[0] / 4, carteJoueur[0] % 4));
+            cartes[posJoueur][1].setImageBitmap(img.getImage(carteJoueur[1] / 4, carteJoueur[1] % 4));
+        }else{
+            cartes[posJoueur][0].setImageResource(R.drawable.cards);
+            cartes[posJoueur][1].setImageResource(R.drawable.cards);
+        }
     }
     
     private void ActCarteTable(){
-        int i = 0;
-        while(carteTable[i] != -1 && i < 5){
-            cartesCentre[i].setImageBitmap(img.getImage(carteTable[i] / 4, carteTable[i] % 4));
-            i++;
+     
+        for (int i = 0; i < 5 ; i++) {
+            Log.v("remplissage", "remplissage : "+carteTable[i]+"");
+            if(carteTable[i] > -1){ 
+                cartesCentre[i].setImageBitmap(img.getImage(carteTable[i] / 4, carteTable[i] % 4));
+            }else{
+                cartesCentre[i].setImageResource(R.drawable.cards);
+            }
         }
     }
     
