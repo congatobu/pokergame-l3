@@ -1,19 +1,22 @@
 package pokerPackage;
 
 
+
+
+
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 
 /**
  * Classe pour lire les commandes
  * @author Benjamin Maurin
  */
-class CommandReader extends Thread{
+public class CommandReader extends Thread{
     BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     PrintWriter screenOut = new PrintWriter(System.out, true);
     String command;

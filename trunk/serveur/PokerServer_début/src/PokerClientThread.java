@@ -2,18 +2,21 @@ package pokerPackage;
 
 
 
+
+
+
+
 import java.io.*;
 import java.net.Socket;
 import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 
 /**
  * Classe du thread par client qui gère les messages avec son client
  * @author Benjamin Maurin
  */
-class PokerClientThread extends Thread {
+public class PokerClientThread extends Thread {
     private PrintWriter screenOut = new PrintWriter(System.out, true);
     private Socket socket = null;
     private String clientIP;
@@ -73,6 +76,7 @@ class PokerClientThread extends Thread {
 
  /**
      * @author benjamin Maurin
+     * Accesseur
      */
     public void setPret(int a)
     {
@@ -81,6 +85,7 @@ class PokerClientThread extends Thread {
     
      /**
      * @author benjamin Maurin
+     *  Accesseur
      */
     public int getPret(int a)
     {
@@ -88,6 +93,7 @@ class PokerClientThread extends Thread {
     }
     
      /**
+     *  Accesseur
      * @author benjamin Maurin
      * @return attente
      */
@@ -96,6 +102,7 @@ class PokerClientThread extends Thread {
     }
     
      /**
+     *  Accesseur
      * @author benjamin Maurin
      * @return partie
      */
@@ -104,6 +111,7 @@ class PokerClientThread extends Thread {
     }
     
        /**
+     *  Accesseur
      * @author benjamin Maurin
      */
     public void setJoue(int a){ 
@@ -111,6 +119,7 @@ class PokerClientThread extends Thread {
     }
     
        /**
+     *  Accesseur
      * @author benjamin Maurin
      */
     public void setAttente(int a){ 
@@ -118,12 +127,14 @@ class PokerClientThread extends Thread {
     }
     
        /**
+     *  Accesseur
      * @author benjamin Maurin
      */
     public void setPartie(PokerPartie a){ 
        this.partie = a;
     }
          /**
+     *  Accesseur
      * @author benjamin Maurin
      * @return cartes du joueur
      */
@@ -132,12 +143,14 @@ class PokerClientThread extends Thread {
     }
     
      /**
+     *  Accesseur
      * @author benjamin Maurin
      */
     public void setCartes(int a, int b){ 
         this.cartes[0]=a; this.cartes[1]=b;
     }
      /**
+     *  Accesseur
      * @author benjamin Maurin
      * @return Jetons totaux du joueur
      */
@@ -146,6 +159,7 @@ class PokerClientThread extends Thread {
     }
     
       /**
+     *  Accesseur
      * @author benjamin Maurin
      * @return Jetons posés du joueur
      */
@@ -154,6 +168,7 @@ class PokerClientThread extends Thread {
     }
     
      /**
+     *  Accesseur
      * @author benjamin Maurin
      */
     public void setJetonsTotaux(int a){ 
@@ -161,6 +176,7 @@ class PokerClientThread extends Thread {
     }
     
      /**
+     *  Accesseur
      * @author benjamin Maurin
      */
     public void setJetonsPoses(int a){ 
@@ -168,6 +184,7 @@ class PokerClientThread extends Thread {
     }
 
     /**
+     *  Accesseur
      * @author benjamin Maurin
      * @return clientIP
      */
@@ -176,6 +193,7 @@ class PokerClientThread extends Thread {
     }
     
     /**
+     *  Accesseur
      * @author benjamin Maurin
      * @return pseudo
      */
@@ -183,21 +201,33 @@ class PokerClientThread extends Thread {
         return this.pseudo;
     }
 
-        
+        /**
+     *  Accesseur
+     * @author benjamin Maurin
+     * @return pot
+     */
     public int getPot(){
     	
     	return pot;
     	
     }
     
-    
+    /**
+     *  Accesseur
+     * @author benjamin Maurin
+     * @param jetons 
+     */
     public void setPot(int jetons){
     	
     	
     	pot=jetons;
     }
     
-    
+    /**
+     * Ajoute au pot les jetons en paramètre
+     *  @author benjamin Maurin
+     * @param jetons 
+     */
     public void ajoutePot(int jetons){
     	
     	pot=pot+jetons;
@@ -274,7 +304,7 @@ class PokerClientThread extends Thread {
      * @param inputLine : le message à traiter
      * @param   *1 : message traite *0: type de message inconnu *-1 : erreur dans le traitement
      */
-    private int traitements(String inputLine){
+     int traitements(String inputLine){
         try{
             //perroquet test
             screenOut.println("Socket recue : "+inputLine+"\n");
