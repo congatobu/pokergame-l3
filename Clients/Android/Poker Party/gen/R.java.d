@@ -1,89 +1,109 @@
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\gen\projet\poker\R.java \
- : C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-hdpi\add.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-hdpi\back.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-hdpi\cancel.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-hdpi\cards.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-hdpi\deptinfo.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-hdpi\dialog.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-hdpi\exit.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-hdpi\fond.jpg \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-hdpi\info.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-hdpi\logo.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-hdpi\myspace.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-hdpi\remove.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-hdpi\settings.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-hdpi\um2.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-ldpi\add.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-ldpi\back.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-ldpi\cancel.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-ldpi\cards.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-ldpi\deptinfo.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-ldpi\dialog.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-ldpi\exit.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-ldpi\fond.jpg \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-ldpi\info.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-ldpi\logo.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-ldpi\myspace.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-ldpi\remove.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-ldpi\settings.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-ldpi\um2.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-mdpi\add.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-mdpi\back.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-mdpi\cancel.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-mdpi\cards.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-mdpi\deptinfo.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-mdpi\dialog.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-mdpi\exit.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-mdpi\fond.jpg \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-mdpi\info.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-mdpi\logo.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-mdpi\myspace.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-mdpi\remove.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-mdpi\settings.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\drawable-mdpi\um2.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\layout\affichageitem.xml \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\layout\apropos.xml \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\layout\main.xml \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\layout\parametre.xml \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\layout\popupcreatecompte.xml \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\res\values\strings.xml \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-hdpi\add.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-hdpi\back.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-hdpi\cancel.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-hdpi\cards.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-hdpi\deptinfo.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-hdpi\dialog.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-hdpi\exit.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-hdpi\info.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-hdpi\logo.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-hdpi\myspace.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-hdpi\remove.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-hdpi\settings.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-hdpi\um2.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-ldpi\add.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-ldpi\back.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-ldpi\cancel.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-ldpi\cards.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-ldpi\deptinfo.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-ldpi\dialog.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-ldpi\exit.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-ldpi\info.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-ldpi\logo.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-ldpi\myspace.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-ldpi\remove.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-ldpi\settings.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-ldpi\um2.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-mdpi\add.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-mdpi\back.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-mdpi\cancel.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-mdpi\cards.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-mdpi\deptinfo.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-mdpi\dialog.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-mdpi\exit.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-mdpi\info.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-mdpi\logo.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-mdpi\myspace.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-mdpi\remove.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-mdpi\settings.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\bin\res\drawable-mdpi\um2.png \
-C:\Users\Shyzkanza\Desktop\projet L3\Release\Android\Poker Party\AndroidManifest.xml \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\gen\projet\poker\R.java \
+ : C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\anim\animlogo.xml \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-hdpi\add.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-hdpi\back.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-hdpi\cancel.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-hdpi\cards.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-hdpi\cartemodif.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-hdpi\deptinfo.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-hdpi\dialog.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-hdpi\exit.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-hdpi\fond.jpg \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-hdpi\info.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-hdpi\logo.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-hdpi\myspace.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-hdpi\remove.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-hdpi\settings.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-hdpi\table.jpg \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-hdpi\um2.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-ldpi\add.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-ldpi\back.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-ldpi\cancel.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-ldpi\cards.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-ldpi\cartemodif.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-ldpi\deptinfo.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-ldpi\dialog.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-ldpi\exit.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-ldpi\fond.jpg \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-ldpi\info.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-ldpi\logo.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-ldpi\myspace.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-ldpi\remove.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-ldpi\settings.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-ldpi\table.jpg \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-ldpi\um2.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-mdpi\add.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-mdpi\back.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-mdpi\cancel.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-mdpi\cards.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-mdpi\cartemodif.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-mdpi\deptinfo.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-mdpi\dialog.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-mdpi\exit.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-mdpi\fond.jpg \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-mdpi\info.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-mdpi\logo.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-mdpi\myspace.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-mdpi\remove.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-mdpi\settings.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-mdpi\table.jpg \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\drawable-mdpi\um2.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\layout\affichageitem.xml \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\layout\apropos.xml \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\layout\attentepartie.xml \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\layout\displaylist.xml \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\layout\listepartie.xml \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\layout\main.xml \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\layout\messengeritem.xml \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\layout\parametre.xml \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\layout\popupactualisepassword.xml \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\layout\popupactualisepseudo.xml \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\layout\popupcreatecompte.xml \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\layout\popupcreatepartie.xml \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\layout\popupipport.xml \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\layout\relancer.xml \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\layout\tableau.xml \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\res\values\strings.xml \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-hdpi\add.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-hdpi\back.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-hdpi\cancel.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-hdpi\cards.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-hdpi\cartemodif.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-hdpi\deptinfo.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-hdpi\dialog.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-hdpi\exit.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-hdpi\info.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-hdpi\logo.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-hdpi\myspace.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-hdpi\remove.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-hdpi\settings.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-hdpi\um2.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-ldpi\add.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-ldpi\back.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-ldpi\cancel.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-ldpi\cards.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-ldpi\cartemodif.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-ldpi\deptinfo.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-ldpi\dialog.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-ldpi\exit.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-ldpi\info.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-ldpi\logo.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-ldpi\myspace.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-ldpi\remove.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-ldpi\settings.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-ldpi\um2.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-mdpi\add.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-mdpi\back.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-mdpi\cancel.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-mdpi\cards.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-mdpi\cartemodif.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-mdpi\deptinfo.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-mdpi\dialog.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-mdpi\exit.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-mdpi\info.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-mdpi\logo.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-mdpi\myspace.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-mdpi\remove.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-mdpi\settings.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\bin\res\drawable-mdpi\um2.png \
+C:\Users\Masss\Documents\NetBeansProjects\Poker Party\AndroidManifest.xml \

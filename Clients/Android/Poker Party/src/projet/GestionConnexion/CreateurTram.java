@@ -29,6 +29,8 @@ public class CreateurTram {
     public static final int MESSENGER = 14;
     public static final int JOUER = 15;
     public static final int CHECK= 16;
+    public static final int CALL= 17;
+    public static final int FOLD= 18;
 
     public CreateurTram(){
         
@@ -113,7 +115,21 @@ public class CreateurTram {
                 tram+="@";
                 tram+=arg[1];
                 Accueuil.connect.say(tram);
-                break;                   
+                break;
+            case CALL:
+                tram+="CHOIX";
+                tram+="@";
+                tram+=arg[0];
+                tram+="@";
+                tram+=arg[1];
+                Accueuil.connect.say(tram);
+                case FOLD:
+                tram+="CHOIX";
+                tram+="@";
+                tram+=arg[0];
+                tram+="@";
+                tram+=arg[1];
+                Accueuil.connect.say(tram);
         }
     }
     
@@ -158,6 +174,7 @@ public class CreateurTram {
                 tram+="0";
                 Accueuil.connect.say(tram);
 
+                        
 
         }
     }
