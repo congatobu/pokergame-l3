@@ -8,6 +8,8 @@ import android.util.Log;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import projet.poker.*;
 
 /**
@@ -245,7 +247,24 @@ public class AnalyseurTram {
                 listeArguments.add(argumentCourant.clone());
                 TableauJeu.MAJLIST(TableauJeu.JETON_TABLE, listeArguments);
             }else if(typeTram.equals("MESSAGE")){
+                String[] argumentCourant = new String[2];
                 
+                index1 = new Integer(index2);
+                index2 = tram.indexOf("@", index1 + 1);    
+                argumentCourant[0] = tram.substring(index1 + 1, index2);                
+                index1 = new Integer(index2);               
+                argumentCourant[1] = tram.substring(index1 + 1, tram.length());
+                
+                listeArguments.add(argumentCourant.clone());
+                
+                TableauJeu.MAJLIST(TableauJeu.MESSENGER, listeArguments);
+            }else if(typeTram.equals("GAGNANTT")){
+                String[] argumentCourant = new String[1];
+                index1 = new Integer(index2);
+
+                argumentCourant[0] = tram.substring(index1 + 1, tram.length());
+                listeArguments.add(argumentCourant.clone());
+                TableauJeu.MAJLIST(TableauJeu.FIN_TOUR, listeArguments);
             }else if(typeTram.equals("EXITOK")){
                 
             }else if(typeTram.equals("MESSAGE")){

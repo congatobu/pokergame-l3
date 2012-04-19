@@ -8,6 +8,7 @@ import android.R;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 
 
@@ -47,14 +48,15 @@ public class GestionImg {
     public Bitmap getImage(int valeur, int couleur){
         Bitmap retour = null;
         
-        int valTemp = valeur--;
-        if(valTemp == -1){
-            valTemp = 12;
+        int valTemp = valeur;
+        if(valTemp == 0){
+            valTemp = 13;
         }
         
         int x = 832 - (largeur * valTemp);
         int y = hauteur * couleur;
         
+       
         retour = Bitmap.createBitmap(bMapScaled, x, y, 64, 73);
         
         return retour;
