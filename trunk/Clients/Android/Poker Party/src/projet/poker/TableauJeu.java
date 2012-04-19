@@ -53,7 +53,8 @@ public class TableauJeu extends TabActivity
     private Button                      envoiMessage;
     private Button                      check;
     private Button                      bet;
-    
+    private Button                      call;
+    private Button                      fold;
      
     
     // Le tabhost d'affichage
@@ -133,6 +134,7 @@ public class TableauJeu extends TabActivity
                     choixJoueur[1] = ((List<String[]>) msg.obj).get(0)[1]; // jeton max
                     choixJoueur[2] = ((List<String[]>) msg.obj).get(0)[2]; // relancé? true ou false
                     enableButton();
+                      Toast.makeText(getApplicationContext(),"a toi !!!", Toast.LENGTH_SHORT).show();
                 }
                 //listPartie = new ArrayList<String[]>((List<String[]>)msg.obj);
                 //MAJAffichage();
@@ -154,7 +156,7 @@ public class TableauJeu extends TabActivity
                 }else if(msg.obj.toString().equals("EXITOK")){
                     finish();
                 }
-                Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT);
+                Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
             }
         };
         
@@ -248,7 +250,7 @@ public class TableauJeu extends TabActivity
         
         
         //check.
-         check=(Button) findViewById(R.id.check);
+        check=(Button) findViewById(R.id.check);
         check.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
@@ -260,6 +262,42 @@ public class TableauJeu extends TabActivity
             }
             
         });
+        
+        call=(Button) findViewById(R.id.call);
+        call.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View arg0) {
+                try {
+                     String[] arg = new String[2];
+            
+                arg[0]="2";
+                arg[1] ="0";
+                    Accueuil.sender.setTram(CreateurTram.CALL,arg,2);
+                } catch (IOException ex) {
+                    Logger.getLogger(TableauJeu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+        });
+        
+        fold=(Button) findViewById(R.id.fold);
+        fold.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View arg0) {
+                try {
+                String[] arg = new String[2];            
+                arg[0]="1";
+                arg[1] ="0";
+                    Accueuil.sender.setTram(CreateurTram.FOLD,arg,2);
+                } catch (IOException ex) {
+                    Logger.getLogger(TableauJeu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+        });
+     
+        
+        
         bet=(Button) findViewById(R.id.bet);
         bet.setOnClickListener(new View.OnClickListener() {
 
@@ -531,9 +569,9 @@ public class TableauJeu extends TabActivity
                 arg[0]="3";
                 arg[1] =""+seekJetons.getProgress();
 
-                //  Log.v("Accueuil", "test");
+                //  Log.v("MATHIEU",arg[1] );
                 try {
-                    Accueuil.sender.setTram(CreateurTram.JOUER, arg, 1);
+                    Accueuil.sender.setTram(CreateurTram.JOUER, arg, 2);
                 } catch (IOException ex) {
                     Logger.getLogger(Accueuil.class.getName()).log(Level.SEVERE, null, ex);
                 }
