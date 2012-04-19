@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/popuprelancer"
+android:orientation="horizontal"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:padding="10dp"
+>
+    <TextView
+    android:id="@+id/jetonplayers"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:text="Mes jetons : "
+    />
+    
+    <EditText
+    android:id="@+id/myjetons"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_toRightOf="@+id/jetonplayers"
+    android:layout_marginLeft="5mm"
+    android:layout_marginRight="5mm"
+    />
+   
+        />
+    <TextView
+    android:id="@+id/jetonselect"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="sélections jetons : "
+    android:layout_below="@+id/myjetons"
+    android:layout_marginRight="10mm"
+    />
+
+    <SeekBar  
+    android:id="@+id/seekJetons"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:layout_marginLeft="5mm"
+    android:layout_marginRight="5mm"
+    android:layout_toRightOf="@+id/jetonplayers"
+    android:layout_below="@+id/myjetons"
+    android:max="150"
+
+    
+    
+    />
+    <TextView
+    android:id="@+id/printJetonSelect"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5mm"
+    android:layout_marginRight="5mm"
+    android:layout_below="@+id/seekJetons"
+    android:layout_centerHorizontal="true"
+    />
+</RelativeLayout>

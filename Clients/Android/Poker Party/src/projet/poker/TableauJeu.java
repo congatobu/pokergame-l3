@@ -1,6 +1,8 @@
 package projet.poker;
 
+import android.app.AlertDialog;
 import android.app.TabActivity;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
 import java.io.IOException;
@@ -16,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import projet.GestionConnexion.AnalyseurEnvoi;
 import projet.GestionConnexion.Connection;
 import projet.GestionConnexion.CreateurTram;
 
@@ -37,6 +41,8 @@ public class TableauJeu extends TabActivity
     private GestionImg                  img;
     private ListView                    maList;
     private EditText                    textAEnvoyer;
+    private SeekBar                     seekJetons;
+    private EditText                    printJetonSelect;
     
     // Tous les boutons
     private Button                      chat;
@@ -44,6 +50,10 @@ public class TableauJeu extends TabActivity
     private Button                      exitPartie;
     private Button                      effaceMessenger;
     private Button                      envoiMessage;
+    private Button                      check;
+    private Button                      bet;
+    
+     
     
     // Le tabhost d'affichage
     private TabHost                     mTabHost;
@@ -60,6 +70,9 @@ public class TableauJeu extends TabActivity
     private int                         posJoueur = 0;
     private int[]                       carteTable = new int[5];
     private int                         potText;
+    
+    //popup
+    AlertDialog.Builder                 adb;
 
     // Création de la ArrayList qui nous permettra de remplire la listView
     ArrayList<HashMap<String, String>>  listItem = new ArrayList<HashMap<String, String>>();
@@ -96,13 +109,13 @@ public class TableauJeu extends TabActivity
                     listDonnees = ((List<String[]>) msg.obj);
                     ActDonneesJoueurs();
                 }else if(msg.arg1 == CARTE_JOUEUR){
-                    carteJoueur[0] = Integer.parseInt(((List<String[]>) msg.obj).get(0)[0]);
-                    carteJoueur[1] = Integer.parseInt(((List<String[]>) msg.obj).get(0)[1]);
+                    carteJoueur[0] = Integer.parseInt(((List<String[]>) msg.obj).get(0)[0]) - 1;
+                    carteJoueur[1] = Integer.parseInt(((List<String[]>) msg.obj).get(0)[1]) - 1;
+                    initManche();
                     ActCartesUtilisateur();
                 }else if(msg.arg1 == CARTE_TABLE){
                     for (int i = 0; i < ((List<String[]>) msg.obj).size(); i++) {
-                        carteTable[i] = Integer.parseInt(((List<String[]>) msg.obj).get(i)[0]);
-                        Log.v("Transfert","Transfert : "+i+"");
+                        carteTable[i] = Integer.parseInt(((List<String[]>) msg.obj).get(i)[0]) -1;
                     }
                     ActCarteTable();
                 }else if(msg.arg1 == JETON_TABLE){
@@ -159,6 +172,7 @@ public class TableauJeu extends TabActivity
                 getWindow().setBackgroundDrawableResource(R.drawable.fond);
             }
         });
+        
         
         // Fermeture du chat
         exitChat = (Button) findViewById(R.id.retour);
@@ -222,6 +236,29 @@ public class TableauJeu extends TabActivity
         }
         initManche();
         maList = (ListView) findViewById(R.id.listviewmessenger);
+        
+        
+        //check.
+         check=(Button) findViewById(R.id.check);
+        check.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View arg0) {
+                try {
+                    Accueuil.sender.setTram(CreateurTram.CHECK);
+                } catch (IOException ex) {
+                    Logger.getLogger(TableauJeu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+        });
+        bet=(Button) findViewById(R.id.bet);
+        bet.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View arg0) {
+                initBet();
+                adb.show();
+            }
+        });
        
     }
     
@@ -395,13 +432,17 @@ public class TableauJeu extends TabActivity
     }
     
     private void ActCarteTable(){
-     
-        for (int i = 0; i < 5 ; i++) {
-            Log.v("remplissage", "remplissage : "+carteTable[i]+"");
-            if(carteTable[i] > -1){ 
-                cartesCentre[i].setImageBitmap(img.getImage(carteTable[i] / 4, carteTable[i] % 4));
-            }else{
-                cartesCentre[i].setImageResource(R.drawable.cards);
+      /*  int i = 0;
+        while(carteTable[i] != -1 && i < 5){
+            cartesCentre[i].setImageBitmap(img.getImage(carteTable[i] / 4, carteTable[i] % 4));
+            i++;
+        }*/
+        for(int i=0; i<5;i++){
+            if(carteTable[i]!=-1){
+                Log.v("remplissage","remplissage : "+carteTable[i]+"");
+                cartesCentre[i].setImageBitmap(img.getImage(carteTable[i]/4,carteTable[i]%4));
+            }else {
+                cartesCentre[1].setImageResource(R.drawable.cards);
             }
         }
     }
@@ -409,4 +450,100 @@ public class TableauJeu extends TabActivity
     private void ActPotTable(){
         pot.setText("pot : "+potText+"$");
     }
-}
+    
+private void initBet(){
+        
+            //On instancie notre layout en tant que View
+            LayoutInflater factory = LayoutInflater.from(this);
+            final View alertDialogView = factory.inflate(R.layout.relancer, null);
+            
+            
+            //Liaison du xml
+           final TextView printJetonSelect = (TextView) alertDialogView.findViewById(R.id.printJetonSelect);
+            final SeekBar seekJetons = (SeekBar) alertDialogView.findViewById(R.id.seekJetons);
+            printJetonSelect.setText("Relance à:  0" );
+            //seekJetons.setMax(potText);
+            //seekJetons.onStartTrackingTouch
+            seekJetons.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
+              
+                printJetonSelect.setText("Relance à: "+Integer.toString(progress + 5));
+
+            }
+
+            public void onStartTrackingTouch(SeekBar arg0) {
+                
+            }
+
+            public void onStopTrackingTouch(SeekBar arg0) {
+                
+            }
+           });
+
+            
+        
+            
+            //Création de l'AlertDialog
+            adb = new AlertDialog.Builder(this);
+
+            //On affecte la vue personnalisé que l'on a crée à notre AlertDialog
+            adb.setView(alertDialogView);
+
+            //On donne un titre à l'AlertDialog
+            adb.setTitle("Relancer");
+
+            //On modifie l'icône de l'AlertDialog pour le fun ;)
+            adb.setIcon(R.drawable.add);
+            
+            
+                        //On affecte un bouton "OK" à notre AlertDialog et on lui affecte un évènement
+            adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    
+                    String[] arg = new String[2];
+                   // CHOIX@3@NombreJeton
+                    arg[0]="3";
+                     arg[1] =""+seekJetons.getProgress();
+                     
+                  //  Log.v("Accueuil", "test");
+                     try {
+                            Accueuil.sender.setTram(CreateurTram.JOUER, arg, 1);
+                        } catch (IOException ex) {
+                            Logger.getLogger(Accueuil.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        dialog.cancel();
+                    
+                    /*
+                    if(verifEnv.analyseNomPartie(nomPartie.getText().toString())){
+                        String[] arg = new String[2];
+                        arg[0] = nomPartie.getText().toString();
+                        arg[1] = ""+nbPlayer.getProgress();
+                        try {
+                            Accueuil.sender.setTram(CreateurTram.CREATE_PARTIE, arg, 2);
+                        } catch (IOException ex) {
+                            Logger.getLogger(Accueuil.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        //MAJAffichage();
+                        dialog.cancel();
+                    }else{
+                        //MAJAffichage();
+                        dialog.cancel();
+                        Toast.makeText(getApplicationContext(), "Mauvais format d'écriture", Toast.LENGTH_SHORT).show();   
+                    }*/
+                } 
+            });
+            
+             //On crée un bouton "Annuler" à notre AlertDialog et on lui affecte un évènement
+            adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    //Lorsque l'on cliquera sur annuler on quittera l'application
+                    dialog.cancel();
+                } 
+            });
+
+   
+    }
+    
+    }
+
