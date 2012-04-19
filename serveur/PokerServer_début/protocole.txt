@@ -199,4 +199,10 @@ choix est un entier: 1==se coucher
 		     3==mise
 
 -------------------------------------------------------------
+		//envoi le joueur a qui c'est le tour de jouer a tout les joueurs
+
+
+Envoi à toute la partie : JOUEURJ@pseudo
+
+-------------------------------------------------------------
 	retour si erreur syntaxe :    ERROR
