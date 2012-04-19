@@ -523,15 +523,24 @@ public class TableauJeu extends TabActivity
         //Liaison du xml
         final TextView printJetonSelect = (TextView) alertDialogView.findViewById(R.id.printJetonSelect);
         final SeekBar seekJetons = (SeekBar) alertDialogView.findViewById(R.id.seekJetons);
-        printJetonSelect.setText("Relance à:  0" );
+        printJetonSelect.setText("Relance à:  " );
         //myjetons.setText(listDonnees.get(posJoueur)[1]);
         //seekJetons.setMax(potText);
         //seekJetons.onStartTrackingTouch
         seekJetons.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
-
-            printJetonSelect.setText("Relance à: "+Integer.toString(progress + 5));
+           
+            try {
+                     int borne = Integer.parseInt(choixJoueur[0]);
+                  printJetonSelect.setText("Relance à: "+Integer.toString(progress + borne));
+                
+            } catch (Exception e) {
+            }
+            
+          
+            
+            
 
         }
 
