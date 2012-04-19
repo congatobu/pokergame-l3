@@ -451,7 +451,10 @@ public class PokerPartie {
      * @author steve giner
      */
     private void envoiJoue(int joueur,int jetonsMin,int jetonsMax,String bool) {
-    	if(clientList.get(joueur)!=null)clientList.get(joueur).send("JOUE@"+jetonsMin+"@"+jetonsMax+"@"+bool);
+    	if(clientList.get(joueur)!=null){
+    		clientList.get(joueur).send("JOUE@"+jetonsMin+"@"+jetonsMax+"@"+bool);
+    		broadcastClientsPartie("JOUEURJ@"+clientList.get(joueur).getPseudo());
+    	}
     }
     
 

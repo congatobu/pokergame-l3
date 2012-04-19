@@ -12,7 +12,10 @@ public class Jeu {
 
 	private Stack<Integer> tas = new Stack<Integer>();
 	private int[][] vc=new int[2][52];
-	
+	/**
+	*constructeur qui initialise le tableau vc avec les valeur et les couleur des cartes(2 a 14, 0 a 3)
+	*@author Steve Giner
+	*/
 	Jeu(){
 		int cpt=0;
 		int cpt2=1;
@@ -34,7 +37,7 @@ public class Jeu {
 	
 	
 	/**
-	*initialise le paquet de 52 cartes
+	*initialise le paquet de 52 cartes (0 a 51)
 	*@author Steve Giner
 	*/
 	public void initTasDe52cartes(){
@@ -82,6 +85,7 @@ public class Jeu {
 	
 	/**
 	*tire une carte du paquet
+	*@return int - retourne une carte(0 a 51)
 	*@author Steve Giner
 	*/
 	public int tireUneCarte()
@@ -92,6 +96,8 @@ public class Jeu {
 	
 	/**
 	*retourne la couleur d'une carte, si le chiffre est 3 alors c'est pique,2 c'est coeur, 1 trefle et 0 c'est carreaux
+	*@param int carte - int de 0 a 51
+	*@return int - couleur d'une carte (0 a 3)
 	*@author Steve Giner
 	*/
 	public int couleurCarte(int carte){
@@ -109,6 +115,8 @@ public class Jeu {
 	
 	/**
 	*retourne la valeur d'une carte(2 a 14)
+	*@param int carte - entier de 0 a 51
+	*@return int - valeur de la carte (2 a 14)
 	*@author Steve Giner
 	*/
 	public int valeur(int carte){
@@ -119,6 +127,8 @@ public class Jeu {
 	
 	/**
 	*retourne un string representant le nom de la carte(1 a 13)
+	*@param int carte - entier de 0 a 51
+	*@return String - nom de la carte
 	*@author Steve Giner
 	*/
 	public String nomCarte(int carte){
@@ -148,7 +158,8 @@ public class Jeu {
 	
 	/**
 	*retourne la valeur de la meilleure carte de la quinteflush
-	*@param int[][] coul tableau avec en 0 la valeur de la carte et 1 la couleur
+	*@param int[][] coul - tableau avec en 0 la valeur de la carte et 1 la couleur
+	*@return int - valeur de la meilleure carte de la quinteflush si il n'y en a pas retourne 0
 	*@author Steve Giner
 	*/
 	private int quinteFlush(int[][] coul){
@@ -213,6 +224,8 @@ public class Jeu {
 	
 	/**
 	*retourne la valeur du carre, 0 si il n'y en a pas
+	*@param int[] valeur - tableau avec les valeurs des 7 cartes de la main
+	*@return int - valeur du carre, 0 si il n'y en a pas
 	*@author Steve Giner
 	*/
 	private int carre(int[] valeur){
@@ -246,6 +259,8 @@ public class Jeu {
 	
 	/**
 	*retourne la valeur de la meilleure carte de la couleur si elle existe sinon 0
+	*@param int[][] coul - tableau avec en 0 la valeur de la carte et 1 la couleur
+	*@return int - valeur de la meilleure carte de la couleur si elle existe sinon 0
 	*@author Steve Giner
 	*/
 	private int couleur(int[][] coul){
@@ -268,10 +283,12 @@ public class Jeu {
 	
 	
 	/**
-	*il faut lui envoyer un tableau avec les valeur des cartes
 	*retourne la valeur de la meilleur quinte (val de la plus grande carte de la suite), si il n'y en a pas retourne 0
+	*@param int[] valeur - tableau avec les valeurs des 7 cartes de la main
+	*@return valeur de la meilleur quinte (val de la plus grande carte de la suite), si il n'y en a pas retourne 0
 	*@author Steve Giner
 	*/
+
 	private int quinte(int[] valeur){
 		
 		int val=0;
@@ -308,8 +325,9 @@ public class Jeu {
 	
 	
 	/**
-	*il faut lui envoyer un tableau avec les valeur des cartes
-	*retourne la valeur de la meilleur triplette, si il n'y en a pas retourne 0
+	*retourne la valeur de la meilleur triplette(brelan), si il n'y en a pas retourne 0
+	*@param int[] valeur - tableau avec les valeurs des 7 cartes de la main
+	*@return valeur de la meilleur triplette, si il n'y en a pas retourne 0
 	*@author Steve Giner
 	*/
 	private int triplette(int[] valeur){
@@ -339,8 +357,9 @@ public class Jeu {
 	
 	
 	/**
-	*il faut lui envoyer un tableau avec les valeur des cartes
-	*retourne les valeurs des deux paires(les meilleures)(la meilleure des 2 en 0), si il n'y a pas 2 paires retourne 0 et 0
+	*retourne les valeurs des deux paires(les meilleures)(la meilleure des 2 avant le '.'), si il n'y a pas 2 paires retourne 0.0
+	*@param int[] valeur - tableau avec les valeurs des 7 cartes de la main
+	*@return float - valeurs des deux paires(les meilleures)(la meilleure des 2 avant le '.'), si il n'y a pas 2 paires retourne 0.0
 	*@author Steve Giner
 	*/
 	private float doublePaire(int[] valeur){//
@@ -383,8 +402,11 @@ public class Jeu {
 	
 	/**
 	*retourne valeur de la paires,si pas de paire retourne 0,faut lui envoyer un tableau avec les valeur des cartes,n est la taille du tableau
-	*@author Steve Giner
-	*/
+	 * @param int[] valeur - tableau avec les valeurs des 7 cartes de la main 
+	 * @param int n - taille du tableau
+	 * @return valeur de la paires,si pas de paire retourne 0
+	 *@author Steve Giner
+	 */
 	private int paire(int[] valeur,int n){
 		
 		
@@ -407,8 +429,10 @@ public class Jeu {
 	
 	
 	/**
-	*retourne la valeur de la meilleur triplette en 0 et celle de la meilleur paire en 1 (sans prendre en compte la triplette trouvee)
-	*retourne un 0 si une des deux n'est pas trouve
+	*retourne la valeur de la meilleur triplette avant la virgule et celle de la meilleur paire apres la virgule (sans prendre en compte la triplette trouvee)
+	*retourne un 0 si une des deux n'est pas trouve(pas de full)
+	*@param int[] valeur - tableau avec les valeurs des 7 cartes de la main
+	*@return float - valeur de la meilleur triplette avant la virgule et celle de la meilleur paire apres la virgule,0 si une des deux n'est pas trouve(pas de full)
 	*@author Steve Giner
 	*/
 	private float full(int[] valeur){
@@ -451,6 +475,8 @@ public class Jeu {
 	*Quinte Flush==8 (5 cartes de la meme famille qui se suivent)
 	*la royale==9
 	*et retourne la valeur de la meilleure carte de la combinaison
+	*@param int[] m - main du joueur+table(7 cartes)
+	*@return float[] - valeur de la combinaison en 0 et meilleure carte de la combinaison en 1, si pas de combinaison alors retourne 0 et la la valeur de la meilleure carte du joueur
 	*@author Steve Giner
 	*/
 	private float[] valeurMain(int[] m){//
@@ -525,6 +551,10 @@ public class Jeu {
 	*0==la valeur de la combinaison
 	*1==la valeur de la meilleure carte de la combinaison(si double combinaison(full ou double paire) le nombre apres la virgule indique la valeur des cartes de la deuxieme combinaison) 
 	*2 et +==le ou les joueurs gagnants
+	*@param int[][] cartes - tableau contenant les main de chaque joueur (2 cartes)
+	*@param int[] table - tableau contenant les cartes de la table (5 cartes)
+	*@param int nbjoueurs - nombre de joueurs
+	*@return float[] - retourne le ou les gagnant avec la combinaisons (0==la valeur de la combinaison,1==la valeur de la meilleure carte de la combinaison(si double combinaison(full ou double paire) le nombre apres la virgule indique la valeur des cartes de la deuxieme combinaison),2 et +==le ou les joueurs gagnants)
 	*@author Steve Giner
 	*/
 	public float[] gagnant(int[][] cartes,int[] table,int nbjoueurs){
@@ -630,6 +660,10 @@ public class Jeu {
 	
 	/**
 	*compare le reste des mains de 2 joueurs,return 0 si egalite,1 si m1 moins bien que m2 et 2 si m1 mieux que m2. error==-1
+	*@param int[] m1 - main d'un joueur (7 cartes)
+	*@param int[] m2 - main d'un autre joueur
+	*@param float[] val - contient en 0 la valeur de la combinaison et en 1 la valeur de la meilleure carte de la combinaison(si double combinaison(full ou double paire) le nombre apres la virgule indique la valeur des cartes de la deuxieme combinaison) 
+	*@return int - 0 si egalite,1 si m1 moins bien que m2 et 2 si m1 mieux que m2. error==-1
 	*@author Steve Giner
 	*/
 	private int compareReste(int[] m1, int[] m2, float[] val) {
@@ -697,51 +731,13 @@ public class Jeu {
 	
 	/**
 	*compare le reste des mains de 2 joueurs,return 0 si egalite,1 si m1 moins bien que m2 et 2 si m1 mieux que m2.
+	*@param int[] m1 - reste d'une main
+	*@param int[] m2 - reste d'une autre main
+	*@param taille - taille de m1 et m2
+	*@return int - 0 si egalite,1 si m1 moins bien que m2 et 2 si m1 mieux que m2
 	*@author Steve Giner
 	*/
 	private int compare(int[] m1, int[] m2,int taille) {
-		
-	/*int[] max1=new int[taille-2];
-	int[] max2=new int[taille-2];
-	int j;
-	boolean b1=true;
-	boolean b2=true;
-	
-	for(int i=0;i<taille;i++){
-		
-		j=0;
-		
-		while(j<taille-2 && b1 && b2){
-			
-			if(valeur(m1[i])>max1[j] && b1){
-				
-				for(int k=taille-3;k>j;k--)max1[k]=max1[k-1];
-				
-				b1=false;
-			}
-			
-			if(valeur(m2[i])>max2[j] && b2){
-				
-				for(int k=taille-3;k>j;k--)max2[k]=max2[k-1];
-				
-				b2=false;
-			}
-			j++;
-		}
-		 
-				 
-	}
-	
-	int b=0;
-	j=0;
-	
-	while(b==0 && j<taille-2)
-	{
-		if(max1[j]<max2[j])b=1;
-		else if(max1[j]>max2[j])b=2;
-		else j++;
-			
-	}*/
 	
 	int b=0;
 	int j=taille-1;
