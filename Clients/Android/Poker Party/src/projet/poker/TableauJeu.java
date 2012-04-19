@@ -451,99 +451,97 @@ public class TableauJeu extends TabActivity
         pot.setText("pot : "+potText+"$");
     }
     
-private void initBet(){
+    private void initBet(){
         
-            //On instancie notre layout en tant que View
-            LayoutInflater factory = LayoutInflater.from(this);
-            final View alertDialogView = factory.inflate(R.layout.relancer, null);
-            
-            
-            //Liaison du xml
-           final TextView printJetonSelect = (TextView) alertDialogView.findViewById(R.id.printJetonSelect);
-            final SeekBar seekJetons = (SeekBar) alertDialogView.findViewById(R.id.seekJetons);
-            printJetonSelect.setText("Relance à:  0" );
-            //seekJetons.setMax(potText);
-            //seekJetons.onStartTrackingTouch
-            seekJetons.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
-              
-                printJetonSelect.setText("Relance à: "+Integer.toString(progress + 5));
+        //On instancie notre layout en tant que View
+        LayoutInflater factory = LayoutInflater.from(this);
+        final View alertDialogView = factory.inflate(R.layout.relancer, null);
 
-            }
 
-            public void onStartTrackingTouch(SeekBar arg0) {
-                
-            }
+        //Liaison du xml
+        final TextView printJetonSelect = (TextView) alertDialogView.findViewById(R.id.printJetonSelect);
+        final SeekBar seekJetons = (SeekBar) alertDialogView.findViewById(R.id.seekJetons);
+        printJetonSelect.setText("Relance à:  0" );
+        //seekJetons.setMax(potText);
+        //seekJetons.onStartTrackingTouch
+        seekJetons.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
-            public void onStopTrackingTouch(SeekBar arg0) {
-                
-            }
-           });
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
 
-            
-        
-            
-            //Création de l'AlertDialog
-            adb = new AlertDialog.Builder(this);
+            printJetonSelect.setText("Relance à: "+Integer.toString(progress + 5));
 
-            //On affecte la vue personnalisé que l'on a crée à notre AlertDialog
-            adb.setView(alertDialogView);
+        }
 
-            //On donne un titre à l'AlertDialog
-            adb.setTitle("Relancer");
+        public void onStartTrackingTouch(SeekBar arg0) {
 
-            //On modifie l'icône de l'AlertDialog pour le fun ;)
-            adb.setIcon(R.drawable.add);
-            
-            
-                        //On affecte un bouton "OK" à notre AlertDialog et on lui affecte un évènement
-            adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    
+        }
+
+        public void onStopTrackingTouch(SeekBar arg0) {
+
+        }
+        });
+
+
+
+
+        //Création de l'AlertDialog
+        adb = new AlertDialog.Builder(this);
+
+        //On affecte la vue personnalisé que l'on a crée à notre AlertDialog
+        adb.setView(alertDialogView);
+
+        //On donne un titre à l'AlertDialog
+        adb.setTitle("Relancer");
+
+        //On modifie l'icône de l'AlertDialog pour le fun ;)
+        adb.setIcon(R.drawable.add);
+
+
+        //On affecte un bouton "OK" à notre AlertDialog et on lui affecte un évènement
+        adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+                String[] arg = new String[2];
+                // CHOIX@3@NombreJeton
+                arg[0]="3";
+                arg[1] =""+seekJetons.getProgress();
+
+                //  Log.v("Accueuil", "test");
+                try {
+                    Accueuil.sender.setTram(CreateurTram.JOUER, arg, 1);
+                } catch (IOException ex) {
+                    Logger.getLogger(Accueuil.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                dialog.cancel();
+
+                /*
+                if(verifEnv.analyseNomPartie(nomPartie.getText().toString())){
                     String[] arg = new String[2];
-                   // CHOIX@3@NombreJeton
-                    arg[0]="3";
-                     arg[1] =""+seekJetons.getProgress();
-                     
-                  //  Log.v("Accueuil", "test");
-                     try {
-                            Accueuil.sender.setTram(CreateurTram.JOUER, arg, 1);
-                        } catch (IOException ex) {
-                            Logger.getLogger(Accueuil.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        dialog.cancel();
-                    
-                    /*
-                    if(verifEnv.analyseNomPartie(nomPartie.getText().toString())){
-                        String[] arg = new String[2];
-                        arg[0] = nomPartie.getText().toString();
-                        arg[1] = ""+nbPlayer.getProgress();
-                        try {
-                            Accueuil.sender.setTram(CreateurTram.CREATE_PARTIE, arg, 2);
-                        } catch (IOException ex) {
-                            Logger.getLogger(Accueuil.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        //MAJAffichage();
-                        dialog.cancel();
-                    }else{
-                        //MAJAffichage();
-                        dialog.cancel();
-                        Toast.makeText(getApplicationContext(), "Mauvais format d'écriture", Toast.LENGTH_SHORT).show();   
-                    }*/
-                } 
-            });
-            
-             //On crée un bouton "Annuler" à notre AlertDialog et on lui affecte un évènement
-            adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    //Lorsque l'on cliquera sur annuler on quittera l'application
+                    arg[0] = nomPartie.getText().toString();
+                    arg[1] = ""+nbPlayer.getProgress();
+                    try {
+                        Accueuil.sender.setTram(CreateurTram.CREATE_PARTIE, arg, 2);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Accueuil.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    //MAJAffichage();
                     dialog.cancel();
-                } 
-            });
+                }else{
+                    //MAJAffichage();
+                    dialog.cancel();
+                    Toast.makeText(getApplicationContext(), "Mauvais format d'écriture", Toast.LENGTH_SHORT).show();   
+                }*/
+            } 
+        });
 
-   
+        //On crée un bouton "Annuler" à notre AlertDialog et on lui affecte un évènement
+        adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                //Lorsque l'on cliquera sur annuler on quittera l'application
+                dialog.cancel();
+            } 
+        });
+
     }
-    
-    }
+}
 
