@@ -9,7 +9,7 @@ import projet.poker.Accueuil;
 
 /**
  *
- * @author Shyzkanza
+ * @author Jessy Bonnotte && Mathieu Polizzi
  */
 public class CreateurTram {
     public static final int CONNECT = 1;
@@ -32,6 +32,11 @@ public class CreateurTram {
     public CreateurTram(){
         
     }
+    /**
+ * crée la tram a envoyer au serveur en fonction du type envoyer par l'action du joueurs
+ * 
+ * @author Jessy Bonnotte && Mathieu Polizzi
+ */
     
     public void setTram(int type, String[] arg, int nbArg) throws IOException{
         String tram = "";
@@ -111,6 +116,11 @@ public class CreateurTram {
                 break;                   
         }
     }
+    /**
+ *crée la tram a envoyer au serveur en fonction du type envoyer par l'action du joueurs
+ * 
+ * @author Jessy Bonnotte && Mathieu Polizzi
+ */
     
     public void setTram(int type) throws IOException{
         String tram = "";

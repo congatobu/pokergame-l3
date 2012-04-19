@@ -14,14 +14,19 @@ import projet.poker.*;
 
 /**
  *
- * @author Jessy Bonnotte
+ * 
+ * @author Jessy Bonnotte && Mathieu Polizzi
  */
 public class AnalyseurTram {
 
     public AnalyseurTram(){
         
     }
-    
+    /**
+ * on dis a cette fonction dans quel activité nous sommes puis on analyse la tram reçu en fonction
+ * 
+ * @author Jessy Bonnotte && Mathieu Polizzi
+ */
     public void setTram(String tram, int currentActivity) throws IOException{
         Log.v("Reception", "Analyseur : "+tram+" "+currentActivity);
         
