@@ -8,7 +8,8 @@ import java.io.IOException;
 import projet.poker.Accueuil;
 
 /**
- *
+ * Classe permettant de créer les trams à envoyer au serveur.
+ * 
  * @author Jessy Bonnotte && Mathieu Polizzi
  */
 public class CreateurTram {
@@ -33,7 +34,7 @@ public class CreateurTram {
         
     }
     /**
- * crée la tram a envoyer au serveur en fonction du type envoyer par l'action du joueurs
+ * crée la tram a envoyer au serveur en fonction du type envoyer par l'action du joueurs.
  * 
  * @author Jessy Bonnotte && Mathieu Polizzi
  */

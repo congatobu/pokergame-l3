@@ -450,7 +450,14 @@ public class TableauJeu extends TabActivity
     private void ActPotTable(){
         pot.setText("pot : "+potText+"$");
     }
-    
+    /**
+     * Fonction servant a initialiser la fenêtre popup du bouton relancer et gérer la relance.
+     * 
+     * @author Mathieu POLIZZI
+     * 
+     * 
+     * @return 
+     */
     private void initBet(){
         
         //On instancie notre layout en tant que View
@@ -513,24 +520,6 @@ public class TableauJeu extends TabActivity
                     Logger.getLogger(Accueuil.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 dialog.cancel();
-
-                /*
-                if(verifEnv.analyseNomPartie(nomPartie.getText().toString())){
-                    String[] arg = new String[2];
-                    arg[0] = nomPartie.getText().toString();
-                    arg[1] = ""+nbPlayer.getProgress();
-                    try {
-                        Accueuil.sender.setTram(CreateurTram.CREATE_PARTIE, arg, 2);
-                    } catch (IOException ex) {
-                        Logger.getLogger(Accueuil.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    //MAJAffichage();
-                    dialog.cancel();
-                }else{
-                    //MAJAffichage();
-                    dialog.cancel();
-                    Toast.makeText(getApplicationContext(), "Mauvais format d'écriture", Toast.LENGTH_SHORT).show();   
-                }*/
             } 
         });
 

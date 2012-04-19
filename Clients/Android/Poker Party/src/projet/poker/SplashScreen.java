@@ -9,8 +9,7 @@ import android.view.KeyEvent;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import projet.splash.SplashAnimation;
 
-public class SplashScreen extends AndroidApplication
-{
+public class SplashScreen extends AndroidApplication{
     private static Handler messageHandler;
     private Intent i;
     SplashAnimation g;
@@ -44,6 +43,13 @@ public class SplashScreen extends AndroidApplication
         return super.onKeyDown(keyCode, event);
     }
     
+    /**
+     * Fonction appelée lorsque l'animation est terminée.
+     * 
+     * @author Jessy Bonnotte
+     * 
+     * @param message 
+     */
     public static void finSplash(String message){
         Message msg = new Message();
         msg.obj = message;

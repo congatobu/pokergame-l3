@@ -23,9 +23,12 @@ import projet.GestionConnexion.AnalyseurEnvoi;
 import projet.GestionConnexion.Connection;
 import projet.GestionConnexion.CreateurTram;
 
-public class ListePartie extends Activity{
-    /** Called when the activity is first created. */
-    
+/**
+ * Classe affichant la liste des partie.
+ * 
+ * @author Jessy Bonnotte & Mathieu Polizzi
+ */
+public class ListePartie extends Activity{    
     // Pour la boite de dialog 
     AlertDialog.Builder                 adb;
     
@@ -53,15 +56,19 @@ public class ListePartie extends Activity{
     HashMap<String, String>             map;  
     
     @Override
+    /** Called when the activity is first created. */
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.listepartie);
-        
-        
+        setContentView(R.layout.listepartie);       
     }
     
     @Override
+    /**
+     * Initialisation de la fenetre.
+     * 
+     * @auhor Jessy Bonnotte
+     */
     public void onResume(){
         super.onResume();
         
@@ -141,7 +148,7 @@ public class ListePartie extends Activity{
      * 
      * @author Mathieu Polizzi
      * 
-     * @return {@code boolean} resultat de la liaison du code avec le XML
+     * @return boolean - resultat de la liaison du code avec le XML
      */
     private boolean liaisonXML(){
         try{
@@ -160,11 +167,11 @@ public class ListePartie extends Activity{
     }
     
     /**
-     * initialise la fenêtre permettant de créer une partie.
+     * initialise les boutons de l'activity.
      * 
      * @author Mathieu Polizzi
      * 
-     * @return {@code boolean} resultat de l'initialisation des objets.
+     * @return boolean - resultat de l'initialisation des objets.
      */
     private boolean initObjet(){
         try{
@@ -198,9 +205,9 @@ public class ListePartie extends Activity{
     /**
      * initialise la boite de dialogue de la création de partie.
      * 
-     * @author  Mathieu Polizzi
+     * @author Mathieu Polizzi
      * 
-     * @return {@code boolean} - resultat de l'initialisation de la dialogBox
+     * @return boolean - resultat de l'initialisation de la dialogBox
      */
     private boolean initDialog(){
         try{
@@ -269,9 +276,9 @@ public class ListePartie extends Activity{
     /**
      * Fonction appelé par l'analyseur de tram afin de mettre a jour l'affichage. La fonction se sert d'un handler afin de sortir les données de la partie static.
      * 
-     * @author Mathieu Polizzi
+     * @author Jessy Bonnotte
      * 
-     * @param tabPartie une liste contenant les parties sous forme de tableaux
+     * @param tabPartie - une liste contenant les parties sous forme de tableaux
      *
      */
     public static void MAJList(List<String[]> tabPartie){
@@ -284,7 +291,7 @@ public class ListePartie extends Activity{
     /**
      * Fonction appelé par l'analyseur de tram pour informaer l'utilisateur des infos envoyés par le serveur.
      * 
-     * @author Mathieu Polizzi
+     * @author Jessy Bonnotte
      * 
      * @param message - le message de retour du serveur
      *
@@ -325,7 +332,7 @@ public class ListePartie extends Activity{
      * @param keyCode le code de la touche pressé
      * @param event l'evenement a faire de la touche pressé
      * 
-     * @return {@code boolean} - si la touche est a prendre en compte
+     * @return boolean - si la touche est a prendre en compte
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
