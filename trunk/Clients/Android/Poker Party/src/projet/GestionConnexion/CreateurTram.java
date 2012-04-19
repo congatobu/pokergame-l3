@@ -105,8 +105,7 @@ public class CreateurTram {
                 tram += "@";
                 tram += arg[1];
                 Accueuil.connect.say(tram);
-                break;
-                
+                break;             
             case JOUER://// CHOIX@3@NombreJeton
                 tram+="CHOIX";
                 tram+="@";
@@ -117,11 +116,12 @@ public class CreateurTram {
                 break;                   
         }
     }
-    /**
- *crée la tram a envoyer au serveur en fonction du type envoyer par l'action du joueurs
- * 
- * @author Jessy Bonnotte && Mathieu Polizzi
- */
+    
+   /**
+    *crée la tram a envoyer au serveur en fonction du type envoyer par l'action du joueurs
+    * 
+    * @author Jessy Bonnotte && Mathieu Polizzi
+    */
     
     public void setTram(int type) throws IOException{
         String tram = "";

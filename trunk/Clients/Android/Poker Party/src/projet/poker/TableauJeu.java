@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.util.MonthDisplayHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
@@ -19,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import projet.GestionConnexion.AnalyseurEnvoi;
 import projet.GestionConnexion.Connection;
 import projet.GestionConnexion.CreateurTram;
 
@@ -32,6 +32,7 @@ public class TableauJeu extends TabActivity
     public static final int             CARTE_TABLE = 3;
     public static final int             JETON_TABLE = 4;
     public static final int             FIN_TOUR = 5;
+    public static final int             MON_TOUR = 6;
     
     // variable d'affichage
     private ImageView[][]               cartes;
@@ -70,6 +71,7 @@ public class TableauJeu extends TabActivity
     private int                         posJoueur = 0;
     private int[]                       carteTable = new int[5];
     private int                         potText;
+    private String[]                    choixJoueur = new String[3];
     
     //popup
     AlertDialog.Builder                 adb;
@@ -111,7 +113,6 @@ public class TableauJeu extends TabActivity
                 }else if(msg.arg1 == CARTE_JOUEUR){
                     carteJoueur[0] = Integer.parseInt(((List<String[]>) msg.obj).get(0)[0]) - 1;
                     carteJoueur[1] = Integer.parseInt(((List<String[]>) msg.obj).get(0)[1]) - 1;
-                    initManche();
                     ActCartesUtilisateur();
                 }else if(msg.arg1 == CARTE_TABLE){
                     for (int i = 0; i < ((List<String[]>) msg.obj).size(); i++) {
@@ -127,6 +128,11 @@ public class TableauJeu extends TabActivity
                     ActCarteTable();
                     ActPotTable();
                     ActCartesUtilisateur();
+                }else if(msg.arg1 == MON_TOUR){
+                    choixJoueur[0] = ((List<String[]>) msg.obj).get(0)[0]; // jeton min
+                    choixJoueur[1] = ((List<String[]>) msg.obj).get(0)[1]; // jeton max
+                    choixJoueur[2] = ((List<String[]>) msg.obj).get(0)[2]; // relancé? true ou false
+                    enableButton();
                 }
                 //listPartie = new ArrayList<String[]>((List<String[]>)msg.obj);
                 //MAJAffichage();
@@ -143,6 +149,10 @@ public class TableauJeu extends TabActivity
                     for (int i = 0; i < 5; i++) {
                         carteTable[i] = -1;
                     }
+                }else if(msg.obj.toString().equals("JOK")){
+                    dislableButton();
+                }else if(msg.obj.toString().equals("EXITOK")){
+                    finish();
                 }
                 Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT);
             }
@@ -214,7 +224,6 @@ public class TableauJeu extends TabActivity
                 } catch (IOException ex) {
                     Logger.getLogger(TableauJeu.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                finish();
             }
         });
         
@@ -259,7 +268,14 @@ public class TableauJeu extends TabActivity
                 adb.show();
             }
         });
-       
+    }
+    
+    private void dislableButton(){
+        
+    }
+    
+    private void enableButton(){
+        
     }
     
     private void initManche(){
@@ -442,7 +458,7 @@ public class TableauJeu extends TabActivity
                 Log.v("remplissage","remplissage : "+carteTable[i]+"");
                 cartesCentre[i].setImageBitmap(img.getImage(carteTable[i]/4,carteTable[i]%4));
             }else {
-                cartesCentre[1].setImageResource(R.drawable.cards);
+                cartesCentre[i].setImageResource(R.drawable.cards);
             }
         }
     }
@@ -450,6 +466,7 @@ public class TableauJeu extends TabActivity
     private void ActPotTable(){
         pot.setText("pot : "+potText+"$");
     }
+    
     /**
      * Fonction servant a initialiser la fenêtre popup du bouton relancer et gérer la relance.
      * 
@@ -469,6 +486,7 @@ public class TableauJeu extends TabActivity
         final TextView printJetonSelect = (TextView) alertDialogView.findViewById(R.id.printJetonSelect);
         final SeekBar seekJetons = (SeekBar) alertDialogView.findViewById(R.id.seekJetons);
         printJetonSelect.setText("Relance à:  0" );
+        //myjetons.setText(listDonnees.get(posJoueur)[1]);
         //seekJetons.setMax(potText);
         //seekJetons.onStartTrackingTouch
         seekJetons.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
