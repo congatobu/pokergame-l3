@@ -8,7 +8,10 @@ import android.content.SharedPreferences;
 import android.os.*;
 import android.util.Log;
 import android.view.*;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.Toast;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,12 +19,21 @@ import projet.GestionConnexion.AnalyseurEnvoi;
 import projet.GestionConnexion.Connection;
 import projet.GestionConnexion.CreateurTram;
 
+/**
+ * Classe d'accueil de l'application. C'est l'activity qui est appeler au démarrage de l'application. Cette option est définis dans le manifest xml.
+ * 
+ * @author Jessy Bonnotte & Mathieu Polizzi
+ */
 public class Accueuil extends Activity{
     
-    // Gestion de la connexion
+    /**
+     * Gestion de la connexion 
+     */
     public static Connection        connect;
-    
-    // Creation de tram puis envoi
+     
+    /**
+     * Creation de tram puis envoi
+     */
     public static CreateurTram      sender;
     
     // Gestion des éléments graphiques
@@ -109,7 +121,7 @@ public class Accueuil extends Activity{
     }
     
     /**
-     * Fonction appelé lors du cherchement de l'appli.
+     * Fonction appelé lors du chargement de l'appli.
      * 
      * @author Jessy Bonnotte
      */
@@ -125,10 +137,10 @@ public class Accueuil extends Activity{
      * 
      * @author Jessy Bonnotte
      * 
-     * @param keyCode le code de la touche pressé
-     * @param event l'evenement a faire de la touche pressé
+     * @param keyCode - le code de la touche pressé
+     * @param event - l'evenement a faire de la touche pressé
      * 
-     * @return boolean - si la touche est a prendre en compte
+     * @return boolean - si la touche est a prendre en compte ou pas.
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -139,7 +151,9 @@ public class Accueuil extends Activity{
     }
     
     /**
+     * Fonction permettant de charger les parametres reseaux. La fonction lit le systeme de preference et recupere l'adresse et le port du serveur necessaire a la connexion.
      * 
+     * @author Mathieu Polizzi
      */
     private void chargerParamReseau(){
         SharedPreferences settings = getSharedPreferences(PREFS_CONFIG, 0);        
@@ -455,7 +469,7 @@ public class Accueuil extends Activity{
         editor.commit();
     }
     
-     private boolean initDialogIPPort(){
+    private boolean initDialogIPPort(){
         try{
             //On instancie notre layout en tant que View
             LayoutInflater factory = LayoutInflater.from(this);

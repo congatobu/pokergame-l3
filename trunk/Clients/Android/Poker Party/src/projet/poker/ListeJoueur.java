@@ -22,9 +22,12 @@ import projet.GestionConnexion.AnalyseurEnvoi;
 import projet.GestionConnexion.Connection;
 import projet.GestionConnexion.CreateurTram;
 
-public class ListeJoueur extends Activity{
-    /** Called when the activity is first created. */
-    
+/**
+ * Classe affichant la liste des joueurs pour une partie.
+ * 
+ * @author Mathieu Polizzi & Jessy Bonnotte
+ */
+public class ListeJoueur extends Activity{    
     // Pour la boite de dialog 
     AlertDialog.Builder                 adb;
     
@@ -50,6 +53,7 @@ public class ListeJoueur extends Activity{
     private String                      map;  
     
     @Override
+    /** Called when the activity is first created. */
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -92,6 +96,7 @@ public class ListeJoueur extends Activity{
     }
     
     @Override
+    /** Called when the activity is resumed. */
     public void onResume(){
         super.onResume();
         Accueuil.connect.setActivity(Connection.LISTE_JOUEUR_PARTIE);
@@ -102,19 +107,12 @@ public class ListeJoueur extends Activity{
         }
     }
     
-
-    @Override
-    public void onStop(){
-        
-        super.onDestroy();
-    }
-    
     /**
-     * initialisation les objets contenu dans le xml.
+     * Initialisation des objets contenu dans le xml.
      * 
      * @author Mathieu Polizzi
      * 
-     * @return {@code boolean} resultat de la liaison du code avec le XML
+     * @return boolean - resultat de la liaison du code avec le XML
      */
     private boolean liaisonXML(){
         try{
@@ -131,11 +129,11 @@ public class ListeJoueur extends Activity{
     }
     
     /**
-     * initialise la fenêtre permettant de créer une partie.
+     * Initialise les differents boutons de la fenetre.
      * 
      * @author Mathieu Polizzi
      * 
-     * @return {@code boolean} resultat de l'initialisation des objets.
+     * @return boolean - resultat de l'initialisation des objets.
      */
     private boolean initObjet(){
         try{
@@ -168,11 +166,11 @@ public class ListeJoueur extends Activity{
     }
     
     /**
-     * initialise la boite de dialogue de la création de partie.
+     * initialise la boite de dialogue d'affichage des infos de joueurs.
      * 
      * @author  Mathieu Polizzi
      * 
-     * @return {@code boolean} - resultat de l'initialisation de la dialogBox
+     * @return boolean - resultat de l'initialisation de la dialogBox
      */
     private boolean initDialog(){
         try{
@@ -243,9 +241,9 @@ public class ListeJoueur extends Activity{
     /**
      * Fonction appelé par l'analyseur de tram afin de mettre a jour l'affichage. La fonction se sert d'un handler afin de sortir les données de la partie static.
      * 
-     * @author Mathieu Polizzi
+     * @author Jessy Bonnotte
      * 
-     * @param tabPartie une liste contenant les parties sous forme de tableaux
+     * @param tabPartie - une liste contenant les parties sous forme de tableaux
      *
      */
     public static void MAJList(List<String> tabJoueur){
@@ -258,7 +256,7 @@ public class ListeJoueur extends Activity{
     /**
      * Fonction appelé par l'analyseur de tram pour informaer l'utilisateur des infos envoyés par le serveur.
      * 
-     * @author Mathieu Polizzi
+     * @author Jessy Bonnotte
      * 
      * @param message - le message de retour du serveur
      *
@@ -292,7 +290,7 @@ public class ListeJoueur extends Activity{
      * @param keyCode le code de la touche pressé
      * @param event l'evenement a faire de la touche pressé
      * 
-     * @return {@code boolean} - si la touche est a prendre en compte
+     * @return boolean - si la touche est a prendre en compte
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

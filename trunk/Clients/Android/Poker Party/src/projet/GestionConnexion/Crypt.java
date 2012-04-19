@@ -5,7 +5,8 @@
 package projet.GestionConnexion;
 
 /**
- *
+ * Classe permmettant de crypter les informations à envoyer au serveur.
+ * 
  * @author Jessy Bonnotte
  */
 public class Crypt {
@@ -22,7 +23,7 @@ public class Crypt {
      * 
      * @param tram la tram a encrypter
      * 
-     * @return {@code String} la tram a envoyer encrypté
+     * @return String - la tram a envoyer encrypté
      */
     public String enCrypt(String tram){
         i = 0;
@@ -49,7 +50,7 @@ public class Crypt {
      * 
      * @param tram reçu du client
      * 
-     * @return {@code String} la tram reçu décrypté
+     * @return String - la tram reçu décrypté
      */
     public String deCrypt(String tram){
         i = 0;

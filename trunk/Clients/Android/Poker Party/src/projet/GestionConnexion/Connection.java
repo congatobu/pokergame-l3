@@ -15,15 +15,31 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author Shyzkanza
+ * Classe permettant de gérer la connection du client.
+ * 
+ * @author Jessy Bonnotte
  */
 public class Connection implements Runnable{
     // Activity courante
+    /**
+     * Pour selectionner l'activity accueuil.
+     */
     public static final int     ACCUEUIL = 1;
+    /**
+     * Pour selectionner l'activity parametre.
+     */
     public static final int     PARAMETRE = 2;
+    /**
+     * Pour selectionner l'activity liste partie.
+     */
     public static final int     LISTE_PARTIE = 3;
+    /**
+     * Pour selectionner l'activity liste joueur partie.
+     */
     public static final int     LISTE_JOUEUR_PARTIE = 4;
+    /**
+     * Pour selectionner l'activity tableau jeu.
+     */
     public static final int     PARTIE = 5;
     
     private int                 currentActivity = 0;
@@ -56,15 +72,34 @@ public class Connection implements Runnable{
     private FutureTask<?>       theTask = null;
     private long                depart = 0;
     private long                arrive = 0;
-    
+ 
+    /**
+     * Constructeur classe de connexion.
+     */
     public Connection(){
         
     }
-    
+    /**
+     * Fonction permettant de definir l'activity courante.
+     * 
+     * @author Jessy Bonnotte
+     * 
+     * @param a - numéro de l'activity courante
+     */
     public void setActivity(int a){
         currentActivity = a;
     }
     
+    /**
+     * Fonction permettant d' initialiser la connexion.
+     * 
+     * @author Jessy Bonnotte
+     * 
+     * @param a - adresse du serveur.
+     * @param p - port du serveur.
+     * 
+     * @return boolean - true si connection ok ou false si échouée.
+     */
     public boolean init(String a, String p){
         adresse = a;
         cryptTram = new Crypt();
@@ -126,11 +161,27 @@ public class Connection implements Runnable{
         }
     }
     
+    /**
+     * Fonction permettant d'envoyer un message au serveur.
+     * 
+     * @author Mathieu Polizzi
+     * 
+     * @param message - chaine a envoyer au serveur
+     * 
+     * @throws IOException - errerur au niveau du buffer d'envoi
+     */
     public void say(String message) throws IOException{
         bw.write(/*cryptTram.enCrypt(*/message/*)*/+"\n");
         bw.flush();
     }
     
+    /**
+     * Fonction permmettant la fermeture de la connection.
+     * 
+     * @author Jessy Bonnotte
+     * 
+     * @return boolean - true si fermeture ok ou false si échouée.
+     */
     public boolean dispose(){
         try {
             sock.close();
@@ -140,6 +191,13 @@ public class Connection implements Runnable{
         return true;
     }
     
+    /**
+     * Fonction permettant de tester si la connexion est active.
+     * 
+     * @author Jessy Bonnotte
+     * 
+     * @return boolean - true si connexion active ou false si échouée.
+     */
     public boolean isConnected(){
         if(sock.isConnected()){
             return true;
@@ -148,14 +206,29 @@ public class Connection implements Runnable{
         }
     }
     
+    /**
+     * Fonction permettant de lancer le processus d'ecoute.
+     * 
+     * @author Jessy Bonnotte
+     */
     private void start(){
         proc.start();
     }
     
+    /**
+     * Fonction permettant de fermer le processus d'ecoute.
+     * 
+     * @author Jessy Bonnotte
+     */
     private void stop(){
         proc.stop();
     }
-
+    
+    /**
+     * Thread d'écoute. Fonction run surchargée de la classe runnable permmettant d'avoir un thread d'écoute en parrallèle.
+     * 
+     * @author Jessy Bonnotte
+     */
     @Override
     public void run() {
         String ligne = "";

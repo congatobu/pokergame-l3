@@ -24,8 +24,6 @@ import java.util.logging.Logger;
 import projet.GestionConnexion.AnalyseurEnvoi;
 import projet.GestionConnexion.Connection;
 import projet.GestionConnexion.CreateurTram;
-
-
  
 /**
  * Classe de l'activity paramètre
@@ -47,9 +45,7 @@ public class Parametre extends Activity{
     private String                  portS;
  
     /** 
-     * Fonction appelé lors de la création de l'activity. le super.onCreate()<br/>
-     * permet de faire les actions de base puis enfin on peut fair eles actions <br/>
-     * personnels 
+     * Fonction appelé lors de la création de l'activity. le super.onCreate() permet de faire les actions de base puis enfin on peut fair eles actions personnels.
      * 
      * @param savedInstanceState - dernière instance de l'application qui a été sauvegardé 
      * 
@@ -145,7 +141,9 @@ public class Parametre extends Activity{
     }
     
     /**
+     * Charge les parametre reseau enregistré dans le systeme de preference.
      * 
+     * @author Jessy Bonnotte
      */
     private void chargerParamReseau(){
         SharedPreferences settings = getSharedPreferences(Accueuil.PREFS_CONFIG, 0);        
@@ -154,12 +152,24 @@ public class Parametre extends Activity{
         portS = settings.getString("port", "0");
     }
     
+    /**
+     * Fonction recevant les données reçu du serveur. elles sont envoyé dans le Handler afin qu'elles redeviennent privé et donc utilisable.
+     * 
+     * @param message - le message reçu du serveur
+     */
     public static void finOperation(String message){
         Message msg = new Message();
         msg.obj = message;
         messageHandler.sendMessage(msg);
     }
     
+    /**
+     * Initialise la boite de dialogue de changement de mot de passe.
+     * 
+     * @author Jessy bonnotte
+     * 
+     * @return boolean - resultat de l'initialisation
+     */
     private boolean initDialogPass(){
         try{
             //On instancie notre layout en tant que View
@@ -219,6 +229,13 @@ public class Parametre extends Activity{
         return true;
     }
     
+    /**
+     * Initialise la boite de dialogue de changement de mot de pseudo.
+     * 
+     * @author Jessy bonnotte
+     * 
+     * @return boolean - resultat de l'initialisation
+     */
     private boolean initDialogPseudo(){
         try{
             //On instancie notre layout en tant que View

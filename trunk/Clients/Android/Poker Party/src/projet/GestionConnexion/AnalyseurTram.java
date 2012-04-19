@@ -8,12 +8,10 @@ import android.util.Log;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import projet.poker.*;
 
 /**
- *
+ * Classe permettant l'analyse des trams reçu du serveur.
  * 
  * @author Jessy Bonnotte && Mathieu Polizzi
  */
@@ -23,7 +21,7 @@ public class AnalyseurTram {
         
     }
     /**
- * on dis a cette fonction dans quel activité nous sommes puis on analyse la tram reçu en fonction
+ * Fonction permmettant d'analyser les tram reçu. On dis a cette fonction dans quel activité nous sommes puis on analyse la tram reçu en fonction. Celà permet d'ignorer les tram reçu qui n'ont aucun rapport avec l'activity courante.
  * 
  * @author Jessy Bonnotte && Mathieu Polizzi
  */
