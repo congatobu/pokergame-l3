@@ -26,7 +26,9 @@ public class CreateurTram {
     public static final int PRET = 12;
     public static final int DEBUT_PARTIE = 13;
     public static final int MESSENGER = 14;
-    
+    public static final int JOUER = 15;
+    public static final int CHECK= 16;
+
     public CreateurTram(){
         
     }
@@ -98,6 +100,15 @@ public class CreateurTram {
                 tram += arg[1];
                 Accueuil.connect.say(tram);
                 break;
+                
+            case JOUER://// CHOIX@3@NombreJeton
+                tram+="CHOIX";
+                tram+="@";
+                tram+=arg[0];
+                tram+="@";
+                tram+=arg[1];
+                Accueuil.connect.say(tram);
+                break;                   
         }
     }
     
@@ -128,6 +139,15 @@ public class CreateurTram {
                 tram += "DEBUTPARTIE";
                 Accueuil.connect.say(tram);
                 break;
+            case CHECK:
+                tram+="CHOIX";
+                tram+="@";
+                tram+="2";
+                tram+="@";
+                tram+="0";
+                Accueuil.connect.say(tram);
+
+
         }
     }
 }
