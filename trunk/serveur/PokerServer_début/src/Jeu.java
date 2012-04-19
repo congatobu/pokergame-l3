@@ -8,6 +8,10 @@ package pokerPackage;
 
 import java.util.*;
 
+        /**
+	*Classe jeu doc pas remplie par steve comme demandé
+	*@author Steve Giner
+	*/
 public class Jeu {
 
 	private Stack<Integer> tas = new Stack<Integer>();

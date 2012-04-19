@@ -319,7 +319,7 @@ public class PokerClientThread extends Thread {
                     screenOut.println("demande de connection\n");
                      test1=st.nextToken();
                      
-                    if(PokerServer.testJconnect(test1)){send("PDC"); lecture=false; return 1;}
+                    PokerServer.testJconnect(test1);
                     
                     cmd=PokerServer.bd.verifPassword(test1,st.nextToken());
                     send(cmd);
@@ -431,7 +431,8 @@ public class PokerClientThread extends Thread {
                                 //recevoir le choix de l'action d'un joueur en jeu
                if(cmd.equals("CHOIX"))
             {
-                screenOut.println("choix de jeu d'un joueur...\n");
+                screenOut.println("choix de jeu d'un joueur... "+inputLine+"\n");
+                 
                  if(connecte){  
                      if(partie!=null){
                          if(joue!=0)
