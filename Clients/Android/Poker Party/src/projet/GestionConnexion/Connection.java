@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.concurrent.FutureTask;
@@ -120,11 +121,11 @@ public class Connection implements Runnable{
         try {
             Log.v("connexion", "avant la socket : "+adresse+"  "+port);
 
-            sock = new Socket(adresse, port);
+            //sock = new Socket(adresse, port);
 
             Log.v("Parametre", "avant socket");
-            //sock = new Socket();
-            //sock.connect(new InetSocketAddress(adresse, port), 5000);
+            sock = new Socket();
+            sock.connect(new InetSocketAddress(adresse, port), 5000);
             Log.v("Parametre", "apres socket");
             if(!sock.isConnected()){
                 msgvaleur = new Message();
