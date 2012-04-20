@@ -870,7 +870,7 @@ public class PokerPartie {
 	        }
 	        tcj.stopeux();
 	       
-	        if(choixJ==3 && relancer){
+	        if(choixJ==3 && !relancer){
 	        	choixJ=2;
 	        	
 	        	
