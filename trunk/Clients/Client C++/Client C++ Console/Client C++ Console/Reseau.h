@@ -13,7 +13,6 @@
 
 using namespace std;
 
-using namespace System::Threading;
 
 class Reseau
 {
@@ -21,7 +20,7 @@ public:
 	Reseau(void);
 	~Reseau(void);
 	int analTram();
-	 void ecoute();
+
 	int connecterServeur();
 	int connecterServeurAMdp();
 	int creerCompte();
