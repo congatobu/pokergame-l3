@@ -194,6 +194,12 @@ else if(choix==2){boucleConnecte();}
 int main()
 {
 	boucleNonConnecte();
+   
+   Thread ^trd;
+ThreadStart ^myThreadDelegate = gcnew ThreadStart(this,ecoute,NULL);
+    trd = gcnew Thread(myThreadDelegate);
+    trd->Start();
+    
 	return 0;
 }
 
