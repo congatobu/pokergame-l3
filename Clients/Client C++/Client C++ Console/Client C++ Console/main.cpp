@@ -14,6 +14,8 @@
 using namespace std;
 
 
+using namespace System::Threading;
+
 void ecoute()
 {
 	while(phrase!=0)
@@ -142,6 +144,8 @@ void ecoute()
 cout<<"vous avez déco";
 
 }
+
+
 void boucleConnecte()
 {
 
