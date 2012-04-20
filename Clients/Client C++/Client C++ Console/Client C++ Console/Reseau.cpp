@@ -36,10 +36,7 @@ if ((connect(socketID, (sockaddr*) &informations, sizeof(sockaddr_in))) != SOCKE
 	}
 else{cout<<"error";}
 
-Thread ^trd;
-ThreadStart ^myThreadDelegate = gcnew ThreadStart(this,ecoute,NULL);
-    trd = gcnew Thread(myThreadDelegate);
-    trd->Start();
+
 // ICI LANCER LE THREAD FCT ecoute	
 return 0;
 }
