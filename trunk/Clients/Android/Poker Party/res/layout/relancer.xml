@@ -42,11 +42,8 @@ android:padding="10dp"
     android:layout_marginRight="5mm"
     android:layout_toRightOf="@+id/jetonplayers"
     android:layout_below="@+id/myjetons"
-    android:max="150"
-
-    
-    
     />
+    
     <TextView
     android:id="@+id/printJetonSelect"
     android:layout_width="wrap_content"

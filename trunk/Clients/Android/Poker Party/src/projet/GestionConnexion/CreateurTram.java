@@ -4,6 +4,7 @@
  */
 package projet.GestionConnexion;
 
+import android.util.Log;
 import java.io.IOException;
 import projet.poker.Accueuil;
 
@@ -114,6 +115,7 @@ public class CreateurTram {
                 tram+=arg[0];
                 tram+="@";
                 tram+=arg[1];
+                 Log.v("createur","createur : "+tram);
                 Accueuil.connect.say(tram);
                 break;
             case CALL:
@@ -122,14 +124,18 @@ public class CreateurTram {
                 tram+=arg[0];
                 tram+="@";
                 tram+=arg[1];
+                Log.v("createur","createur : "+tram);
                 Accueuil.connect.say(tram);
-                case FOLD:
+                break;
+            case FOLD:
                 tram+="CHOIX";
                 tram+="@";
                 tram+=arg[0];
                 tram+="@";
                 tram+=arg[1];
+                Log.v("createur","createur : "+tram);
                 Accueuil.connect.say(tram);
+                break;
         }
     }
     
@@ -173,6 +179,7 @@ public class CreateurTram {
                 tram+="@";
                 tram+="0";
                 Accueuil.connect.say(tram);
+                break;
 
                         
 
