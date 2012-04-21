@@ -33,6 +33,7 @@ public class TableauJeu extends TabActivity
     public static final int             JETON_TABLE = 4;
     public static final int             FIN_TOUR = 5;
     public static final int             MON_TOUR = 6;
+    public static final int             JOUEUR_COURANT =7;
     
     // variable d'affichage
     private ImageView[][]               cartes;
@@ -73,6 +74,7 @@ public class TableauJeu extends TabActivity
     private int[]                       carteTable = new int[5];
     private int                         potText;
     private String[]                    choixJoueur = new String[3];
+    private String                      joueurCourant;
     
     //popup
     AlertDialog.Builder                 adb;
@@ -135,7 +137,11 @@ public class TableauJeu extends TabActivity
                     choixJoueur[2] = ((List<String[]>) msg.obj).get(0)[2]; // relancé? true ou false
                     enableButton();
                       Toast.makeText(getApplicationContext(),"a toi !!!", Toast.LENGTH_SHORT).show();
+                }else if(msg.arg1 == JOUEUR_COURANT){
+                    joueurCourant = ((List<String[]>) msg.obj).get(0)[0];
+                    setJoueurCourant();
                 }
+                
                 //listPartie = new ArrayList<String[]>((List<String[]>)msg.obj);
                 //MAJAffichage();
             }
@@ -306,6 +312,16 @@ public class TableauJeu extends TabActivity
                 adb.show();
             }
         });
+    }
+    
+    private void setJoueurCourant(){
+        for (int i = 0; i < 8; i++) {
+            if(infoPlayers[i][0].getText().toString().equals(joueurCourant)){
+                infoPlayers[i][0].setTextColor(Color.GREEN);
+            }else{
+                infoPlayers[i][0].setTextColor(Color.RED);
+            }       
+        }
     }
     
     private void dislableButton(){
@@ -578,7 +594,7 @@ public class TableauJeu extends TabActivity
                 arg[0]="3";
                 arg[1] =""+seekJetons.getProgress();
 
-                //  Log.v("MATHIEU",arg[1] );
+                 
                 try {
                     Accueuil.sender.setTram(CreateurTram.JOUER, arg, 2);
                 } catch (IOException ex) {

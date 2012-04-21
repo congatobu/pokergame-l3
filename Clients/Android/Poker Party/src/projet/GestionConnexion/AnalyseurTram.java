@@ -269,7 +269,7 @@ public class AnalyseurTram {
                 listeArguments.add(argumentCourant.clone());
                 TableauJeu.MAJLIST(TableauJeu.FIN_TOUR, listeArguments);
             }else if(typeTram.equals("EXITOK")){
-                
+                TableauJeu.afficheMessage("EXITOK");
             }else if(typeTram.equals("JOK")){
                 TableauJeu.afficheMessage("JOK");
             }else if(typeTram.equals("JOUE")){
@@ -280,15 +280,23 @@ public class AnalyseurTram {
                 argumentCourant[0] = tram.substring(index1 + 1, index2);                
                 index1 = new Integer(index2); 
                 index2 = tram.indexOf("@", index1 + 1);
-                argumentCourant[2] = tram.substring(index1 + 1, index2);
+                argumentCourant[1] = tram.substring(index1 + 1, index2);
                 index1 = new Integer(index2);               
-                argumentCourant[3] = tram.substring(index1 + 1, tram.length());
+                argumentCourant[2] = tram.substring(index1 + 1, tram.length());
                 
                 listeArguments.add(argumentCourant.clone());
                 
                 TableauJeu.MAJLIST(TableauJeu.MON_TOUR, listeArguments);
-            }else if(typeTram.equals("MESSAGE")){
+            }else if(typeTram.equals("JOUEURJ")){
+                String[] argumentCourant = new String[1];
+             
+                index1 = new Integer(index2);
+                index2 = tram.indexOf("@", index1 + 1);    
+                argumentCourant[0] = tram.substring(index1 + 1, tram.length());
                 
+                listeArguments.add(argumentCourant.clone());
+                
+                TableauJeu.MAJLIST(TableauJeu.JOUEUR_COURANT, listeArguments);
             }
         }        
     }
