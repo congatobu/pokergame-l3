@@ -576,6 +576,8 @@ public class PokerPartie {
     	nbJoueur=getNbJReel();//nombre de joueurs en jeu (si ==1 faut finir)
     	joueur=b;
         nbTapis=0;
+    	jetonsPose=new int[getNbJ()];
+    	for(int i=0;i<getNbJ();i++)jetonsPose[i]=0;
     	
     	//envoi de 2 cartes a chaque joueurs 
     	for(int i=0;i<getNbJ();i++){
