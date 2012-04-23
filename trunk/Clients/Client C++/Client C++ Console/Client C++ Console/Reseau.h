@@ -20,6 +20,7 @@ public:
 	Reseau(void);
 	~Reseau(void);
 	int analTram();
+	int ecoute();
 
 	int connecterServeur();
 	int connecterServeurAMdp();

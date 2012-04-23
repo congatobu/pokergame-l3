@@ -5,6 +5,7 @@
 #include <errno.h>
 #include <windows.h>
 #include <tchar.h>
+#include <string>
 #pragma comment(lib, "ws2_32.lib")
 
 #define port 6667
@@ -12,12 +13,30 @@
 #include "Reseau.h"
 
 using namespace std;
-
-
+using namespace System;
 using namespace System::Threading;
 
-void ecoute()
+ref class Ecouter
 {
+public:
+   void ecoute()
+   {
+
+	char phrase[255];
+	SOKET soketID;
+/*
+	string getinfo;
+	string nomcompte;
+	string nompartie;
+	string nbjoueursmax;
+	string mdp;
+	string pseudo;
+	string ancienpseudo;
+	string nouveaupseudo;
+	string ancienmdp;
+	string nouveaumdp;
+	SOCKET socketID;
+*/
 	while(phrase!=0)
 	{
 	recv(socketID, phrase, 255, 0);
@@ -143,7 +162,8 @@ void ecoute()
 	}
 cout<<"vous avez déco";
 
-}
+	}
+};
 
 
 void boucleConnecte()
@@ -198,17 +218,9 @@ else if(choix==2){boucleConnecte();}
 int main()
 {
 	boucleNonConnecte();
-   
-   Thread ^trd;
-ThreadStart ^myThreadDelegate = gcnew ThreadStart(this,ecoute,NULL);
-    trd = gcnew Thread(myThreadDelegate);
+	ThreadStart^ threadDelegate = gcnew ThreadStart(&Ecouter::ecoute,NULL);
+    Thread^ trd = gcnew Thread(threadDelegate);
     trd->Start();
     
 	return 0;
 }
-
-
-
-
-
-

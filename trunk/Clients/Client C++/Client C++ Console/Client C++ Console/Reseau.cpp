@@ -13,6 +13,153 @@ Reseau::~Reseau(void)
 }
 
 
+void Reseau::ecoute()
+{
+/*
+	char phrase[255];
+	string getinfo;
+	string nomcompte;
+	string nompartie;
+	string nbjoueursmax;
+	string mdp;
+	string pseudo;
+	string ancienpseudo;
+	string nouveaupseudo;
+	string ancienmdp;
+	string nouveaumdp;
+	SOCKET socketID;
+*/
+	while(phrase!=0)
+	{
+	recv(socketID, phrase, 255, 0);
+		cout<<"phrase :"<<phrase<<endl;
+	if(strcmp(phrase,"CONNECTOK")==0)
+	{
+		std::cout << " Connexion établie " << std::endl;
+	}
+	else if(strcmp(phrase,"REJOK")==0)
+	{
+		std::cout << " C'est bon " << std::endl;
+	}
+	else if(strcmp(phrase,"PNE")==0)
+	{
+		std::cout << "  La partie n'existe pas " << std::endl;
+	}
+	else if(strcmp(phrase,"TOOMANY")==0)
+	{
+		std::cout << " trop de joueurs dans la partie " << std::endl;
+	}
+	else if(strcmp(phrase,"AIP")==0)
+	{
+		std::cout << "Le joueur est deja dans une partie" << std::endl;
+	}
+	else if(strcmp(phrase,"PEC")==0)
+	{
+		std::cout << " La partie est en cours " << std::endl;
+	}
+	else if(strcmp(phrase,"NCON")==0)
+	{
+		std::cout << " Il faut se connecter avant " << std::endl;
+	}
+	else if(strcmp(phrase,"CREATOK")==0)
+	{
+		std::cout << " Compte Créé " << std::endl;
+	}
+	else if(strcmp(phrase,"AUPSEUDO")==0)
+	{
+		std::cout << " Pseudo déjà utilisé, ajout impossible " << std::endl;
+	}
+	else if(strcmp(phrase,"ERREURBDD")==0)
+	{
+		std::cout << " erreur a l'ajout, veuillez recommencer " << std::endl;
+	}
+	else if(strcmp(phrase,"WFPSEUDO")==0)
+	{
+		std::cout << "mauvais format de pseudo" << std::endl;
+	}
+	else if(strcmp(phrase,"WFPASS")==0)
+	{
+		std::cout << " mauvais format de password " << std::endl;
+	}
+	else if(strcmp(phrase,"NCON")==0)
+	{
+		std::cout << " Il faut se connecter avant " << std::endl;
+	}
+	else if(strcmp(phrase,"OK")==0)
+	{
+		std::cout << " Pseudo changé " << std::endl;
+	}
+	else if(strcmp(phrase,"WPASS")==0)
+	{
+		std::cout << " mauvais password utilisé, changement impossible " << std::endl;
+	}
+	else if(strcmp(phrase,"WPSEUDO")==0)
+	{
+		std::cout << " pseudo introuvable " << std::endl;
+	}
+	else if(strcmp(phrase,"AUPSEUDO")==0)
+	{
+		std::cout << " Pseudo deja utilisé " << std::endl;
+	}
+	else if(strcmp(phrase,"OK")==0)
+	{
+		std::cout << " Mot de passe changé " << std::endl;
+	}
+	else if(strcmp(phrase,"WPASS")==0)
+	{
+		std::cout << " mauvais password utilisé, changement impossible " << std::endl;
+	}
+	else if(strcmp(phrase,"WPSEUDO")==0)
+	{
+		std::cout << " pseudo introuvable " << std::endl;
+	}
+	else if(strcmp(phrase,"WFPASS")==0)
+	{
+		std::cout << " Mot de passe incorect mauvais format " << std::endl;
+	}
+	else if(strcmp(phrase,"WFPSEUDO")==0)
+	{
+		std::cout << " mauvais format de pseudo " << std::endl;
+	}
+	
+	else if(strcmp(phrase,"CREATPOK")==0)
+	{
+		std::cout << " C'est bon la partie est créée " << std::endl;
+	}
+	else if(strcmp(phrase,"PAU")==0)
+	{
+		std::cout << "  La partie déjà utilisé " << std::endl;
+	}
+	else if(strcmp(phrase,"WFP")==0)
+	{
+		std::cout << " mauvais format nom de partie " << std::endl;
+	}
+	else if(strcmp(phrase,"AIP")==0)
+	{
+		std::cout << "Le joueur est deja dans une partie" << std::endl;
+	}
+	else if(strcmp(phrase,"NCON")==0)
+	{
+		std::cout << " Il faut se connecter avant " << std::endl;
+	}
+	else if(strcmp(phrase,"DEBUTPARTIE")==0)
+	{
+		std::cout << " C'est bon " << std::endl;
+	}
+	else if(strcmp(phrase,"WFPSEUDO")==0)
+	{
+		std::cout << " mauvais format de pseudo " << std::endl;
+	}
+
+	}
+cout<<"vous avez déco";
+
+}
+
+
+
+
+
 int Reseau::connecterServeur(void)
 {
 WSADATA wsaData;
