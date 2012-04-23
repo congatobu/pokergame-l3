@@ -15,7 +15,11 @@ import java.util.logging.Logger;
 
 /**
  * Classe du serveur qui va gerer les parties
- * @author benjamin Maurin
+ * @author benjamin Maurin et steve giner
+ */
+/**
+ * @author Toya
+ *
  */
 public class PokerPartie {
 		
@@ -178,7 +182,7 @@ public class PokerPartie {
     
     /**
      * Fonction pour enlever un client de la partie
-     * @author Benjamin Maurin
+     * @author Benjamin Maurin et steve giner
      * @param deadClient client à supprimer
      */
     public void deleteClient(PokerClientThread deadClient){
@@ -337,8 +341,9 @@ public class PokerPartie {
     
     
     /**
-    * procedure permettant le deroulement d'un tournoi
+    * procedure permettant le deroulement d'un tournoi (c'est ici qu'une partie commence)
     * @author steve giner
+    * @return int - retourne l'indice du gagnant dans clientList du tournoi ou -1 si il y a une erreur gagnant
     */
     public int tournoi(){
     	int i=0;
@@ -394,7 +399,7 @@ public class PokerPartie {
     }
     
     /**
-     * procedure permettant l'envoi des jetons de tous les joueurs
+     * procedure permettant l'envoi des jetons de tous les joueurs a tous les joeurs
      * @author steve giner
      */
     private void envoiJetonsJ() {
@@ -412,8 +417,9 @@ public class PokerPartie {
 
     
     /**
-     * envoi des cartes de la main
+     * envoi a joueur les cartes de sa main
      * @author steve giner
+     * @param int joueur - indice du joueur dans le vector clientList a qui on doit envoyer le message
      */
     private void envoiCarteM(int joueur) {
     	
@@ -429,6 +435,8 @@ public class PokerPartie {
     /**
      * envoi des cartes de la table
      * @author steve giner
+     * @param int nbc - nombre de cartes a envoyer a tout les joueurs (taille a parcourir sur table)
+     * @param int[] table - tableau contenant les cartes de la table a envoyer
      */
     private void envoiCarteT(int nbc,int[] table) {
     	
@@ -449,8 +457,12 @@ public class PokerPartie {
     
    
     /**
-     *  envoi joue et les parametres pour savoir ses choix,bool:envoi la valeur que doit prendre le bouton relancer (on ou off)
+     * envoi joue et les parametres pour savoir ses choix
      * @author steve giner
+     * @param int joueur - indice du joueur dans le vector clientList a qui on doit envoyer le message
+     * @param int jetonsMin - jetons minimum que le joueur doit jouer pour continuer (suivre si == jetonsMin)
+     * @param int jetonsMax - jetons maximum que le joueur peut jouer (tapis si == jetonsMax)
+     * @param String bool - envoi la valeur que doit prendre le bouton relancer(true ou false)
      */
     private void envoiJoue(int joueur,int jetonsMin,int jetonsMax,String bool) {
     	if(clientList.get(joueur)!=null){
@@ -462,11 +474,11 @@ public class PokerPartie {
 
     
     /**
-     *  envoi des jetons de la table
+     * envoi des jetons de la table
      * @author steve giner
      */
-    private void envoiJetonsT(int jetons) {
-    	broadcastClientsPartie("JETONT@"+jetons);
+    private void envoiJetonsT() {
+    	broadcastClientsPartie("JETONT@"+jetTable);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
@@ -477,7 +489,7 @@ public class PokerPartie {
     
     
     /**
-     *  envoi des cartes de ceux qui ne sont pas couch�s
+     * envoi des cartes de ceux qui ne sont pas couch�s ni plus en jeu
      * @author steve giner
      */
     private void envoiMontreC() {
@@ -500,8 +512,9 @@ public class PokerPartie {
  
 
   /**
-   *  envoi le gagnant du tour (celui qui ramasse des jetons)
+   * envoi le gagnant du tour (celui qui ramasse des jetons)
    * @author steve giner
+   * @param int[] t - tableau contenant le ou les gagnants
    */
   private void envoiGagnantT(int[] t) {
    
@@ -517,10 +530,15 @@ public class PokerPartie {
   /**
    * envoi le gagnant de la partie (celui qui gagne une victoire++)
    * @author steve giner
+   * @param int joueur - indice du joueur dans le vector clientList a qui on doit envoyer le message 
    */
   private void envoiGagnantP(int joueur) {
 	  
-	  if(clientList.get(joueur)!=null)broadcastClientsPartie("GAGNANTP@"+clientList.get(joueur).getPseudo());
+	  if(clientList.get(joueur)!=null){
+	
+		  broadcastClientsPartie("GAGNANTP@"+clientList.get(joueur).getPseudo());
+		  
+	  }
 	  
   
   }
@@ -531,14 +549,18 @@ public class PokerPartie {
   /**
    * envoi un perdant de la partie (celui qui gagne une defaite++)
    * @author steve giner
+   * @param int joueur - indice du joueur dans le vector clientList a qui on doit envoyer le message 
    */
   private void envoiPerdu(int joueur) {
 	  if(clientList.get(joueur)!=null)broadcastClientsPartie("PERDU@"+clientList.get(joueur).getPseudo());
   }
   
+  
+  
   /**
    * determine si il ya un gagnant et donc si le tournoi et termine
    * @author steve giner
+   * @return int - retourne l'indice du gagnant dans clientList, -1 si il n'y a pas encore de gagnant et -2 si il y a une erreur (plus de joueur en jeu par exemple)
    */
 	private int gagnant() {
 		
@@ -566,7 +588,11 @@ public class PokerPartie {
 	/**
     * procedure permettant le deroulement d'une partie
     * @author steve giner
+    * @param int b - indice du joueur qui doit poser la petite blind
     */
+    /**
+     * @param b
+     */
     public void deroulement(int b){
     	
     	//initialisation du paquet de cartes
@@ -719,10 +745,16 @@ public class PokerPartie {
 			}
 		}
 		
+		for(int i=0;i<getNbJ();i++){
+    		if(clientList.get(i)!=null){
+	    			clientList.get(i).setJetonsPoses(0);
+			    	clientList.get(i).setPot(0);	                
+	    		}
+		}
 		
     	envoiJetonsJ();
     	jetTable=0;
-    	envoiJetonsT(jetTable);
+    	envoiJetonsT();
 		
 	//on regarde si il y a des nouveaux perdants
 		
@@ -748,47 +780,52 @@ public class PokerPartie {
 
 
 /**
- * 
- * @param jetTable
- * @param g
- * @param taille
- * @param testReste 
+ * procedure permettant de repartir les gains entre les diff�rents joueurs.
+ * @author steve giner
+ * @param int jetTable - jetons a distribuer
+ * @param float[] g - tableau des gagnants (de 2 a (taille-1) car les case 0 et 1 sont pour les valeurs de la main)
+ * @param int taille - taille de g
+ * @param boolean testReste - pour savoir si on distribue les restes au(x) perdant(s) pas couche(s) (a cause des tapis) ou non, si true alors on les distribue sinon non
  */
 
 	private void repartionDesGains(int jetTable, float[] g,int taille,boolean testReste) {
 		
-		if(taille==3){
+		if(taille==3 && clientList.get((int)g[2]).getAttente()==0){
 		
-			if(clientList.get((int)g[2]).getAttente()==0){// si il n'a pas fait tapis
-				clientList.get((int)g[2]).setJetonsTotaux(clientList.get((int)g[2]).getJetonsTotaux()+jetTable);
+			clientList.get((int)g[2]).setJetonsTotaux(clientList.get((int)g[2]).getJetonsTotaux()+jetTable);
+			/*if(clientList.get((int)g[2]).getAttente()==0){// si il n'a pas fait tapis
+				
 			}
+			else{
+				clientList.get((int)g[2]).setJetonsTotaux(clientList.get((int)g[2]).getJetonsTotaux()+(jetTable-clientList.get((int)g[2]).getPot()));
+			}*/
 		}
 		else{
 		
 			int reste=jetTable;
-			int gain=0;
+			int gain=1;
 			int jreste=taille-2;
 			boolean[] r=new boolean[jreste];//sert a savoir si on lui a donne assez de jetons
 			for(int i=0;i<jreste;i++)r[i]=false;
-				
+			int tp=0;	
 			
-			gain=reste/jreste;
+			
 			
 			while(gain>0 && jreste>0){
 				
-			
+				gain=reste/jreste;
 			
 				for(int i=2;i<taille;i++){
 					
 					if(clientList.get((int)g[i])!=null && !r[i-2]){
-						
-							if(gain>=jetTable-clientList.get((int)g[i]).getPot()){//gain superieure a ce qu'il a le droit de toucher
+							tp=this.jetTable-clientList.get((int)g[i]).getPot();
+							if(gain>=tp){//gain superieure a ce qu'il a le droit de toucher
 								
-								clientList.get((int)g[i]).setJetonsTotaux(clientList.get((int)g[i]).getJetonsTotaux()+jetTable-clientList.get((int)g[i]).getPot());
+								clientList.get((int)g[i]).setJetonsTotaux(clientList.get((int)g[i]).getJetonsTotaux()+tp);
 								jreste--;
 								r[i-2]=true;
-								clientList.get((int)g[i]).ajoutePot(gain);
-								reste=reste-(jetTable-clientList.get((int)g[i]).getPot());
+								clientList.get((int)g[i]).ajoutePot(this.jetTable);
+								reste=reste-tp;
 							}
 							else{//gain<
 								
@@ -799,14 +836,14 @@ public class PokerPartie {
 					}
 				}
 				
-				gain=reste/jreste;
+				
 			}
 			
 			if(testReste){
 				
 				if(reste!=0){//on rend ca au(x) perdant(s) pas couche(s)
 					
-					float[] reste1=new float[getNbJ()-taille+2];
+					float[] reste1=new float[getNbJ()-taille+4];
 					reste1[0]=0;reste1[1]=0;
 					boolean exist=false;
 					int cpt=2;
@@ -842,16 +879,16 @@ public class PokerPartie {
 	/**
      * fonction qui retournera le choix du joueur.
      * @author steve giner
-	
-	 * @param joueur 
-	 * @param jetons jetons max pose sur la table par un joueur
-	 * @param relancer true si droit de relancer, false sinon
+     * @return int - numero de choix du joueur (1 coucher,2 suivre/check, 3 relancer)
+	 * @param int joueur - indice du joueur qui joue
+	 * @param int jetons - jetons max pose sur la table par un joueur
+	 * @param boolean relancer - true si droit de relancer, false sinon
      */
 	private int choix(int jetons, int joueur,boolean relancer) {
         
          //envoi min et max jetons possible de miser pour relancer
             //envoi de la demande de choix
-            jetMis=0;
+        jetMis=0;
     	choixJ=1;
     	if(clientList.get(joueur)!=null){
 	    	int min=jetons-clientList.get(joueur).getJetonsPoses();
@@ -913,7 +950,7 @@ public class PokerPartie {
     
 	/**
 	 * envoi a tout les joueurs le choix du joueur au pseudo "pseudo".
-	 * @param pseudo
+	 * @param String pseudo - pseudo du joueur
 	 * @author steve giner
 	 */
 private void envoiChoixJoueur(String pseudo) {
@@ -924,11 +961,12 @@ private void envoiChoixJoueur(String pseudo) {
 	}
 
 /**
- * 
- * @param choix  le numero de l'action choisie
- * @param jetons le nombre de jetons joués
+ * fonction permettant de transmettre le choix du joueur
+ * @param choix - le numero de l'action choisie
+ * @param jetons - le nombre de jetons joués
+ * @param PokerClientThread client - client qui joue
  * @author Maurin Benjamin , Giner Steve
- * @return 
+ * @return String - retourne si le choix et valide ou pas
  */
     public String jouage(int choix,int jetons,PokerClientThread client)
     { // ne pas oublier les tests
@@ -968,9 +1006,8 @@ private void envoiChoixJoueur(String pseudo) {
 	/**
     * procedure permettant de changer les jetons d'un joueurs
     * @author steve giner
-    * @param joueur qui mise
-    * @param jetons nb de jetons a enlever au joueur et a mettre sur la table
-	 * @param jetTable 
+    * @param int joueur - indice du joueur qui mise jetons
+    * @param int jetons - nb de jetons a enlever au joueur et a mettre sur la table
     */
 	private void mise(int joueur, int jetons) {
                 
@@ -978,16 +1015,14 @@ private void envoiChoixJoueur(String pseudo) {
 		if(clientList.get(joueur)!=null){
 			clientList.get(joueur).setJetonsTotaux(clientList.get(joueur).getJetonsTotaux()-jetons);
 			clientList.get(joueur).setJetonsPoses(clientList.get(joueur).getJetonsPoses()+jetons);
-			jetonsPose[joueur]=clientList.get(joueur).getJetonsTotaux()-jetons;
+			jetonsPose[joueur]=clientList.get(joueur).getJetonsPoses();
 			
 			if(clientList.get(joueur).getJetonsTotaux()==0){
 				clientList.get(joueur).setAttente(2);
 				nbTapis++;
 				for(int i=0;i<getNbJ();i++){
-					if(jetonsPose[i]<jetonsPose[joueur])
-					clientList.get(joueur).ajoutePot(jetonsPose[i]);
-					else
-						clientList.get(joueur).ajoutePot(jetonsPose[joueur]);
+					if(jetonsPose[i]>jetonsPose[joueur])
+					clientList.get(joueur).ajoutePot(jetonsPose[i]-jetonsPose[joueur]);
 				}
 			
 			}
@@ -997,7 +1032,7 @@ private void envoiChoixJoueur(String pseudo) {
                         
 			
 	    	envoiJetonsJ();
-	    	envoiJetonsT(this.jetTable);
+	    	envoiJetonsT();
 		}
 	}
     
@@ -1006,6 +1041,7 @@ private void envoiChoixJoueur(String pseudo) {
 	/**
 	* procedure permettant d'effectuer la premiere phase d'un tour d'enchere
 	* @author steve giner
+	* @return boolean - retourne true si aucun joueur n'a relance et false sinon
 	*/
 	private boolean premPhase(){
 		boolean bool=true;
@@ -1055,8 +1091,6 @@ private void envoiChoixJoueur(String pseudo) {
 	/**
 	* procedure permettant d'effectuer le premier tour d'enchere
 	* @author steve giner
-	 * @param nbJoueur 
-	* @param nbJ nombre de joueurs qu'il reste
 	*/
 	private void premiereEnchere() {
     	
@@ -1125,8 +1159,6 @@ private void envoiChoixJoueur(String pseudo) {
 	/**
 	* procedure permettant d'effectuer un tour d'enchere.
 	* @author steve giner
-	* @param nbJ nombre de joueurs qu'il reste
-	* * @param nbTapis 
 	*/
 	private void enchere() {
     
@@ -1186,6 +1218,13 @@ private void envoiChoixJoueur(String pseudo) {
 		
 	}
 
+	
+	
+	/**
+	 * procedure permettant d'ajouter des jetons au pot (jetons que le joueur ne pourra pas toucher)
+	 * @param int joueur - indice du joueur
+	 * @param int jetMis - nombre de jetons
+	 */
 	private void majPot(int joueur,int jetMis) {
 		
 		int ajout=0;
