@@ -17,10 +17,6 @@ import java.util.logging.Logger;
  * Classe du serveur qui va gerer les parties
  * @author benjamin Maurin et steve giner
  */
-/**
- * @author Toya
- *
- */
 public class PokerPartie {
 		
     private Vector<PokerClientThread> clientList= new Vector<PokerClientThread>();
@@ -524,6 +520,7 @@ public class PokerPartie {
 		if(clientList.get(t[i])!=null)m=m+"@"+clientList.get(t[i]).getPseudo();
 	
 	 broadcastClientsPartie(m);
+	 
   }
     
   
@@ -735,7 +732,7 @@ public class PokerPartie {
                     gagne[0]=cl[0];
                     envoiGagnantT(gagne);
             try {
-                Thread.sleep(1000);
+                Thread.sleep(7000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(PokerPartie.class.getName()).log(Level.SEVERE, null, ex);
             }
