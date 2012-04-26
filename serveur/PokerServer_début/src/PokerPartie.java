@@ -635,6 +635,7 @@ public class PokerPartie {
     	dernierRelance=b+1;
     	joueur++;
         dernierRelance=-1;
+        nbJoueur=getNbJReel();
     	premiereEnchere();
     	
   
