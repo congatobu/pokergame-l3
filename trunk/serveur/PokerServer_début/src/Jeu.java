@@ -2,14 +2,10 @@ package pokerPackage;
 
 
 
-
-
-
-
 import java.util.*;
 
-        /**
-	*Classe jeu doc pas remplie par steve comme demandé
+    /**
+	*Classe permettant la manipulation et comparaison des cartes et des mains
 	*@author Steve Giner
 	*/
 public class Jeu {
@@ -41,7 +37,7 @@ public class Jeu {
 	
 	
 	/**
-	*initialise le paquet de 52 cartes (0 a 51)
+	*initialise le paquet de 52 cartes (0 a 51).
 	*@author Steve Giner
 	*/
 	public void initTasDe52cartes(){
