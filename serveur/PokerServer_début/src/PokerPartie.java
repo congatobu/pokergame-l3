@@ -598,7 +598,7 @@ public class PokerPartie {
     	jetTable=0;//jetons au milieu de la table
     	nbJoueur=getNbJReel();//nombre de joueurs en jeu (si ==1 faut finir)
     	joueur=b;
-        nbTapis=0;
+        nbTapis=0;// nombre de joueur en tapis
     	jetonsPose=new int[getNbJ()];
     	for(int i=0;i<getNbJ();i++)jetonsPose[i]=0;
     	
@@ -909,7 +909,7 @@ public class PokerPartie {
 	        }
 	        tcj.stopeux();
 	       
-	        if(choixJ==3 && !relancer){
+	        if(choixJ==3 && (!relancer || jetJ<=min)){
 	        	choixJ=2;
 	        	
 	        	
