@@ -716,13 +716,14 @@ public class PokerPartie {
 		int[] gagne;
 		if(nbJoueur>1){
 			float[] g=je.gagnant(cartes,table,nbJoueur);
-			repartionDesGains(jetTable,g,g.length,true);
-                        gagne=new int[g.length-2];
+			gagne=new int[g.length-2];
+		                 
 			for(int i=2;i<g.length;i++){
                             
-                            gagne[i-2]=(int)g[i];
+                            gagne[i-2]=cl[(int)g[i]];
                         }
-                        
+			repartionDesGains(jetTable,gagne,gagne.length,true);
+			
                         envoiGagnantT(gagne);	
 			
 			
@@ -781,16 +782,16 @@ public class PokerPartie {
  * procedure permettant de repartir les gains entre les différents joueurs.
  * @author steve giner
  * @param int jetTable - jetons a distribuer
- * @param float[] g - tableau des gagnants (de 2 a (taille-1) car les case 0 et 1 sont pour les valeurs de la main)
+ * @param int[] gagne - tableau des gagnants 
  * @param int taille - taille de g
  * @param boolean testReste - pour savoir si on distribue les restes au(x) perdant(s) pas couche(s) (a cause des tapis) ou non, si true alors on les distribue sinon non
  */
 
-	private void repartionDesGains(int jetTable, float[] g,int taille,boolean testReste) {
+	private void repartionDesGains(int jetTable, int[] gagne,int taille,boolean testReste) {
 		
-		if(taille==3 && clientList.get((int)g[2]).getAttente()==0){
+		if(taille==1 && clientList.get(gagne[0]).getAttente()==0){
 		
-			clientList.get((int)g[2]).setJetonsTotaux(clientList.get((int)g[2]).getJetonsTotaux()+jetTable);
+			clientList.get(gagne[0]).setJetonsTotaux(clientList.get(gagne[0]).getJetonsTotaux()+jetTable);
 			/*if(clientList.get((int)g[2]).getAttente()==0){// si il n'a pas fait tapis
 				
 			}
@@ -802,7 +803,7 @@ public class PokerPartie {
 		
 			int reste=jetTable;
 			int gain=1;
-			int jreste=taille-2;
+			int jreste=taille;
 			boolean[] r=new boolean[jreste];//sert a savoir si on lui a donne assez de jetons
 			for(int i=0;i<jreste;i++)r[i]=false;
 			int tp=0;	
@@ -813,22 +814,22 @@ public class PokerPartie {
 				
 				gain=reste/jreste;
 			
-				for(int i=2;i<taille;i++){
+				for(int i=0;i<taille;i++){
 					
-					if(clientList.get((int)g[i])!=null && !r[i-2]){
-							tp=this.jetTable-clientList.get((int)g[i]).getPot();
+					if(clientList.get(gagne[i])!=null && !r[i]){
+							tp=this.jetTable-clientList.get(gagne[i]).getPot();
 							if(gain>=tp){//gain superieure a ce qu'il a le droit de toucher
 								
-								clientList.get((int)g[i]).setJetonsTotaux(clientList.get((int)g[i]).getJetonsTotaux()+tp);
+								clientList.get(gagne[i]).setJetonsTotaux(clientList.get(gagne[i]).getJetonsTotaux()+tp);
 								jreste--;
-								r[i-2]=true;
-								clientList.get((int)g[i]).ajoutePot(this.jetTable);
+								r[i]=true;
+								clientList.get(gagne[i]).ajoutePot(this.jetTable);
 								reste=reste-tp;
 							}
 							else{//gain<
 								
-								clientList.get((int)g[i]).setJetonsTotaux(clientList.get((int)g[i]).getJetonsTotaux()+gain);
-								clientList.get((int)g[i]).ajoutePot(gain);
+								clientList.get(gagne[i]).setJetonsTotaux(clientList.get(gagne[i]).getJetonsTotaux()+gain);
+								clientList.get(gagne[i]).ajoutePot(gain);
 								reste=reste-gain;
 							}					
 					}
@@ -841,20 +842,22 @@ public class PokerPartie {
 				
 				if(reste!=0){//on rend ca au(x) perdant(s) pas couche(s)
 					
-					float[] reste1=new float[getNbJ()-taille+4];
-					reste1[0]=0;reste1[1]=0;
+					int[] reste1=new int[getNbJ()-taille];
+					
 					boolean exist=false;
-					int cpt=2;
-					for(int i=2;i<getNbJ();i++){
+					int cpt=0;int j=0;
+					for(int i=0;i<getNbJ();i++){
 						
 						if(clientList.get(i)!=null){
 							if(clientList.get(i).getAttente()!=1 || clientList.get(i).getAttente()!=-1){
-							
-								for(int j=2;j<taille;j++){
+								exist=false;
+								j=0;
+								while(!exist && j<taille){	
 									
-									if(i==g[j])exist=true;
-									
+									if(i==gagne[j])exist=true;
+									j++;
 								}
+								
 								if(!exist){
 									reste1[cpt]=i;
 									cpt++;
@@ -936,8 +939,8 @@ public class PokerPartie {
 	        	
 	        	
 	        }
-	        
-	        envoiChoixJoueur(clientList.get(joueur).getPseudo());
+	      
+	       if(clientList.get(joueur)!=null) envoiChoixJoueur(clientList.get(joueur).getPseudo());
     	}
     	
     	
@@ -970,7 +973,7 @@ private void envoiChoixJoueur(String pseudo) {
     { // ne pas oublier les tests
         String retour;
         if(client!=null){
-    	if(choix<0 || choix>3){
+    	if(choix<1 || choix>3){
     		choixJ=1;
     		jetJ=0;
     		retour= "MNC";
@@ -978,7 +981,8 @@ private void envoiChoixJoueur(String pseudo) {
     	}
     	else{
     		if(jetons<0 || jetons>client.getJetonsTotaux()){
-    			
+    			jetJ=jetons;
+    			choixJ=choix;
     			retour= "MJET";
     		}
 
@@ -1011,12 +1015,14 @@ private void envoiChoixJoueur(String pseudo) {
                 
             
 		if(clientList.get(joueur)!=null){
+			if(jetons>clientList.get(joueur).getJetonsTotaux()){jetons=clientList.get(joueur).getJetonsTotaux();jetMis=jetons;}
 			clientList.get(joueur).setJetonsTotaux(clientList.get(joueur).getJetonsTotaux()-jetons);
 			clientList.get(joueur).setJetonsPoses(clientList.get(joueur).getJetonsPoses()+jetons);
 			jetonsPose[joueur]=clientList.get(joueur).getJetonsPoses();
 			
-			if(clientList.get(joueur).getJetonsTotaux()==0){
+			if(clientList.get(joueur).getJetonsTotaux()<=0){
 				clientList.get(joueur).setAttente(2);
+				clientList.get(joueur).setJetonsTotaux(0);
 				nbTapis++;
 				for(int i=0;i<getNbJ();i++){
 					if(jetonsPose[i]>jetonsPose[joueur])
