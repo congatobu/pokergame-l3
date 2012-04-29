@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <html>
 
 <head>
@@ -15,6 +13,7 @@
 	<script type="text/javascript" src="Scripts/emission_partie.js"></script>
 	<script type="text/javascript" src="Scripts/reception.js"></script>
 	<script type="text/javascript" src="Scripts/gestion.js"></script>
+	<script type="text/javascript" src="Scripts/affichage_partie.js"></script>
 	
 </head>
 
@@ -22,11 +21,12 @@
 	<div class="wrapper">
 		<div id="background"></div>
 	</div>
-	<form id="test_reception" class="test" onSubmit="javascript:test(this.message.value); return false;">
+	<div id="partie"></div>
+	<form id="test_reception" class="test cahe" onSubmit="javascript:test(this.message.value); return false;">
 		Message reçu : <input type="text" name="message">
 		<input type="submit" value="Test">
 	</form>
-	<form id="test_reception3" class="test" onSubmit="javascript:test3(this.message.value); return false;">
+	<form id="test_reception3" class="test cache" onSubmit="javascript:test3(this.message.value); return false;">
 		action : <input type="text" name="message">
 		<input type="submit" value="Test">
 	</form>
@@ -34,60 +34,60 @@
 	<div id="acceuil"></div>
 	
 	<div id="formtaille1" class="form cache">
-		<form id="formcon" class="cache" onSubmit="javascript:connexion(this.pseudo, this.pass); return false;">
+		<form id="formcon" class="cache  formtaille" onSubmit="javascript:connexion(this.pseudo, this.pass); return false;">
 			<legend>Connexion</legend>
-			<label for="pseudo" class="inline">Pseudo :</label>
+			<label for="pseudo" class="inline" id="labpseudocon">Pseudo :</label>
 			<input type="text" name="pseudo" id="pseudocon">
-			<label for="pass" class="inline">Mot de Passe :</label>
+			<label for="pass" class="inline" id="labpasscon">Mot de Passe :</label>
 			<input type="password" name="pass" id="passcon">
 			<input type="submit" value="Connexion">
 			<input type="button" value="Annuler" onclick="javascript:annuler('formcon');">
 		</form>
-		<form id="creerpartie" class="cache" onSubmit="javascript:creer_partie(this.nompartie, this.nbjoueurs); return false;">
+		<form id="creerpartie" class="cache formtaille" onSubmit="javascript:creer_partie(this.nompartie, this.nbjoueurs); return false;">
 			<legend>Créer une Partie</legend>
-			<label for="nompartie" class="inline">Nom Partie : </label>
+			<label for="nompartie" class="inline" id="labnompartie">Nom Partie : </label>
 			<input type="text" name="nompartie" id="nompartie">
-			<label for="nbjoueurs" class="inline">Joueurs Maximun :</label>
+			<label for="nbjoueurs" class="inline" id="labnbjoueurs">Joueurs Maximun :</label>
 			<input type="text" name="nbjoueurs" id="nbjoueurs">
 			<input type="submit" value="Créer partie">
 			<input type="button" value="Annuler" onclick="javascript:annuler('creerpartie');">
 		</form>
 	</div>
 	<div id="formtaille2" class="form cache">
-		<form id="formcreat" class="cache" onSubmit="javascript:creation(this.pseudo, this.pass, this.pass2); return false;">
+		<form id="formcreat" class="cache formtaille" onSubmit="javascript:creation(this.pseudo, this.pass, this.pass2); return false;">
 			<legend>Création de Compte</legend>
-			<label for="pseudo" class="inline">Pseudo :</label>
+			<label for="pseudo" class="inline" id="labpseudocreat">Pseudo :</label>
 			<input type="text" name="pseudo" id="pseudocreat">
-			<label for="pass" class="inline">Mot de Passe :</label>
-			<input type="password" name="pass" id="pass">
-			<label for="pass2" class="inline">Comfirmation :</label>
-			<input type="password" name="pass2" id="pass2">
+			<label for="pass" class="inline" id="labpasscreat">Mot de Passe :</label>
+			<input type="password" name="pass" id="passcreat">
+			<label for="pass2" class="inline" id="labpass2creat">Comfirmation :</label>
+			<input type="password" name="pass2" id="pass2creat">
 			<input type="submit" value="Créer compte">
 			<input type="button" value="Annuler" onclick="javascript:annuler('formcreat');">
 		</form>
-		<form id="chmtpsd" class="cache" onSubmit="javascript:changer_psd(this.pseudo, this.npseudo, this.pass); return false;">
+		<form id="chmtpsd" class="cache formtaille" onSubmit="javascript:changer_psd(this.pseudo, this.npseudo, this.pass); return false;">
 			<legend>Modifier Pseudo</legend>
-			<label for="pseudo" class="inline">Pseudo Actuel :</label>
+			<label for="pseudo" class="inline" id="labpseudochmt">Pseudo Actuel :</label>
 			<input type="text" name="pseudo" id="pseudochmt">
-			<label for="npseudo" class="inline">Nouveau Pseudo :</label>
-			<input type="text" name="npseudo">
-			<label for="pass" class="inline">Mot de Passe :</label>
-			<input type="password" name="pass" id="pass">
+			<label for="npseudo" class="inline" id="labnouvpseudo">Nouveau Pseudo :</label>
+			<input type="text" name="npseudo" id="nouvpseudo">
+			<label for="pass" class="inline" id="labpasschmtpsd">Mot de Passe :</label>
+			<input type="password" name="pass" id="passchmtpsd">
 			<input type="submit" value="Valider">
 			<input type="button" value="Annuler" onclick="javascript:annuler('chmtpsd');">
 		</form>
 	</div>
 	<div id="formtaille3" class="form cache">
-		<form id="chmtmdp" class="cache" onSubmit="javascript:changer_mdp(this.pseudo, this.ancien, this.nouveau, this.nouveau2); return false;">
+		<form id="chmtmdp" class="cache  formtaille" onSubmit="javascript:changer_mdp(this.pseudo, this.ancien, this.nouveau, this.nouveau2); return false;">
 			<legend>Modifier Mot de Passe</legend>
-			<label for="pseudo" class="inline">Pseudo :</label>
+			<label for="pseudo" class="inline" id="labpseudochmt2">Pseudo :</label>
 			<input type="text" name="pseudo" id="pseudochmt2">
-			<label for="ancien" class="inline">Ancien Mot de Passe :</label>
-			<input type="password" name="ancien">
-			<label for="nouveau" class="inline">Nouveau Mot de Passe :</label>
-			<input type="password" name="nouveau">
-			<label for="nouveau2" class="inline">Confirmation :</label>
-			<input type="password" name="nouveau2">
+			<label for="ancien" class="inline" id="labancienmdp">Ancien Mot de Passe :</label>
+			<input type="password" name="ancien" id="ancienmdp">
+			<label for="nouveau" class="inline" id="labnouveaumdp">Nouveau Mot de Passe :</label>
+			<input type="password" name="nouveau" id="nouveaumdp">
+			<label for="nouveau2" class="inline" id="labconfirm">Confirmation :</label>
+			<input type="password" name="nouveau2" id="confirm">
 			<input type="submit" value="Valider">
 			<input type="button" value="Annuler" onclick="javascript:annuler('chmtmdp');">
 		</form>
@@ -105,6 +105,7 @@
 			<a href="#">Compte</a>
 			<ul>
 				<li id="licon" class="deconnecte"><a href="javascript:affiche('formtaille1','formcon', 'pseudocon');">Connexion</a></li>
+				<li id="infosperso" class="connecte"><a href="javascript:infosperonnelles()">Infos personnelles</a></li>
 				<li id="lidecon" class="connecte"><a href="javascript:deconnexion();">Déconnexion</a></li>
 				<li id="licreat" class="deconnecte"><a href="javascript:affiche('formtaille2','formcreat', 'pseudocreat');">Créer un compte</a></li>
 				<li id="lipsd" class="deconnecte"><a href="javascript:affiche('formtaille2','chmtpsd', 'pseudochmt');">Changer pseudo</a></li>
@@ -113,7 +114,7 @@
 		</li>
 	</ul>
 	
-	<div id="table" class="cache">
+	<div id="tableau" class="cache">
 		<div id="div_titre">
 			<TABLE BORDER="0" id="titre_table">
 				<TR>
@@ -129,25 +130,32 @@
 		</div>
 	</div>
 	
-	<div id="partie"  class="cache">
-	<h3></h3>
-	<h4>Liste des joueurs</h4>
-	<ul id="listejoueurs"></ul>
-	<button id="bdebut" onclick="debuter_partie()">Démarrer partie</button>
-	<button onclick="quitter_partie()">Quitter partie</button>
-	</div>
-	
 	<div id="infos_joueur"  class="cache">
+	
 		<label for="nomjr">Joueur :</label>
 		<p id='info_nom' name='nomjr' class='infosjr'></p>
 		<label for="insc">Date d'Inscription :</label>
 		<p id='info_inscription' name="insc" class='infosjr'></p>
-		<label for="gagn">Parties Gagnée :</label>
+		<label for="gagn">Victoires/Défaites :</label>
 		<p id='info_gagnees' name="gagn" class='infosjr'></p>
-		<label for="perd">Parties Perdues :</label>
-		<p id='info_perdus' name="perd" class='infosjr'></p>
 	</div>
-
+	
+	
+	<div id="boutons">
+		<form>
+			<input id="commencer" type="button" value="Commencer" onclick="javascript:debuter_partie();">
+			<input type="button" value="Quitter" onclick="javascript:quitter_partie();">
+		</form>
+	</div>
+	
+	<div id="chat" class="cahe" onmouseover="javascript:montrer_chat();" >
+		<textarea id="prompt"  readonly class="prompt"></textarea>
+		<form  onsubmit="javascript:chatter(mess); return false;" >
+			<input type="text" name="mess" id="mess" class="prompt">
+			<input type="submit" value="Envoyer" id="envoimess">
+		</form>
+	</div>
+	
 </body>
 	
 </html>

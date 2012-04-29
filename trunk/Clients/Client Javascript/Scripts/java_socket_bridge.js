@@ -29,6 +29,7 @@ function socket_disconnect(){
 // Write something to the socket
 function socket_send(message){
 	if(java_socket_bridge_ready_flag){
+	console.log("EMISSION:   "+message);
 		return get_java_socket_bridge().send(message);
 	}
 	else{
@@ -39,7 +40,6 @@ function socket_send(message){
 // Get something from the socket
 function on_socket_get(message){
 	traiter_message(message);
-	alert(message);
 }
 
 // Report an error
