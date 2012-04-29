@@ -145,8 +145,11 @@ public class JavaSocketBridge extends JApplet {
 
 	// Get input from the socket
 	public void hear(String message){
+		lo
 		Object[] arguments = new Object[1];
+		log(message+"   mes couilles");
 		arguments[0] = message;
+		log(arguments[0]);
 		browser.call("on_socket_get", arguments);
 		log("Java Socket Bridge RECEIVED: "+message);
 	}

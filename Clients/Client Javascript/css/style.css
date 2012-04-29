@@ -42,14 +42,32 @@ body{
 	bottom:125px;
 }
 
+/*ACCEUIL*/
+#acceuil{
+	/*font-weight : bold;*/
+	font-family : Arial;
+	font-size : 15px;
+	width: 200px;
+	height : 21px;
+	/*font-variant: small-caps;*/
+	letter-spacing:1px;
+	position : absolute;
+	color: #fff;
+    background: #000;
+	text-align : center;
+	border-radius : 30px 30px 30px 30px;
+	padding-top : 3px;
+	top : 10px;
+	left : 10px;
+}
 
 /*MENU*/
 #menu, #menu ul {
-        padding : 0; /* pas de marge intérieure */
-        margin : 0; /* ni extérieure */
-        list-style : none; /* on supprime le style par défaut de la liste */
-        line-height : 21px; /* on définit une hauteur pour chaque élément */
-        text-align : center; /* on centre le texte qui se trouve dans la liste */
+	padding : 0; /* pas de marge intérieure */
+	margin : 0; /* ni extérieure */
+	list-style : none; /* on supprime le style par défaut de la liste */
+	line-height : 21px; /* on définit une hauteur pour chaque élément */
+	text-align : center; /* on centre le texte qui se trouve dans la liste */
 }
 
 #menu{
@@ -118,8 +136,8 @@ html>body #menu li ul ul{
 }
 
 #menu a:hover{
-        color: #fff; /* On passe le texte en noir... */
-        background: #000; /* ... et au contraire, le fond en blanc */
+    color: #fff; /* On passe le texte en noir... */
+    background: #000; /* ... et au contraire, le fond en blanc */
 }
 
 #menu li:hover ul {
@@ -160,14 +178,20 @@ html>body #menu li ul ul{
 	margin-top:-215px;
 }
 
-form {
+.formtaille{
 	font-family : Arial;
 	text-align:center;
-	margin:auto;
 	border-radius:10px 40px 10px 40px;
 	background-color:RGBA(20,80,40,0.9);
 	padding:10px;
- 
+ }
+ #boutons{
+	position: absolute;
+	width:220px;
+	bottom: 0;
+	right : 0;
+	margin-bottom: 10px;
+	margin-right: 5px;
  }
 
 legend {
@@ -228,7 +252,7 @@ background-image: -o-linear-gradient(top, #800100, #800100); /*uniquement en mod
 
 
 /*LISTE DES PARTIES*/
-#table{
+#tableau{
 	position:absolute;
 	top : 50%;
 	left:50%;
@@ -272,7 +296,9 @@ background-image: -o-linear-gradient(top, #800100, #800100); /*uniquement en mod
 }
 
 .ligne_partie{
+	/*overflow : hidden;*/
 	border : none;
+	width : 250px;
 	height : 35px;
 }
 
@@ -303,9 +329,11 @@ background-image: -o-linear-gradient(top, #800100, #800100); /*uniquement en mod
 /*INFORMATIONS JOUEUR*/
 
 #infos_joueur{
-	position:fixed;
+	position: absolute;
+	bottom : 50px;
+	right : 0;
 	font-family : Arial;
-	width:325px;
+	width:350px;
 	color:white;
 	border-radius:7px 7px 7px 7px;
 	background-color:RGBA(255,255,255,0.5);
@@ -320,18 +348,88 @@ background-image: -o-linear-gradient(top, #800100, #800100); /*uniquement en mod
 	margin-left: 20px;
 	margin-top: 0;
 	display: block;
-	width: 160px;
+	width: 170px;
 	float: left;
 }
 
 .infosjr {
 	color: RGBA(200,200,200,1);
 	float: right;
-	padding-right: 32px;
-	width: 113px;
+	padding-right: 10px;
+	width: 150px;
 	line-height: 35px;
+	text-align: center;
 }
 
 #info_nom:first-letter{
 	text-transform: uppercase;
 }
+
+#chat{
+	display:block;
+	position:absolute;
+	width:350px;
+	height:150px;
+	left : 0;
+	bottom : 25px;
+}
+
+#chat:hover .prompt{
+	opacity:0.3;
+	-ms-transition: all 0.7s ease-in;
+	-webkit-transition: all 0.7s ease-in;
+	-moz-transition: all 0.7s ease-in;
+	-sand-transition: all 0.7s ease-in;
+	-o-transition: all 0.7s ease-in;
+	transition: all 0.7s ease-in;
+}
+#chat:hover #envoimess{
+	opacity: 1;
+	-ms-transition: all 0.7s ease-in;
+	-webkit-transition: all 0.7s ease-in;
+	-moz-transition: all 0.7s ease-in;
+	-sand-transition: all 0.7s ease-in;
+	-o-transition: all 0.7s ease-in;
+	transition: all 0.7s ease-in;
+}
+
+
+.prompt,#envoimess{
+	opacity:0.1;
+	-ms-transition: all 0.5s ease-in;
+	-webkit-transition: all 0.5s ease-in;
+	-moz-transition: all 0.5s ease-in;
+	-sand-transition: all 0.5s ease-in;
+	-o-transition: all 0.5s ease-in;
+	transition: all 0.5s ease-in;
+}
+.prompt{color:white;}
+
+#prompt{
+	outline:none;
+	user-select: none;
+	width:350px;
+	height:120px;
+	resize:none;
+	background-color:RGBA(255,255,255,0.3);
+	border-radius:5px 35px 5px 35px;
+}
+#mess{
+	outline: none;
+	float :left;
+	width:245px;
+	height:30px;
+	background-color:RGBA(255,255,255,0.3);
+	margin-top:5px;
+	border-radius:5px 15px 5px 15px;
+}
+#envoimess{
+	opacity : 0.1;
+	outline: none;
+	float :left;
+	position:relative;
+	margin-top:8px;
+	right:0;
+	border-radius:5px 15px 5px 15px;
+}
+
