@@ -12,27 +12,12 @@ Reseau::~Reseau(void)
 {
 }
 
-
-void Reseau::ecoute()
+DWORD WINAPI Reseau::ecoute(LPVOID arg)
 {
-/*
-	char phrase[255];
-	string getinfo;
-	string nomcompte;
-	string nompartie;
-	string nbjoueursmax;
-	string mdp;
-	string pseudo;
-	string ancienpseudo;
-	string nouveaupseudo;
-	string ancienmdp;
-	string nouveaumdp;
-	SOCKET socketID;
-*/
 	while(phrase!=0)
 	{
 	recv(socketID, phrase, 255, 0);
-		cout<<"phrase :"<<phrase<<endl;
+		//cout<<"phrase :"<<phrase<<endl;
 	if(strcmp(phrase,"CONNECTOK")==0)
 	{
 		std::cout << " Connexion établie " << std::endl;
@@ -153,10 +138,10 @@ void Reseau::ecoute()
 
 	}
 cout<<"vous avez déco";
+	// On quitte le Thread une fois finis
+    ExitThread(0); 
 
 }
-
-
 
 
 
@@ -183,6 +168,30 @@ if ((connect(socketID, (sockaddr*) &informations, sizeof(sockaddr_in))) != SOCKE
 	}
 else{cout<<"error";}
 
+	
+    SECURITY_ATTRIBUTES attr;  
+    HANDLE th = 0;  
+  
+
+	// Le champ de longueur de la structure par la valeur renvoyée par sizeof
+    attr.nLength = sizeof(SECURITY_ATTRIBUTES);  
+
+
+	// Pour utiliser les paramètres de sécurité par défaut
+    attr.lpSecurityDescriptor = NULL;  
+
+
+	// Le champ d'héritage du handle sur 0 pour que les processus fils n'héritent pas du handle
+    attr.bInheritHandle = 0;  
+  
+	/* 1 param = adresse de la structure
+	* 2 param = 0 pour utiliser la taille de la pile par default
+	* 3 param = le nom de la fonction a appeler pour executer le Thread
+	 * 4 param = la variable a passer a la fonction
+	 * 5 param = 0 pour demarrer le Thread immédiatement
+	 * 6 param = NULL car pas besoin de recup le PID du Thread créé
+	 */
+    th = CreateThread(&attr, 0, Reseau::ecoute, NULL, 0, NULL);
 
 // ICI LANCER LE THREAD FCT ecoute	
 return 0;

@@ -20,8 +20,7 @@ public:
 	Reseau(void);
 	~Reseau(void);
 	int analTram();
-	int ecoute();
-
+	DWORD WINAPI ecoute(LPVOID arg);
 	int connecterServeur();
 	int connecterServeurAMdp();
 	int creerCompte();
