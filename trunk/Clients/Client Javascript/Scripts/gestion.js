@@ -390,7 +390,7 @@ function lister_joueurs(liste){
  * @param {String[]} act Tableau contenant les cartes de l'utilisateur.
  */
 function cartem(act){
-	partie.distribuerCarteJoueurs(act.slice(1,act.length));
+	partie.distribuerCarteJoueurs(act.slice(2,act.length));
 }
 
 /**
