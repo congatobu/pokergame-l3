@@ -366,10 +366,11 @@ background-image: -o-linear-gradient(top, #800100, #800100); /*uniquement en mod
 }
 
 #chat{
+	overflow : hidden;
 	display:block;
 	position:absolute;
 	width:350px;
-	height:150px;
+	height:155px;
 	left : 0;
 	bottom : 25px;
 }
