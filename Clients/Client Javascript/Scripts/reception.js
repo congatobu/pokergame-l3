@@ -109,7 +109,7 @@ function traiter_message(message){
 		else if(act[0]=="SETINFO") getinfo(message);
 		
 		else if(act[0]=="MESSAGE"){
-			$("#prompt").append("\n"+act[1]+" dit : "+act[2]);
+			$("#prompt").append("\n    "+act[1]+" dit : "+act[2]);
 			$("#prompt").scrollTop = $("#prompt").scrollHeight;
 		}
 	}
