@@ -3,7 +3,7 @@
  * @author Paul	Mura
  */
 
-var pseudo="";
+var pseudo="POL";
 var nom_partie="test";
 var createur =  false;
 var encours =  false;
@@ -25,6 +25,8 @@ $(function(){
 	$("#acceuil").hide();
 	$("#boutons").hide();
 	$("#commencer").hide();
+	entrer_partie();
+	domaine = "PARTIE";
 });
 
 
@@ -390,7 +392,7 @@ function lister_joueurs(liste){
  * @param {String[]} act Tableau contenant les cartes de l'utilisateur.
  */
 function cartem(act){
-	partie.distribuerCarteJoueurs(act.slice(2,act.length));
+	partie.distribuerCarteJoueurs(act.slice(1,act.length));
 }
 
 /**
@@ -400,7 +402,7 @@ function cartem(act){
  */
 function cartet(act){
 	partie.centrerJetons(jetonsTable);
-	partie.distribuerCarteTable(act.slice(1,act.length));
+	partie.distribuerCarteTable(act.slice(2,act.length));
 }
 
 /**
