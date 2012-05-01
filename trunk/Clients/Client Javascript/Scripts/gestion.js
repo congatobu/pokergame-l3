@@ -3,8 +3,8 @@
  * @author Paul	Mura
  */
 
-var pseudo="POL";
-var nom_partie="test";
+var pseudo="";
+var nom_partie="";
 var createur =  false;
 var encours =  false;
 var partie;
@@ -25,8 +25,6 @@ $(function(){
 	$("#acceuil").hide();
 	$("#boutons").hide();
 	$("#commencer").hide();
-	entrer_partie();
-	domaine = "PARTIE";
 });
 
 
