@@ -27,6 +27,7 @@ body{
 
 /*TEST*/
 #test_reception{
+	opacity : 0.1;
 	width:200px;
 	height:100px;
 	position:fixed;
