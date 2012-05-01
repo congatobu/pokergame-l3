@@ -1,0 +1,1162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="generator" content="JsDoc Toolkit" />
+		
+		<title>JsDoc Reference - Partie</title>
+
+		<style type="text/css">
+			/* default.css */
+body
+{
+	font: 12px "Lucida Grande", Tahoma, Arial, Helvetica, sans-serif;
+	width: 800px;
+}
+
+.header
+{
+	clear: both;
+	background-color: #ccc;
+	padding: 8px;
+}
+
+h1
+{
+	font-size: 150%;
+	font-weight: bold;
+	padding: 0;
+	margin: 1em 0 0 .3em;
+}
+
+hr
+{
+	border: none 0;
+	border-top: 1px solid #7F8FB1;
+	height: 1px;
+}
+
+pre.code
+{
+	display: block;
+	padding: 8px;
+	border: 1px dashed #ccc;
+}
+
+#index
+{
+	margin-top: 24px;
+	float: left;
+	width: 160px;
+	position: absolute;
+	left: 8px;
+	background-color: #F3F3F3;
+	padding: 8px;
+}
+
+#content
+{
+	margin-left: 190px;
+	width: 600px;
+}
+
+.classList
+{
+	list-style-type: none;
+	padding: 0;
+	margin: 0 0 0 8px;
+	font-family: arial, sans-serif;
+	font-size: 1em;
+	overflow: auto;
+}
+
+.classList li
+{
+	padding: 0;
+	margin: 0 0 8px 0;
+}
+
+.summaryTable { width: 100%; }
+
+h1.classTitle
+{
+	font-size:170%;
+	line-height:130%;
+}
+
+h2 { font-size: 110%; }
+caption, div.sectionTitle
+{
+	background-color: #7F8FB1;
+	color: #fff;
+	font-size:130%;
+	text-align: left;
+	padding: 2px 6px 2px 6px;
+	border: 1px #7F8FB1 solid;
+}
+
+div.sectionTitle { margin-bottom: 8px; }
+.summaryTable thead { display: none; }
+
+.summaryTable td
+{
+	vertical-align: top;
+	padding: 4px;
+	border-bottom: 1px #7F8FB1 solid;
+	border-right: 1px #7F8FB1 solid;
+}
+
+/*col#summaryAttributes {}*/
+.summaryTable td.attributes
+{
+	border-left: 1px #7F8FB1 solid;
+	width: 140px;
+	text-align: right;
+}
+
+td.attributes, .fixedFont
+{
+	line-height: 15px;
+	color: #002EBE;
+	font-family: "Courier New",Courier,monospace;
+	font-size: 13px;
+}
+
+.summaryTable td.nameDescription
+{
+	text-align: left;
+	font-size: 13px;
+	line-height: 15px;
+}
+
+.summaryTable td.nameDescription, .description
+{
+	line-height: 15px;
+	padding: 4px;
+	padding-left: 4px;
+}
+
+.summaryTable { margin-bottom: 8px; }
+
+ul.inheritsList
+{
+	list-style: square;
+	margin-left: 20px;
+	padding-left: 0;
+}
+
+.detailList {
+	margin-left: 20px; 
+	line-height: 15px;
+}
+.detailList dt { margin-left: 20px; }
+
+.detailList .heading
+{
+	font-weight: bold;
+	padding-bottom: 6px;
+	margin-left: 0;
+}
+
+.light, td.attributes, .light a:link, .light a:visited
+{
+	color: #777;
+	font-style: italic;
+}
+
+.fineprint
+{
+	text-align: right;
+	font-size: 10px;
+}
+		</style>
+	</head>
+
+	<body>
+<!-- ============================== header ================================= -->	
+		<!-- begin static/header.html -->
+		<div id="header">
+</div>
+		<!-- end static/header.html -->
+
+<!-- ============================== classes index ============================ -->
+		<div id="index">
+			<!-- begin publish.classesIndex -->
+			<div align="center"><a href="../index.html">Class Index</a>
+| <a href="../files.html">File Index</a></div>
+<hr />
+<h2>Classes</h2>
+<ul class="classList">
+	
+	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
+	
+	<li><a href="../symbols/Carte.html">Carte</a></li>
+	
+	<li><a href="../symbols/Div.html">Div</a></li>
+	
+	<li><a href="../symbols/Input.html">Input</a></li>
+	
+	<li><a href="../symbols/Joueur.html">Joueur</a></li>
+	
+	<li><a href="../symbols/Mise.html">Mise</a></li>
+	
+	<li><a href="../symbols/Partie.html">Partie</a></li>
+	
+	<li><a href="../symbols/Slide.html">Slide</a></li>
+	
+</ul>
+<hr />
+			<!-- end publish.classesIndex -->
+		</div>
+		
+		<div id="content">
+<!-- ============================== class title ============================ -->
+			<h1 class="classTitle">
+				
+				Class Partie
+			</h1>
+
+<!-- ============================== class summary ========================== -->			
+			<p class="description">
+				
+				
+			
+				Objet qui instancie une partie. Celle-ci appelle notamment tous les autres constructeurspour le bon déroulement de la partie.
+				
+				
+					<br /><i>Defined in: </i> <a href="../symbols/src/Scripts_affichage_partie.js.html">affichage_partie.js</a>.
+				
+			</p>
+
+<!-- ============================== constructor summary ==================== -->			
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Partie.">
+				<caption>Class Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/Partie.html#constructor">Partie</a></b>(correspond)
+							</div>
+							<div class="description">Construit un objet Partie</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+
+<!-- ============================== properties summary ===================== -->
+			
+
+<!-- ============================== methods summary ======================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class Partie.">
+					<caption>Method Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Partie.html#actionJoueur">actionJoueur</a></b>(pseudo, choix)
+								</div>
+								<div class="description">méthode définissant l'action du joueur adverse</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Partie.html#afficherBoutons">afficherBoutons</a></b>(bool)
+								</div>
+								<div class="description">méthode affichant ou non les bouton (aussi en fonction que l'utilisateur puisse relancer ou non)</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Partie.html#asseoirJoueur">asseoirJoueur</a></b>(pseudo, place)
+								</div>
+								<div class="description">instancie un objet joueur dans une variable de l'objet partie</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Partie.html#centrerJetons">centrerJetons</a></b>(montant)
+								</div>
+								<div class="description">créer l'animation qui met au centre les jetons de tous les joueurs, vers le pot.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Partie.html#distribuerCarteJoueurs">distribuerCarteJoueurs</a></b>(c)
+								</div>
+								<div class="description">créer l'animation de distribution des cartes au joueur de la table</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Partie.html#distribuerCarteTable">distribuerCarteTable</a></b>(liste)
+								</div>
+								<div class="description">créer l'animation de distribution des cartes de la table</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Partie.html#enleverCarteJoueurs">enleverCarteJoueurs</a></b>()
+								</div>
+								<div class="description">supprime les cartes de tout les joueurs</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Partie.html#enleverCarteTable">enleverCarteTable</a></b>()
+								</div>
+								<div class="description">supprime les cartes de le table</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Partie.html#gagnants">gagnants</a></b>(liste)
+								</div>
+								<div class="description">Désigne les gagnants sur la table et réinitialise les paramètres pour le tour suivant</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Partie.html#getIndiceJoueur">getIndiceJoueur</a></b>(pseudo)
+								</div>
+								<div class="description">obtenir L'indice du joueur sur la table en fonction de son pseudo</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Partie.html#initialiser">initialiser</a></b>(le)
+								</div>
+								<div class="description">Initialise la partie lors de l'instanciation de l'objet, mais peut aussi être appelé après pour la réinitialiser sans avoir à détuire l'objet</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Partie.html#initialiserBoutons">initialiserBoutons</a></b>()
+								</div>
+								<div class="description">méthode initialisant les boutons relatifs au choix de l'utilisateur (passe, suit ou relance)</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Partie.html#interroger">interroger</a></b>(pseudo)
+								</div>
+								<div class="description">créer l'animation de pour l'interrogation du joueur (le timer et l'affichage des boutons pour l'utilisateur)</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Partie.html#leverJoueur">leverJoueur</a></b>(place)
+								</div>
+								<div class="description">supprime le joueur désigné par la place de la partie</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Partie.html#miseajourJetons">miseajourJetons</a></b>(liste)
+								</div>
+								<div class="description">met le montants des jetons des joueurs et sauvegardes la somme de ces anciennes mises</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Partie.html#miseajourJoueurs">miseajourJoueurs</a></b>(liste)
+								</div>
+								<div class="description">rajoute les nouveaux joueurs et supprime ceux qui sont sortie de la partie</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Partie.html#montrerCartesJoueurs">montrerCartesJoueurs</a></b>(liste)
+								</div>
+								<div class="description">montre les cartes des joueurs présent sur la liste</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Partie.html#setMinMax">setMinMax</a></b>(misemin, misemax, relance)
+								</div>
+								<div class="description">definir la mise minimum et maximum que l'utilisateur peut miser et si il peut relancer</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
+<!-- ============================== events summary ======================== -->
+			
+
+<!-- ============================== constructor details ==================== -->		
+			
+			<div class="details"><a name="constructor"> </a>
+				<div class="sectionTitle">
+					Class Detail
+				</div>
+				
+				<div class="fixedFont">
+						<b>Partie</b>(correspond)
+				</div>
+				
+				<div class="description">
+					Construit un objet Partie
+					
+				</div>
+				
+				
+				
+				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								<span class="light fixedFont">{String}</span>  <b>correspond</b>
+								
+							</dt>
+								<dd>au pseudo de l'utilisateur pour le retrouver facilement dans les phase du jeu</dd>
+						
+						</dl>
+					
+					
+					
+					
+					
+						<dl class="detailList">
+						<dt class="heading">Returns:</dt>
+						
+								<dd>une nouvelle Partie</dd>
+						
+						</dl>
+					
+					
+					
+
+			</div>
+			
+
+<!-- ============================== field details ========================== -->		
+			
+
+<!-- ============================== method details ========================= -->		
+			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name="actionJoueur"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>actionJoueur</b>(pseudo, choix)
+					
+					</div>
+					<div class="description">
+						méthode définissant l'action du joueur adverse
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>pseudo</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<span class="light fixedFont">{int}</span> <b>choix</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="afficherBoutons"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>afficherBoutons</b>(bool)
+					
+					</div>
+					<div class="description">
+						méthode affichant ou non les bouton (aussi en fonction que l'utilisateur puisse relancer ou non)
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{boolean}</span> <b>bool</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="asseoirJoueur"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>asseoirJoueur</b>(pseudo, place)
+					
+					</div>
+					<div class="description">
+						instancie un objet joueur dans une variable de l'objet partie
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>pseudo</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<span class="light fixedFont">{int}</span> <b>place</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="centrerJetons"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>centrerJetons</b>(montant)
+					
+					</div>
+					<div class="description">
+						créer l'animation qui met au centre les jetons de tous les joueurs, vers le pot.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{int}</span> <b>montant</b>
+									
+								</dt>
+								<dd>désignant le montant du pot</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="distribuerCarteJoueurs"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>distribuerCarteJoueurs</b>(c)
+					
+					</div>
+					<div class="description">
+						créer l'animation de distribution des cartes au joueur de la table
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{int[]}</span> <b>c</b>
+									
+								</dt>
+								<dd>tableau a 2 cases contenant les indices des cartes de l'utilisateur</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="distribuerCarteTable"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>distribuerCarteTable</b>(liste)
+					
+					</div>
+					<div class="description">
+						créer l'animation de distribution des cartes de la table
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{int[]}</span> <b>liste</b>
+									
+								</dt>
+								<dd>tableau a 3,4 ou 5 cases contenant les indices cartes</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="enleverCarteJoueurs"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>enleverCarteJoueurs</b>()
+					
+					</div>
+					<div class="description">
+						supprime les cartes de tout les joueurs
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="enleverCarteTable"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>enleverCarteTable</b>()
+					
+					</div>
+					<div class="description">
+						supprime les cartes de le table
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="gagnants"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>gagnants</b>(liste)
+					
+					</div>
+					<div class="description">
+						Désigne les gagnants sur la table et réinitialise les paramètres pour le tour suivant
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String[]}</span> <b>liste</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="getIndiceJoueur"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{int}</span>
+					<b>getIndiceJoueur</b>(pseudo)
+					
+					</div>
+					<div class="description">
+						obtenir L'indice du joueur sur la table en fonction de son pseudo
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>pseudo</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{int}</span> indice</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="initialiser"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>initialiser</b>(le)
+					
+					</div>
+					<div class="description">
+						Initialise la partie lors de l'instanciation de l'objet, mais peut aussi être appelé après pour la réinitialiser sans avoir à détuire l'objet
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>le</b>
+									
+								</dt>
+								<dd>pseudo de l'utilisateur</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="initialiserBoutons"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>initialiserBoutons</b>()
+					
+					</div>
+					<div class="description">
+						méthode initialisant les boutons relatifs au choix de l'utilisateur (passe, suit ou relance)
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="interroger"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>interroger</b>(pseudo)
+					
+					</div>
+					<div class="description">
+						créer l'animation de pour l'interrogation du joueur (le timer et l'affichage des boutons pour l'utilisateur)
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>pseudo</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="leverJoueur"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>leverJoueur</b>(place)
+					
+					</div>
+					<div class="description">
+						supprime le joueur désigné par la place de la partie
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{int}</span> <b>place</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="miseajourJetons"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>miseajourJetons</b>(liste)
+					
+					</div>
+					<div class="description">
+						met le montants des jetons des joueurs et sauvegardes la somme de ces anciennes mises
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String[][]}</span> <b>liste</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="miseajourJoueurs"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>miseajourJoueurs</b>(liste)
+					
+					</div>
+					<div class="description">
+						rajoute les nouveaux joueurs et supprime ceux qui sont sortie de la partie
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String[]}</span> <b>liste</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="montrerCartesJoueurs"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>montrerCartesJoueurs</b>(liste)
+					
+					</div>
+					<div class="description">
+						montre les cartes des joueurs présent sur la liste
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String[]}</span> <b>liste</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="setMinMax"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>setMinMax</b>(misemin, misemax, relance)
+					
+					</div>
+					<div class="description">
+						definir la mise minimum et maximum que l'utilisateur peut miser et si il peut relancer
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{int}</span> <b>misemin</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<span class="light fixedFont">{int}</span> <b>misemax</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<span class="light fixedFont">{boolean}</span> <b>relance</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					
+				
+			
+			
+<!-- ============================== event details ========================= -->		
+			
+			
+			<hr />
+		</div>
+
+		
+<!-- ============================== footer ================================= -->
+		<div class="fineprint" style="clear:both">
+			
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue May 01 2012 00:25:29 GMT+0200 (CEST)
+		</div>
+	</body>
+</html>
