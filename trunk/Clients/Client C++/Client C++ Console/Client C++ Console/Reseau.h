@@ -19,21 +19,21 @@ class Reseau
 public:
 	Reseau(void);
 	~Reseau(void);
-	int analTram();
-	DWORD WINAPI ecoute(LPVOID arg);
-	int connecterServeur();
-	int connecterServeurAMdp();
-	int creerCompte();
-	int getlistepartie();
-	int rejoindreUnePartie();
-	int creerPartie();
-	void deconnecterServeur();
-	int changerPseudo();
-	int changerMdp();
-	int getInfo();
-	int lancerPartie();
-	int lancerJeu();
-	int communiquerSessrveur();
+	int analTram();// fonction qui annalyse les trames envoyées par le serveur
+	DWORD WINAPI ecoute(LPVOID arg);// fonction qui ecoute a l'aide d'un thread en permanance le serveur
+	int connecterServeur();// connecter au serveur sans mot de passe
+	int connecterServeurAMdp();// connecter au serveur avec mot de passe
+	int creerCompte();// creer un compte
+	int getlistepartie();// permet d'avoir les parties en cours
+	int rejoindreUnePartie();// rejoindre une partie en cours
+	int creerPartie();// créer une partie
+	void deconnecterServeur();// se deconnecter du serveur
+	int changerPseudo();// changer le pseudo
+	int changerMdp();// changer le mot de passe
+	int getInfo();// permet d'avoir des infos sur un joueur
+	int lancerPartie();// lancer une partie si vous etes l'hote
+	int lancerJeu();// lancer le jeu
+	int communiquerSessrveur();// chat qui permet de connecter avec le serveur
 
 private:
 	
