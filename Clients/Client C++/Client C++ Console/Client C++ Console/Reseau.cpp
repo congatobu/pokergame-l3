@@ -191,7 +191,7 @@ else{cout<<"error";}
 	 * 5 param = 0 pour demarrer le Thread immédiatement
 	 * 6 param = NULL car pas besoin de recup le PID du Thread créé
 	 */
-    th = CreateThread(&attr, 0, Reseau::ecoute, NULL, 0, NULL);
+    th = CreateThread(&attr, 0, Reseau::ecoute(),NULL ,0, NULL);
 
 // ICI LANCER LE THREAD FCT ecoute	
 return 0;
@@ -218,11 +218,11 @@ while (strcmp(phrase, "EXIT") != 0);
 return 0;
 }
 */
-int Reseau::creerCompte(void)
+int Reseau::creerCompte(void)// creer un compte
 {
-	pseudomdp="";
-	nomcompte="";
-	mdp="";
+	pseudomdp="";//initialise pseudomdp a vide
+	nomcompte="";//initialise nomcompte a vide
+	mdp="";//initialise mdp a vide
 	
 	std::cout << "Entrez votre Pseudo : ";
 	cin>>nomcompte;
@@ -230,19 +230,19 @@ int Reseau::creerCompte(void)
 	std::cout << "Entrez votre mot de passe : ";
 	cin>>mdp;
 
-	string tmp="CREATCPT@"+nomcompte+"@"+mdp+"\n";
+	string tmp="CREATCPT@"+nomcompte+"@"+mdp+"\n"; // place dans tmp la socket a envoyer au serveur 
 
 	pseudomdp = tmp.c_str();
 
 	cout<<pseudomdp<<endl;
 
-	if ((send(socketID, pseudomdp, strlen(pseudomdp), 0)) == 0)
+	if ((send(socketID, pseudomdp, strlen(pseudomdp), 0)) == 0)// si la socket n'est pas envoyé afficher une erreur
 		perror("send");
 	cout<<sizeof(&pseudomdp)<<endl;
 	cout<<"phrase send"<<endl;
 
-	memset(phrase, 0, 255);
-	recv(socketID, phrase, 255, 0);
+	memset(phrase, 0, 255);//void * memset ( void * ptr, int value, size_t num );
+	recv(socketID, phrase, 255, 0);// recois du serveur
 
 	cout<<"phrase :"<<phrase<<endl;
 	
@@ -251,7 +251,7 @@ return 0;
 }
 
 
-int Reseau::connecterServeurAMdp()
+int Reseau::connecterServeurAMdp()// connecté au serveur avec mot de passe
 {
 	pseudomdp="";
 	nomcompte="";
@@ -308,7 +308,7 @@ else if((strcmp(phrase,"WPSEUDO")==0))
 
 
 
-int Reseau::getlistepartie()
+int Reseau::getlistepartie()// permet de recevoir les partie en cours
 {
 		getliste="GETLISTEPARTIE\n";
 		if ((send(socketID, getliste, strlen(getliste), 0)) == 0)
@@ -319,7 +319,7 @@ int Reseau::getlistepartie()
 		return 0;
 }
 
-int Reseau::rejoindreUnePartie()
+int Reseau::rejoindreUnePartie()// rejoindre une partie
 {
 	cout<<"Donnez le nom de la partie"<<endl;
 	cin>>nompartie;
@@ -346,7 +346,7 @@ return 0;
 
 
 
-int Reseau::changerPseudo()
+int Reseau::changerPseudo()// permet de changer le pseudo
 {
 	pseudomdp="";
 	ancienpseudo="";
@@ -382,7 +382,7 @@ int Reseau::changerPseudo()
 return 0;	
 }
 
-int Reseau::changerMdp()
+int Reseau::changerMdp()// changer le mot de passe
 {
 	pseudomdp="";
 	ancienmdp="";
@@ -418,7 +418,7 @@ int Reseau::changerMdp()
 return 0;
 }
 
-int Reseau::creerPartie()
+int Reseau::creerPartie()// creer une partie
 {
 cout<<"Donnez le nom de la partie"<<endl;
 	cin>>nompartie;
@@ -447,7 +447,7 @@ return 0;
 
 }
 
-int Reseau::getInfo()
+int Reseau::getInfo()// permet d'avoir des info sur les joueurs
 {
 
 	cout<<"Donnez le nom du joueur"<<endl;
@@ -470,7 +470,7 @@ int Reseau::getInfo()
 	return 0;
 	
 }
-int Reseau::lancerPartie()
+int Reseau::lancerPartie()// permet de lancer la partie
 {
 	string tmp="DEBUTPARTIE""\n";
 
@@ -493,7 +493,7 @@ int Reseau::lancerPartie()
 return 0;
 }
 
-int Reseau::lancerJeu()
+int Reseau::lancerJeu()// permet de lancer le jeu si on est l'hotes
 {
 	recv(socketID, phrase, 255, 0);
 	cout<<"phrase :"<<phrase<<endl;
@@ -521,13 +521,13 @@ int Reseau::lancerJeu()
 return 0;
 }
 
-void Reseau::deconnecterServeur(void)
+void Reseau::deconnecterServeur(void)// fonction se deconnecter du serveur
 {
-	closesocket(socketID);
-	WSACleanup();
+	closesocket(socketID);// ferme la socket
+	WSACleanup();//function ferme Winsock 2 DLL (Ws2_32.dll)
 
 }
-void analTram(string tram)
+void analTram(string tram)// fonction qui permet d'analyser les trames envoyé par le serveur
 {
  int index1 = 0;
  int index2 = tram.find("@");

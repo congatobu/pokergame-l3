@@ -13,10 +13,8 @@
 #include "Reseau.h"
 
 using namespace std;
-using namespace System;
-using namespace System::Threading;
 
-void boucleConnecte()
+void boucleConnecte()//Fonction de jeu lorsque l'utilisateur est connecté
 {
 
 	Reseau mr;
@@ -24,21 +22,20 @@ void boucleConnecte()
 	mr.connecterServeurAMdp();
 
 
-	cout<<"\n 1) voir les parties en cours\n 2) Creer une partie\n 3) pour rejoindre une partie\n "<<endl;
-	cin>>choix;
+	cout<<"\n 1) voir les parties en cours\n 2) Creer une partie\n 3) pour rejoindre une partie\n "<<endl; //liste des choix qui s'offre a l'utilisateur
+	cin>>choix;//on recupere le choix de l'utilisateur
 
-	if(choix==1){mr.lancerPartie();}
-	if(choix==2){mr.creerPartie();}
-	if(choix==3){
-		mr.rejoindreUnePartie();
-		cout<<"1) lancer la partie (si vous etes l'hotes)\n 2)lancer le jeu\n ";
-		cin>>choix;
-			if(choix==1){mr.lancerPartie();}
-			if(choix==2){mr.lancerJeu();}
-		}
+	if(choix==1){mr.lancerPartie();}// si le choix de l'utilisateur est 1 on lance la partie
+	if(choix==2){mr.creerPartie();}// si le choix de l'utilisateur est 2 on crée une parie
+	if(choix==3){mr.rejoindreUnePartie();//  si le choix de l'utilisateur est 3 on rejoind la partie
+					cout<<"1) lancer la partie (si vous etes l'hotes)\n 2)lancer le jeu\n ";
+					cin>>choix;
+					if(choix==1){mr.lancerPartie();}
+					if(choix==2){mr.lancerJeu();}
+				}
 }
 
-void boucleNonConnecte()
+void boucleNonConnecte()//Fonction de jeu durant la quelle l'utilisateur n'est pas connecté
 {
 int choix=0;
 Reseau mr;
@@ -53,23 +50,23 @@ if(choix==1)
 	boucleConnecte();
 }
 else if(choix==2){mr.connecterServeur();mr.getInfo();} //demande les infos sur un joueur
-else if(choix==3){mr.connecterServeur();mr.creerCompte();}
-else if(choix==4){mr.connecterServeur();mr.changerPseudo();}
-else if(choix==5){mr.connecterServeur();mr.changerMdp();}
+else if(choix==3){mr.connecterServeur();mr.creerCompte();}//Créer un compte
+else if(choix==4){mr.connecterServeur();mr.changerPseudo();}//Changer le pseudo
+else if(choix==5){mr.connecterServeur();mr.changerMdp();}//Permet le changement de mot de passe
 else{cout<<"mauvais choix !!!!!!!!!!";}
 //mr.communiquerServeur();
 cout<<"1) Pour vous deconnecter \n 2) Pour le menu (Non conencté)\n 3) Pour le menu2 (connecté)\n "<<endl;
 cin>>choix;
-if(choix==1){mr.deconnecterServeur();}
-else if(choix==2){boucleNonConnecte();}
-else if(choix==2){boucleConnecte();}
+if(choix==1){mr.deconnecterServeur();}//se deconnecte
+else if(choix==2){boucleNonConnecte();}//lance la fonction en mode non connecté
+else if(choix==2){boucleConnecte();}//lance la fonction en mode connecté
 
 }
 
 int main()
 {
 	
-	boucleNonConnecte();
+	boucleNonConnecte();// fonction mode non connecté
     
 	return 0;
 }
