@@ -14,7 +14,7 @@ var dico = {"Janvier":"01","Fevrier":"02","Mars":"03","Avril":"04","Mai":"05","J
 //INITIALISATION
 
 /**
- * Appelle la fonction de message correspondant au domaine au message reçu.
+ * Initialise l'affichage en cachant les élément HTML qui ne doivent pas apparaitres au démarrage.
  * @name Initialiser
  * @author Paul	Mura
  */
