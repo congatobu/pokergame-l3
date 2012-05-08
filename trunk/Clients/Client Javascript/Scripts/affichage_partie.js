@@ -352,7 +352,7 @@ function Partie(u){
 			}
 		    montantjoueurs = [0,0,0,0,0,0,0,0];
 		    montantjoueurstour = [0,0,0,0,0,0,0,0];
-		},500);
+		},3000);
 	};
 	//----- méthodes relatives à la gestion des cartes & Jetons -----
 	this.distribuerCarteJoueurs=function(c){
@@ -753,7 +753,7 @@ function Mise(){
 	};
 	this.deplacerJetons=function(siege,sens){
 		if(sens){	
-			if(compteur[siege]<100){
+			if(sousdiv[siege]!=null && compteur[siege]<100){
 				compteur[siege]++;
 				t[siege]-=dt[siege];
 				l[siege]-=dl[siege];
