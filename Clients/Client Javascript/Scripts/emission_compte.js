@@ -10,7 +10,7 @@ var pseudoC = "";
  * @author Paul	Mura
  */
 function connexion_serveur(){
-	socket_connect('83.197.19.113', 6667);
+	socket_connect('86.209.234.202', 6667);
 }
 
 /**
