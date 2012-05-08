@@ -2,6 +2,7 @@ package pokerPackage;
 
 
 
+
 import java.util.*;
 
     /**
@@ -170,7 +171,7 @@ public class Jeu {
 		
 		
 		
-		for(int i=6;i>0;i--){
+		for(int i=6;i>-1;i--){
 			
 			if(cpt[1][coul[1][i]]==0){//si on a pas de de suite commencee
 				
@@ -180,12 +181,12 @@ public class Jeu {
 			}
 			else{//on a deja une valeur a trouvee
 				
-				if(cpt[0][coul[1][i]]==coul[0][i-1]+1){
+				if(cpt[0][coul[1][i]]==coul[0][i]+cpt[1][coul[1][i]]){
 					cpt[1][coul[1][i]]++;
-					cpt[0][coul[1][i]]=coul[0][i-1];
 				}
 				else{
-					cpt[1][coul[1][i]]=0;
+					
+					if(coul[0][i]!=2)cpt[1][coul[1][i]]=0;
 					
 				}
 				
@@ -195,12 +196,9 @@ public class Jeu {
 			
 		
 		for(int i=0;i<4;i++){
-			
-			if(cpt[1][coul[1][i]]>=5){
-				if(val < cpt[1][coul[1][i]]+cpt[0][coul[1][i]]-1)
-				val=cpt[1][coul[1][i]]+cpt[0][coul[1][i]]-1;
-				
-			}
+
+			if(cpt[1][i]>=5 && val < cpt[0][i])
+			val=cpt[0][i];
 			
 		}
 		
@@ -482,26 +480,9 @@ public class Jeu {
 	private float[] valeurMain(int[] m){//
 	
 	int i=0;
-	boolean bool=false;
-	int tmp=0;
+	
 	int[][] valCoul=new int[2][7];
 	
-	
-	
-	
-	while(!bool){
-		bool=true;
-		for(i=0;i<6;i++){
-			if(valeur(m[i])>valeur(m[i+1])){
-				tmp=m[i];
-				m[i]=m[i+1];
-				m[i+1]=tmp;
-				bool=false;
-			}
-			
-		}
-	
-	}	
 	
 	for(i=0;i<7;i++){
 		valCoul[0][i]=valeur(m[i]);
@@ -569,7 +550,8 @@ public class Jeu {
 		float max0=-1;
 		float max1=-1;
 		int b=-1;
-		
+		boolean bool=false;
+		int tmp=0;
 		
 		for(int j=0;j<nbjoueurs;j++){
 			for(int i=0;i<5;i++){
@@ -579,6 +561,23 @@ public class Jeu {
 			
 			m[j][5]=cartes[j][0];
 			m[j][6]=cartes[j][1];
+			
+			//on tri m[j]
+			bool=false;
+			tmp=0;
+			while(!bool){
+				bool=true;
+				for(int k=0;k<6;k++){
+					if(valeur(m[j][k])>valeur(m[j][k+1])){
+						tmp=m[j][k];
+						m[j][k]=m[j][k+1];
+						m[j][k+1]=tmp;
+						bool=false;
+					}					
+				}
+			}
+			
+			
 			
 			valeur[j]=valeurMain(m[j]);//en 0 on a la valeur de la combinaison et dans 1 celle de la meilleure carte de la combinaison
 			
@@ -591,7 +590,7 @@ public class Jeu {
 			}
 			else{
 				if(max0==valeur[j][0]){
-					if(max1<valeur[j][0]){
+					if(max1<valeur[j][1]){
 						
 						max1=valeur[j][1];
 						cpt=0;
