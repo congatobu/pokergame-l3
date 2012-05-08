@@ -10,9 +10,9 @@ import com.badlogic.gdx.backends.android.AndroidApplication;
 import projet.splash.SplashAnimation;
 
 public class SplashScreen extends AndroidApplication{
-    private static Handler messageHandler;
-    private Intent i;
-    SplashAnimation g;
+    private static Handler              _messageHandler;
+    private Intent                      _i;
+    private SplashAnimation             _g;
     
     /** Called when the activity is first created. */
     @Override
@@ -20,7 +20,7 @@ public class SplashScreen extends AndroidApplication{
     {
         super.onCreate(savedInstanceState);
         
-        messageHandler = new Handler() {
+        _messageHandler = new Handler() {
             @Override
             public void handleMessage(android.os.Message msg) {
                 if(msg.obj.toString().equals("STOP")){
@@ -30,9 +30,9 @@ public class SplashScreen extends AndroidApplication{
             }
         };
         
-        g = new SplashAnimation();
+        _g = new SplashAnimation();
         
-        initialize(g, false);
+        initialize(_g, false);
     }
     
     @Override
@@ -53,6 +53,6 @@ public class SplashScreen extends AndroidApplication{
     public static void finSplash(String message){
         Message msg = new Message();
         msg.obj = message;
-        messageHandler.sendMessage(msg);
+        _messageHandler.sendMessage(msg);
     }
 }

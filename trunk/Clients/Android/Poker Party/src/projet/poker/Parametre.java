@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import projet.GestionConnexion.AnalyseurEnvoi;
-import projet.GestionConnexion.Connection;
+import projet.GestionConnexion.Connexion;
 import projet.GestionConnexion.CreateurTram;
  
 /**
@@ -32,17 +32,17 @@ import projet.GestionConnexion.CreateurTram;
  */
 public class Parametre extends Activity{
  
-    private ListView                maListViewPerso;
+    private ListView                _listView_Parametre;
     
     // Handler pour sortir les messages de la partie static
-    private static Handler          messageHandler;
+    private static Handler          _messageHandler;
     
     // Pour la boite de dialog 
-    AlertDialog.Builder             adb;
+    private AlertDialog.Builder     _adb;
     
     // Paratmètres de connexion
-    private String                  ipS;
-    private String                  portS;
+    private String                  _IP;
+    private String                  _PORT;
  
     /** 
      * Fonction appelé lors de la création de l'activity. le super.onCreate() permet de faire les actions de base puis enfin on peut fair eles actions personnels.
@@ -55,10 +55,10 @@ public class Parametre extends Activity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.parametre);
-        Accueuil.connect.setActivity(Connection.PARAMETRE);
+        Accueil.connexion.setActivity(Connexion.PARAMETRE);
         getWindow().setBackgroundDrawableResource(R.drawable.fond);
         
-        messageHandler = new Handler() {
+        _messageHandler = new Handler() {
             @Override
             public void handleMessage(android.os.Message msg) {
                 Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
@@ -66,7 +66,7 @@ public class Parametre extends Activity{
         };
         
         //Récupération de la listview créée dans le fichier main.xml
-        maListViewPerso = (ListView) findViewById(R.id.listviewperso);
+        _listView_Parametre = (ListView) findViewById(R.id.listviewperso);
  
         //Création de la ArrayList qui nous permettra de remplire la listView
         ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
@@ -103,25 +103,25 @@ public class Parametre extends Activity{
                new String[] {"img", "titre", "description"}, new int[] {R.id.img, R.id.titre, R.id.description});
  
         //On attribut à notre listView l'adapter que l'on vient de créer
-        maListViewPerso.setAdapter(mSchedule);
+        _listView_Parametre.setAdapter(mSchedule);
  
         //Enfin on met un écouteur d'évènement sur notre listView
-        maListViewPerso.setOnItemClickListener(new OnItemClickListener() {
+        _listView_Parametre.setOnItemClickListener(new OnItemClickListener() {
             @Override
             @SuppressWarnings("unchecked")
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 switch(position){
                     case 0:
                         initDialogPseudo();
-                        adb.show();
+                        _adb.show();
                         break;
                     case 1:
                         initDialogPass();
-                        adb.show();
+                        _adb.show();
                         break;
                     case 2:
                         initDialogIPPort();
-                        adb.show();
+                        _adb.show();
                         break;                  
                 }
                 //on récupère la HashMap contenant les infos de notre item (titre, description, img)
@@ -146,10 +146,10 @@ public class Parametre extends Activity{
      * @author Jessy Bonnotte
      */
     private void chargerParamReseau(){
-        SharedPreferences settings = getSharedPreferences(Accueuil.PREFS_CONFIG, 0);        
+        SharedPreferences settings = getSharedPreferences(Accueil.PREFS_CONFIG, 0);        
                
-        ipS = settings.getString("ip", "0");
-        portS = settings.getString("port", "0");
+        _IP = settings.getString("ip", "0");
+        _PORT = settings.getString("port", "0");
     }
     
     /**
@@ -160,7 +160,7 @@ public class Parametre extends Activity{
     public static void finOperation(String message){
         Message msg = new Message();
         msg.obj = message;
-        messageHandler.sendMessage(msg);
+        _messageHandler.sendMessage(msg);
     }
     
     /**
@@ -180,16 +180,16 @@ public class Parametre extends Activity{
             final EditText oldmdp = (EditText) alertDialogView.findViewById(R.id.oldmdp);
             final EditText newmdp = (EditText) alertDialogView.findViewById(R.id.newmdp);
             //Création de l'AlertDialog
-            adb = new AlertDialog.Builder(this);
+            _adb = new AlertDialog.Builder(this);
             //On affecte la vue personnalisé que l'on a crée à notre AlertDialog
-            adb.setView(alertDialogView);
+            _adb.setView(alertDialogView);
             //On donne un titre à l'AlertDialog
-            adb.setTitle("Changer de mot de pass");
+            _adb.setTitle("Changer de mot de pass");
             //On modifie l'icône de l'AlertDialog pour le fun ;)
-            adb.setIcon(R.drawable.myspace);
+            _adb.setIcon(R.drawable.myspace);
             final AnalyseurEnvoi verifEnv = new AnalyseurEnvoi();
             //On affecte un bouton "OK" à notre AlertDialog et on lui affecte un évènement
-            adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            _adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     
                     Log.v("Parametre", "test");
@@ -200,11 +200,11 @@ public class Parametre extends Activity{
                         arg[1] = oldmdp.getText().toString();
                         arg[2] = newmdp.getText().toString();
 
-                        if(Accueuil.connect.init("88.167.230.145", "6667")){
+                        if(Accueil.connexion.init("88.167.230.145", "6667")){
                             try {
-                                Accueuil.sender.setTram(CreateurTram.ACTUALISE_PASSWORD, arg, 3);
+                                Accueil.createurTram.setTram(CreateurTram.ACTUALISE_PASSWORD, arg, 3);
                             } catch (IOException ex) {
-                                Logger.getLogger(Accueuil.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                         dialog.cancel();
@@ -217,7 +217,7 @@ public class Parametre extends Activity{
             });
 
             //On crée un bouton "Annuler" à notre AlertDialog et on lui affecte un évènement
-            adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            _adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     //Lorsque l'on cliquera sur annuler on quittera l'application
                     dialog.cancel();
@@ -246,16 +246,16 @@ public class Parametre extends Activity{
             final EditText mdppseudo = (EditText) alertDialogView.findViewById(R.id.mdppseudo);
             final EditText newpseudo = (EditText) alertDialogView.findViewById(R.id.newpseudo);
             //Création de l'AlertDialog
-            adb = new AlertDialog.Builder(this);
+            _adb = new AlertDialog.Builder(this);
             //On affecte la vue personnalisé que l'on a crée à notre AlertDialog
-            adb.setView(alertDialogView);
+            _adb.setView(alertDialogView);
             //On donne un titre à l'AlertDialog
-            adb.setTitle("Changer de pseudo");
+            _adb.setTitle("Changer de pseudo");
             //On modifie l'icône de l'AlertDialog pour le fun ;)
-            adb.setIcon(R.drawable.myspace);
+            _adb.setIcon(R.drawable.myspace);
             final AnalyseurEnvoi verifEnv = new AnalyseurEnvoi();
             //On affecte un bouton "OK" à notre AlertDialog et on lui affecte un évènement
-            adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            _adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     
                     Log.v("Parametre", "test");
@@ -266,11 +266,11 @@ public class Parametre extends Activity{
                         arg[1] = mdppseudo.getText().toString();
                         arg[2] = newpseudo.getText().toString();
 
-                        if(Accueuil.connect.init("88.167.230.145", "6667")){
+                        if(Accueil.connexion.init("88.167.230.145", "6667")){
                             try {
-                                Accueuil.sender.setTram(CreateurTram.ACTUALISE_PSEUDO, arg, 3);
+                                Accueil.createurTram.setTram(CreateurTram.ACTUALISE_PSEUDO, arg, 3);
                             } catch (IOException ex) {
-                                Logger.getLogger(Accueuil.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                         dialog.cancel();
@@ -283,7 +283,7 @@ public class Parametre extends Activity{
             });
 
             //On crée un bouton "Annuler" à notre AlertDialog et on lui affecte un évènement
-            adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            _adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     //Lorsque l'on cliquera sur annuler on quittera l'application
                     dialog.cancel();
@@ -295,6 +295,11 @@ public class Parametre extends Activity{
         return true;
     }
     
+    /**
+     * Fonction permettant d'initialiser la boite de dialogue pour la configuration de l'ip et du port
+     * 
+     * @return boolean - resultat de l'initialisation
+     */
     private boolean initDialogIPPort(){
         try{
             //On instancie notre layout en tant que View
@@ -304,21 +309,21 @@ public class Parametre extends Activity{
             final EditText ip = (EditText) alertDialogView.findViewById(R.id.ip);
             final EditText port = (EditText) alertDialogView.findViewById(R.id.port);
             //Création de l'AlertDialog
-            adb = new AlertDialog.Builder(this);
+            _adb = new AlertDialog.Builder(this);
             //On affecte la vue personnalisé que l'on a crée à notre AlertDialog
-            adb.setView(alertDialogView);
+            _adb.setView(alertDialogView);
             //On donne un titre à l'AlertDialog
-            adb.setTitle("Parametrage reseau");
+            _adb.setTitle("Parametrage reseau");
             //On modifie l'icône de l'AlertDialog pour le fun ;)
-            adb.setIcon(R.drawable.info);
+            _adb.setIcon(R.drawable.info);
             
-            ip.setText(ipS);
-            port.setText(portS);
+            ip.setText(_IP);
+            port.setText(_PORT);
             
             //On affecte un bouton "OK" à notre AlertDialog et on lui affecte un évènement
-            adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            _adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    SharedPreferences settings = getSharedPreferences(Accueuil.PREFS_CONFIG, 0);        
+                    SharedPreferences settings = getSharedPreferences(Accueil.PREFS_CONFIG, 0);        
                     SharedPreferences.Editor editor = settings.edit();
                     editor.putString("ip", ip.getText().toString());
                     editor.putString("port", port.getText().toString());
@@ -328,7 +333,7 @@ public class Parametre extends Activity{
             });
 
             //On crée un bouton "Annuler" à notre AlertDialog et on lui affecte un évènement
-            adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            _adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     //Lorsque l'on cliquera sur annuler on quittera l'application
                     dialog.cancel();

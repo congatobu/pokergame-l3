@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  * 
  * @author Jessy Bonnotte
  */
-public class Connection implements Runnable{
+public class Connexion implements Runnable{
     // Activity courante
     /**
      * Pour selectionner l'activity accueuil.
@@ -46,38 +46,35 @@ public class Connection implements Runnable{
     private int                 currentActivity = 0;
     
     // Propriétés de comunication
-    private String              adresse;
-    private int                 port;
+    private String              _adresse;
+    private int                 _port;
     
     // Gestion des flux de lecture et d'écriture
-    private BufferedReader      br;
-    private BufferedWriter      bw;
+    private BufferedReader      _buffuredReader;
+    private BufferedWriter      _buffuredWriter;
     
     // La socket de comunication
-    private Socket              sock;
+    private Socket              _socket;
     
     // Le thread d'écoute
-    private Thread              proc;
+    private Thread              _processus;
     
     // Comunication entre les thread
-    private Handler             hand;
-    private Message             msgvaleur;
+    private Handler             _handler;
+    private Message             _messageHandler;
     
     // Décriptage de la tram
-    private Crypt               cryptTram;
+    private Crypt               _crypteur;
     
     // Analyse de la tram
-    private AnalyseurTram       analTram;
-    
-    // Timeout de connexion
-    private FutureTask<?>       theTask = null;
-    private long                depart = 0;
-    private long                arrive = 0;
+    private AnalyseurTram       _analyseurTram;
  
     /**
      * Constructeur classe de connexion.
+     * 
+     * @author Jessy Bonnotte
      */
-    public Connection(){
+    public Connexion(){
         
     }
     /**
@@ -102,59 +99,59 @@ public class Connection implements Runnable{
      * @return boolean - true si connection ok ou false si échouée.
      */
     public boolean init(String a, String p){
-        adresse = a;
-        cryptTram = new Crypt();
-        port = Integer.parseInt(p);
-        analTram = new AnalyseurTram();
+        _adresse = a;
+        _crypteur = new Crypt();
+        _port = Integer.parseInt(p);
+        _analyseurTram = new AnalyseurTram();
 
-        hand = new Handler(){
+        _handler = new Handler(){
             @Override
             public void handleMessage(Message msg){
                 try {
-                    analTram.setTram(msg.obj.toString(), currentActivity);
+                    _analyseurTram.setTram(msg.obj.toString(), currentActivity);
                 } catch (IOException ex) {
-                    Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         };
 
         try {
-            Log.v("connexion", "avant la socket : "+adresse+"  "+port);
+            Log.v("connexion", "avant la socket : "+_adresse+"  "+_port);
 
             //sock = new Socket(adresse, port);
 
             Log.v("Parametre", "avant socket");
-            sock = new Socket();
-            sock.connect(new InetSocketAddress(adresse, port), 5000);
+            _socket = new Socket();
+            _socket.connect(new InetSocketAddress(_adresse, _port), 5000);
             Log.v("Parametre", "apres socket");
-            if(!sock.isConnected()){
-                msgvaleur = new Message();
-                msgvaleur.obj = "TIMEOUT";
-                hand.sendMessage(msgvaleur);
+            if(!_socket.isConnected()){
+                _messageHandler = new Message();
+                _messageHandler.obj = "TIMEOUT";
+                _handler.sendMessage(_messageHandler);
                 return false;
             }
-            br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-            bw = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
-            proc = new Thread(this);
-            proc.start();                   
+            _buffuredReader = new BufferedReader(new InputStreamReader(_socket.getInputStream()));
+            _buffuredWriter = new BufferedWriter(new OutputStreamWriter(_socket.getOutputStream()));
+            _processus = new Thread(this);
+            _processus.start();                   
             /*}catch (IOException e) {
 
             }*/
             return true;
         } catch (UnknownHostException ex) {
             Log.v("Parametre", "ici");
-            msgvaleur = new Message();
-            msgvaleur.obj = "ERREUR";
-            hand.sendMessage(msgvaleur);
+            _messageHandler = new Message();
+            _messageHandler.obj = "ERREUR";
+            _handler.sendMessage(_messageHandler);
 
             //Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
 
             return false;
         } catch (IOException ex) {
             Log.v("Parametre", ex.getMessage());
-            msgvaleur = new Message();
-            msgvaleur.obj = "ERREUR";
-            hand.sendMessage(msgvaleur);
+            _messageHandler = new Message();
+            _messageHandler.obj = "ERREUR";
+            _handler.sendMessage(_messageHandler);
 
             //Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
 
@@ -172,8 +169,8 @@ public class Connection implements Runnable{
      * @throws IOException - errerur au niveau du buffer d'envoi
      */
     public void say(String message) throws IOException{
-        bw.write(/*cryptTram.enCrypt(*/message/*)*/+"\n");
-        bw.flush();
+        _buffuredWriter.write(/*cryptTram.enCrypt(*/message/*)*/+"\n");
+        _buffuredWriter.flush();
     }
     
     /**
@@ -185,7 +182,7 @@ public class Connection implements Runnable{
      */
     public boolean dispose(){
         try {
-            sock.close();
+            _socket.close();
         } catch (Exception ex) {
             return false;
         }
@@ -200,7 +197,7 @@ public class Connection implements Runnable{
      * @return boolean - true si connexion active ou false si échouée.
      */
     public boolean isConnected(){
-        if(sock.isConnected()){
+        if(_socket.isConnected()){
             return true;
         }else{
             return false;
@@ -213,7 +210,7 @@ public class Connection implements Runnable{
      * @author Jessy Bonnotte
      */
     private void start(){
-        proc.start();
+        _processus.start();
     }
     
     /**
@@ -222,7 +219,7 @@ public class Connection implements Runnable{
      * @author Jessy Bonnotte
      */
     private void stop(){
-        proc.stop();
+        _processus.stop();
     }
     
     /**
@@ -234,16 +231,16 @@ public class Connection implements Runnable{
     public void run() {
         String ligne = "";
         try {
-            while ((ligne = br.readLine()) != null) {
+            while ((ligne = _buffuredReader.readLine()) != null) {
                 if(!ligne.equals("")){
-                    msgvaleur = new Message();
-                    msgvaleur.obj = /*cryptTram.deCrypt(*/ligne/*)*/;
-                    hand.sendMessage(msgvaleur);
+                    _messageHandler = new Message();
+                    _messageHandler.obj = /*cryptTram.deCrypt(*/ligne/*)*/;
+                    _handler.sendMessage(_messageHandler);
                 }
             }
-            msgvaleur = new Message();
-            msgvaleur.obj = "CONNEXION CLOSE";
-            hand.sendMessage(msgvaleur);
+            _messageHandler = new Message();
+            _messageHandler.obj = "CONNEXION CLOSE";
+            _handler.sendMessage(_messageHandler);
             dispose();
         } catch (Exception e) {
             

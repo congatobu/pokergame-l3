@@ -14,7 +14,7 @@ android:padding="10dp"
     android:text="Mes jetons : "
     />
     
-    <EditText
+    <TextView
     android:id="@+id/myjetons"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

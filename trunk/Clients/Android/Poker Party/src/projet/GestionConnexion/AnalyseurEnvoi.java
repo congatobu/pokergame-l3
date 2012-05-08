@@ -11,9 +11,14 @@ package projet.GestionConnexion;
  */
 public class AnalyseurEnvoi {
     
-    String caracChaine = "azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN123456789éèàâêîôûäëïöüù";
-    int nbCar = 0;
+    private String              caracChaine = "azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN123456789éèàâêîôûäëïöüù";
+    private int                 nbCar = 0;
     
+    /**
+     * Constructeur de l'analyseur d'envoi
+     * 
+     * @author Jessy Bonnotte
+     */
     public AnalyseurEnvoi(){
         nbCar = caracChaine.length();
     }
@@ -25,9 +30,9 @@ public class AnalyseurEnvoi {
      * 
      * @author Jessy Bonnotte
      * 
-     * @param pseudo
+     * @param pseudo - le pseudo a vérifier
      * 
-     * @return 
+     * @return boolean - résultat de l'analyse. true si pseudo correcte sinon false
      */
     public boolean analysePseudo(String pseudo){
         boolean retour = true;
@@ -49,13 +54,13 @@ public class AnalyseurEnvoi {
     }
     
     /**
-     * Fonction servant a vérifier les caractères du pseudo.
+     * Fonction servant a vérifier les caractères du nom de la partie.
      * 
      * @author Jessy Bonnotte
      * 
-     * @param pseudo
+     * @param partie - le nom de partie a vérifier
      * 
-     * @return 
+     * @return boolean - résultat de l'analyse. true si nom de partie correcte sinon false
      */
     public boolean analyseNomPartie(String partie){
         boolean retour = true;
@@ -81,9 +86,9 @@ public class AnalyseurEnvoi {
      * 
      * @author Jessy Bonnotte;
      * 
-     * @param password le mot de passe a vérifier.
+     * @param password - le mot de passe a vérifier.
      * 
-     * @return true si le mot de passes contient des caractere correcte sinno false.
+     * @return boolean - résultat de l'analyse. true si le mot de passe correcte sinon false
      */
     public boolean analyseMDP(String password){
         boolean retour = true;

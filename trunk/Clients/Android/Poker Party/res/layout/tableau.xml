@@ -38,18 +38,10 @@
                     android:layout_alignParentBottom="true"/>
 
                     <Button
-                    android:id="@+id/checkfold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/fold"
-                    android:text="parole/se coucher"
-                    android:layout_alignParentBottom="true"/>
-
-                    <Button
                     android:id="@+id/check"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/checkfold"
+                    android:layout_toRightOf="@+id/fold"
                     android:text="parole"
                     android:layout_alignParentBottom="true"/>
 
