@@ -113,7 +113,8 @@ function choix_joueur(numero, jetons){
  * @param {HTMLObject} mess Le message à faire suivre.
  */
 function chatter(mess){
-$("#mess").text("");
-	socket_send("MESSAGE@"+get_pseudo()+"@"+mess.value);
-	$("#mess").text("");
+	if(mess.value!=''){
+		socket_send("MESSAGE@"+get_pseudo()+"@"+mess.value);
+		$('#mess').val("");
+	}
 }
