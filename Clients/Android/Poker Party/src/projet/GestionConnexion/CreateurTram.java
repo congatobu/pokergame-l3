@@ -6,7 +6,7 @@ package projet.GestionConnexion;
 
 import android.util.Log;
 import java.io.IOException;
-import projet.poker.Accueuil;
+import projet.poker.Accueil;
 
 /**
  * Classe permettant de créer les trams à envoyer au serveur.
@@ -33,15 +33,26 @@ public class CreateurTram {
     public static final int CALL= 17;
     public static final int FOLD= 18;
 
+    /**
+     * Constructeur du créateur de tram
+     * 
+     * @author Jessy bonnotte
+     */
     public CreateurTram(){
         
     }
-    /**
- * crée la tram a envoyer au serveur en fonction du type envoyer par l'action du joueurs.
- * 
- * @author Jessy Bonnotte && Mathieu Polizzi
- */
     
+    /**
+     * Fonction permettant de créer des tram avec paramètre. l'utilisateur choisis le type de tram et donnes les parametre et la tram est ensuite créé puis envoyé au serveur.
+     * 
+     * @author Jessy bonnotte
+     * 
+     * @param type - le type de tram à creer
+     * @param arg - les arguments à passé à la tram
+     * @param nbArg - le nombre d'arguments passé à la tram
+     * 
+     * @throws IOException - exception levé s'il y a un problème lors de l'envoi
+     */
     public void setTram(int type, String[] arg, int nbArg) throws IOException{
         String tram = "";
         switch(type){
@@ -51,7 +62,7 @@ public class CreateurTram {
                 tram += arg[0];
                 tram += "@";
                 tram += arg[1];
-                Accueuil.connect.say(tram);
+                Accueil.connexion.say(tram);
                 break;
             case CREATECPT:
                 tram += "CREATCPT";
@@ -59,7 +70,7 @@ public class CreateurTram {
                 tram += arg[0];
                 tram += "@";
                 tram += arg[1];
-                Accueuil.connect.say(tram);
+                Accueil.connexion.say(tram);
                 break;
             case ACTUALISE_PASSWORD:
                 tram += "ACTPASSWORD";
@@ -69,7 +80,7 @@ public class CreateurTram {
                 tram += arg[1];
                 tram += "@";
                 tram += arg[2];
-                Accueuil.connect.say(tram);
+                Accueil.connexion.say(tram);
                 break;
             case ACTUALISE_PSEUDO:
                 tram += "ACTPSEUDO";
@@ -79,13 +90,13 @@ public class CreateurTram {
                 tram += arg[1];
                 tram += "@";
                 tram += arg[2];
-                Accueuil.connect.say(tram);
+                Accueil.connexion.say(tram);
                 break;
             case GET_LISTE_PARTIE_NOMPARTIE:
                 tram += "GETLISTEPARTIE";
                 tram += "@";
                 tram += arg[0];
-                Accueuil.connect.say(tram);
+                Accueil.connexion.say(tram);
                 break;  
             case CREATE_PARTIE:
                 tram += "CREATEPARTIE";
@@ -93,13 +104,13 @@ public class CreateurTram {
                 tram += arg[0];
                 tram += "@";
                 tram += arg[1];
-                Accueuil.connect.say(tram);
+                Accueil.connexion.say(tram);
                 break;
             case REJOINDRE_PARTIE:
                 tram += "REJP";
                 tram += "@";
                 tram += arg[0];
-                Accueuil.connect.say(tram);
+                Accueil.connexion.say(tram);
                 break;
             case MESSENGER:
                 tram += "MESSAGE";
@@ -107,7 +118,7 @@ public class CreateurTram {
                 tram += arg[0];
                 tram += "@";
                 tram += arg[1];
-                Accueuil.connect.say(tram);
+                Accueil.connexion.say(tram);
                 break;             
             case JOUER://// CHOIX@3@NombreJeton
                 tram+="CHOIX";
@@ -116,7 +127,7 @@ public class CreateurTram {
                 tram+="@";
                 tram+=arg[1];
                  Log.v("createur","createur : "+tram);
-                Accueuil.connect.say(tram);
+                Accueil.connexion.say(tram);
                 break;
             case CALL:
                 tram+="CHOIX";
@@ -125,7 +136,7 @@ public class CreateurTram {
                 tram+="@";
                 tram+=arg[1];
                 Log.v("createur","createur : "+tram);
-                Accueuil.connect.say(tram);
+                Accueil.connexion.say(tram);
                 break;
             case FOLD:
                 tram+="CHOIX";
@@ -134,43 +145,44 @@ public class CreateurTram {
                 tram+="@";
                 tram+=arg[1];
                 Log.v("createur","createur : "+tram);
-                Accueuil.connect.say(tram);
+                Accueil.connexion.say(tram);
                 break;
         }
     }
     
    /**
-    *crée la tram a envoyer au serveur en fonction du type envoyer par l'action du joueurs
+    * Focntion permettant de créer une tram simple et l'envoi ensuite au serveur
     * 
     * @author Jessy Bonnotte && Mathieu Polizzi
+    *
+    * @param type - le type de tram à créer
     */
-    
     public void setTram(int type) throws IOException{
         String tram = "";
         switch(type){
             case GET_LISTE_PARTIE:
                 tram += "GETLISTEPARTIE";
-                Accueuil.connect.say(tram);
+                Accueil.connexion.say(tram);
                 break;
             case DECONNECT:
                 tram += "DECONNECT";
-                Accueuil.connect.say(tram);
+                Accueil.connexion.say(tram);
                 break;
             case GET_PLAYER:
                 tram += "GETPLAYERPARTY";
-                Accueuil.connect.say(tram);
+                Accueil.connexion.say(tram);
                 break;
             case EXIT_PARTIE:
                 tram += "EXITPARTIE";
-                Accueuil.connect.say(tram);
+                Accueil.connexion.say(tram);
                 break;
             case PRET:
                 tram += "IAMREADY";
-                Accueuil.connect.say(tram);
+                Accueil.connexion.say(tram);
                 break;
             case DEBUT_PARTIE:
                 tram += "DEBUTPARTIE";
-                Accueuil.connect.say(tram);
+                Accueil.connexion.say(tram);
                 break;
             case CHECK:
                 tram+="CHOIX";
@@ -178,11 +190,8 @@ public class CreateurTram {
                 tram+="2";
                 tram+="@";
                 tram+="0";
-                Accueuil.connect.say(tram);
+                Accueil.connexion.say(tram);
                 break;
-
-                        
-
         }
     }
 }

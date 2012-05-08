@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import projet.GestionConnexion.AnalyseurEnvoi;
-import projet.GestionConnexion.Connection;
+import projet.GestionConnexion.Connexion;
 import projet.GestionConnexion.CreateurTram;
 
 /**
@@ -29,28 +30,30 @@ import projet.GestionConnexion.CreateurTram;
  */
 public class ListeJoueur extends Activity{    
     // Pour la boite de dialog 
-    AlertDialog.Builder                 adb;
+    AlertDialog.Builder                 _adb;
     
     // Handlers permettant de sortir les message serveur des fonctions static
-    private static Handler              messageHandler;
-    private static Handler              resultHandler;
+    private static Handler              _messageHandler;
+    private static Handler              _resultatHandler;
     
     // Gestion des éléments graphiques
-    private Button                      start;
-    private Button                      retour;
-    private ListView                    listeJoueurs;
+    private Button                      _bouton_Start;
+    private Button                      _bouton_Retour;
+    private ListView                    _listView_Joueurs;
     
-    private List<String>                listJoueurs;
-    private ArrayAdapter<String>        aa;
+    // Gestion de la liste des joueurs
+    private List<String>                _listeJoueurs;
+    private ArrayAdapter<String>        _aa;
+    private String                      _nomUtilisateur;
     
     // Demarrage de la nouvelle activity
-    private Intent                      i;
+    private Intent                      _i;
 
     // Création de la ArrayList qui nous permettra de remplire la listView
-    private ArrayList<String>           listItem = new ArrayList<String>();
+    private ArrayList<String>           _listeJoueursTransfert = new ArrayList<String>();
            
-    // On déclare la HashMap qui contiendra les informations pour un item
-    private String                      map;  
+    // On déclare une variable de type String qui contiendra les nom a afficher
+    private String                      _nomJoueursTemp;  
     
     @Override
     /** Called when the activity is first created. */
@@ -59,25 +62,28 @@ public class ListeJoueur extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.attentepartie);
         
-        aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listItem);
+        initPseudoJoueur();
+        
+        _aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, _listeJoueursTransfert);
         
         // on prepare le handler de retour de liste
-        messageHandler = new Handler() {
+        _messageHandler = new Handler() {
             @Override
             public void handleMessage(android.os.Message msg) {
-                listJoueurs = new ArrayList<String>((List<String>)msg.obj);
+                _listeJoueurs = new ArrayList<String>((List<String>)msg.obj);
                 MAJAffichage();
+                analyseStart();
             }
         };
         
-        resultHandler = new Handler(){
+        _resultatHandler = new Handler(){
             @Override
             public void handleMessage(android.os.Message msg) {
                 if(msg.obj.toString().equals("EXITOK")){
                     finish();
                 }else if(msg.obj.toString().equals("AREUREADY")){
-                    i = new Intent (getApplicationContext(), TableauJeu.class);
-                    startActivity(i);
+                    _i = new Intent (getApplicationContext(), TableauJeu.class);
+                    startActivity(_i);
                     finish();
                 }
                 MAJAffichage();
@@ -99,9 +105,9 @@ public class ListeJoueur extends Activity{
     /** Called when the activity is resumed. */
     public void onResume(){
         super.onResume();
-        Accueuil.connect.setActivity(Connection.LISTE_JOUEUR_PARTIE);
+        Accueil.connexion.setActivity(Connexion.LISTE_JOUEUR_PARTIE);
         try {
-            Accueuil.sender.setTram(CreateurTram.GET_PLAYER);
+            Accueil.createurTram.setTram(CreateurTram.GET_PLAYER);
         } catch (IOException ex) {
             Logger.getLogger(ListePartie.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -116,16 +122,31 @@ public class ListeJoueur extends Activity{
      */
     private boolean liaisonXML(){
         try{
-            start = (Button) findViewById(R.id.start);
-            retour = (Button) findViewById(R.id.retour);
+            _bouton_Start = (Button) findViewById(R.id.start);
+            _bouton_Retour = (Button) findViewById(R.id.retour);
             
             //Récupération de la listview créée dans le fichier main.xml
-            listeJoueurs = (ListView) findViewById(R.id.listviewjoueur);
+            _listView_Joueurs = (ListView) findViewById(R.id.listviewjoueur);
                          
         }catch(Exception e){
             return false;
         }
         return true;
+    }
+    
+    /**
+     * 
+     */
+    private void analyseStart(){
+        Iterator<String> iterator = _listeJoueurs.iterator();
+        String tmp = iterator.next();
+        if(_nomUtilisateur.equals(tmp.substring(1,tmp.length()))){
+            _bouton_Start.setEnabled(true);
+            _bouton_Start.setVisibility(0);
+        }else{
+            _bouton_Start.setEnabled(false);
+            _bouton_Start.setVisibility(1);
+        }
     }
     
     /**
@@ -137,22 +158,22 @@ public class ListeJoueur extends Activity{
      */
     private boolean initObjet(){
         try{
-            start.setOnClickListener(new View.OnClickListener() {
+            _bouton_Start.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View arg0) {  
                     try {
-                        Accueuil.sender.setTram(CreateurTram.DEBUT_PARTIE);
+                        Accueil.createurTram.setTram(CreateurTram.DEBUT_PARTIE);
                     } catch (IOException ex) {
                         Logger.getLogger(ListeJoueur.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             });
             
-            retour.setOnClickListener(new View.OnClickListener() {
+            _bouton_Retour.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View arg0) {
                     try {
-                        Accueuil.sender.setTram(CreateurTram.EXIT_PARTIE);
+                        Accueil.createurTram.setTram(CreateurTram.EXIT_PARTIE);
                     } catch (IOException ex) {
                         Logger.getLogger(ListePartie.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -185,21 +206,21 @@ public class ListeJoueur extends Activity{
             final SeekBar nbPlayer = (SeekBar) alertDialogView.findViewById(R.id.nbPlayers);
             
             //Création de l'AlertDialog
-            adb = new AlertDialog.Builder(this);
+            _adb = new AlertDialog.Builder(this);
 
             //On affecte la vue personnalisé que l'on a crée à notre AlertDialog
-            adb.setView(alertDialogView);
+            _adb.setView(alertDialogView);
 
             //On donne un titre à l'AlertDialog
-            adb.setTitle("Créer Partie");
+            _adb.setTitle("Créer Partie");
 
             //On modifie l'icône de l'AlertDialog pour le fun ;)
-            adb.setIcon(R.drawable.add);
+            _adb.setIcon(R.drawable.add);
 
             final AnalyseurEnvoi verifEnv = new AnalyseurEnvoi();
             
             //On affecte un bouton "OK" à notre AlertDialog et on lui affecte un évènement
-            adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            _adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     
                     Toast.makeText(getApplicationContext(), ""+nbPlayer.getProgress(), Toast.LENGTH_SHORT).show();
@@ -211,9 +232,9 @@ public class ListeJoueur extends Activity{
                         arg[0] = nomPartie.getText().toString();
                         arg[1] = ""+nbPlayer.getProgress();
                         try {
-                            Accueuil.sender.setTram(CreateurTram.CREATE_PARTIE, arg, 2);
+                            Accueil.createurTram.setTram(CreateurTram.CREATE_PARTIE, arg, 2);
                         } catch (IOException ex) {
-                            Logger.getLogger(Accueuil.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         //MAJAffichage();
                         dialog.cancel();
@@ -226,7 +247,7 @@ public class ListeJoueur extends Activity{
             });
 
             //On crée un bouton "Annuler" à notre AlertDialog et on lui affecte un évènement
-            adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            _adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     //Lorsque l'on cliquera sur annuler on quittera l'application
                     dialog.cancel();
@@ -249,8 +270,7 @@ public class ListeJoueur extends Activity{
     public static void MAJList(List<String> tabJoueur){
         Message msg = new Message();
         msg.obj = tabJoueur;
-        messageHandler.sendMessage(msg);
-     
+        _messageHandler.sendMessage(msg);
     }
     
     /**
@@ -264,7 +284,7 @@ public class ListeJoueur extends Activity{
     public static void afficheMessage(String message){
         Message msg = new Message();
         msg.obj = message;
-        resultHandler.sendMessage(msg);
+        _resultatHandler.sendMessage(msg);
     }
     
     /**
@@ -273,13 +293,13 @@ public class ListeJoueur extends Activity{
      * @author Mathieu Polizzi
      */
     private void MAJAffichage(){
-        listItem.clear();
-        Iterator<String> iterator = listJoueurs.iterator();
+        _listeJoueursTransfert.clear();
+        Iterator<String> iterator = _listeJoueurs.iterator();
         while (iterator.hasNext()) {
-            listItem.add(iterator.next());
+            _listeJoueursTransfert.add(iterator.next());
         }
-        listeJoueurs.setAdapter(aa);  
-        aa.notifyDataSetChanged();
+        _listView_Joueurs.setAdapter(_aa);  
+        _aa.notifyDataSetChanged();
     }
     
     /**
@@ -298,5 +318,15 @@ public class ListeJoueur extends Activity{
             return false;
         }
         return super.onKeyDown(keyCode, event);
+    }
+    
+    /**
+     * Fonction permettant de savoir le pseudo du joueur
+     * 
+     * @author Jessy Bonnotte
+     */
+    private void initPseudoJoueur(){
+         SharedPreferences settings = getSharedPreferences(Accueil.PREFS_CONNECT, 0);
+         _nomUtilisateur = settings.getString("pseudo", "0");
     }
 }

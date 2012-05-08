@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import projet.GestionConnexion.AnalyseurEnvoi;
-import projet.GestionConnexion.Connection;
+import projet.GestionConnexion.Connexion;
 import projet.GestionConnexion.CreateurTram;
 
 /**
@@ -24,46 +24,46 @@ import projet.GestionConnexion.CreateurTram;
  * 
  * @author Jessy Bonnotte & Mathieu Polizzi
  */
-public class Accueuil extends Activity{
+public class Accueil extends Activity{
     
     /**
      * Gestion de la connexion 
      */
-    public static Connection        connect;
+    public static Connexion         connexion;
      
     /**
-     * Creation de tram puis envoi
+     * Variable static servant a creer les tram
      */
-    public static CreateurTram      sender;
+    public static CreateurTram      createurTram;
     
     // Gestion des éléments graphiques
-    private Button                  param;
-    private Button                  connection;
-    private Button                  creerCompte;
-    private CheckBox                retenir;
-    private EditText                user;
-    private EditText                pass;
+    private Button                  _bouton_Parametre;
+    private Button                  _bouton_Connexion;
+    private Button                  _bouton_CreerCompte;
+    private CheckBox                _checkBox_Retenir;
+    private EditText                _editText_Utilisateur;
+    private EditText                _editText_Password;
     
     // Ouverture d'une nouvelle activity
-    private Intent                  i;
+    private Intent                  _i;
     
     // Verification pseudo/mot de passe
-    private AnalyseurEnvoi          verifEnvoi;  
+    private AnalyseurEnvoi          _analyseurEnvoi;  
     
     // gestion des éléments du menu paramètre
-    private final int               PARAMETRE = 1;
-    private final int               A_PROPOS = 2;
-    private final int               QUITTER = 3;
+    private final int               _PARAMETRE = 1;
+    private final int               _A_PROPOS = 2;
+    private final int               _QUITTER = 3;
     
     // Paratmètres de connexion
-    private String                  ip;
-    private String                  port;
+    private String                  _ip;
+    private String                  _port;
     
     // Pour la boite de dialog 
-    AlertDialog.Builder             adb;
+    private AlertDialog.Builder     _adb;
     
     // Handler pour sortir les messages de la partie static
-    private static Handler          messageHandler;
+    private static Handler          _messageHandler;
     
     /**
      * Référence vers le texte stocké dans le système de préférences
@@ -89,21 +89,21 @@ public class Accueuil extends Activity{
       	//startActivity(i);
         setContentView(R.layout.main);
         
-        messageHandler = new Handler() {
+        _messageHandler = new Handler() {
             @Override
             public void handleMessage(android.os.Message msg) {
                 if(msg.obj.toString().equals("Connexion etabli")){
-                    i = new Intent (getApplicationContext(), ListePartie.class);
-                    startActivity(i);
+                    _i = new Intent (getApplicationContext(), ListePartie.class);
+                    startActivity(_i);
                 }else{
                     Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
                 }
             }
         };
 
-        sender = new CreateurTram();
-        connect = new Connection();
-        verifEnvoi = new AnalyseurEnvoi();
+        createurTram = new CreateurTram();
+        connexion = new Connexion();
+        _analyseurEnvoi = new AnalyseurEnvoi();
         getWindow().setBackgroundDrawableResource(R.drawable.fond);
         
         if(!liaisonXML()){
@@ -114,8 +114,8 @@ public class Accueuil extends Activity{
             Toast.makeText(this, "Problème a l'initialisation des objets", Toast.LENGTH_SHORT).show();
         }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.GINGERBREAD_MR1) {
-            param.setEnabled(false);
-            param.setVisibility(View.INVISIBLE);
+            _bouton_Parametre.setEnabled(false);
+            _bouton_Parametre.setVisibility(View.INVISIBLE);
         }
         initZone();
     }
@@ -128,7 +128,7 @@ public class Accueuil extends Activity{
     @Override
     public void onResume(){
         super.onResume();
-        connect.setActivity(Connection.ACCUEUIL); 
+        connexion.setActivity(Connexion.ACCUEUIL); 
         chargerParamReseau();
     }
     
@@ -159,12 +159,12 @@ public class Accueuil extends Activity{
         SharedPreferences settings = getSharedPreferences(PREFS_CONFIG, 0);        
         if(settings.getString("ip", "0").equals("0") || settings.getString("port", "0").equals("0")){
             initDialogIPPort();
-            adb.show();
+            _adb.show();
         }
                
-        ip = settings.getString("ip", "0");
-        port = settings.getString("port", "0");
-        Log.v("connect", ip+" "+port);
+        _ip = settings.getString("ip", "0");
+        _port = settings.getString("port", "0");
+        Log.v("connect", _ip+" "+_port);
     }
     
     /** 
@@ -179,12 +179,12 @@ public class Accueuil extends Activity{
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0, PARAMETRE, 0, "Paramètre");
-        menu.findItem(PARAMETRE).setIcon(R.drawable.settings);
-        menu.add(0, A_PROPOS, 0, "A propos");
-        menu.findItem(A_PROPOS).setIcon(R.drawable.info);
-        menu.add(0, QUITTER, 0, "Quitter");
-        menu.findItem(QUITTER).setIcon(R.drawable.exit);
+        menu.add(0, _PARAMETRE, 0, "Paramètre");
+        menu.findItem(_PARAMETRE).setIcon(R.drawable.settings);
+        menu.add(0, _A_PROPOS, 0, "A propos");
+        menu.findItem(_A_PROPOS).setIcon(R.drawable.info);
+        menu.add(0, _QUITTER, 0, "Quitter");
+        menu.findItem(_QUITTER).setIcon(R.drawable.exit);
         return true;
     }
 
@@ -201,15 +201,15 @@ public class Accueuil extends Activity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case PARAMETRE:
-            i = new Intent (getApplicationContext(), Parametre.class);
-      	    startActivity(i);
+        case _PARAMETRE:
+            _i = new Intent (getApplicationContext(), Parametre.class);
+      	    startActivity(_i);
             return true;
-        case A_PROPOS:
-            i = new Intent (getApplicationContext(), APropos.class);
-            startActivity(i);
+        case _A_PROPOS:
+            _i = new Intent (getApplicationContext(), APropos.class);
+            startActivity(_i);
             return true;
-        case QUITTER:
+        case _QUITTER:
             finish();
             return true;
         }
@@ -225,12 +225,12 @@ public class Accueuil extends Activity{
      */
     private boolean liaisonXML(){
         try{
-            pass = (EditText) findViewById(R.id.mdp);
-            user = (EditText) findViewById(R.id.pseudo);
-            connection = (Button) findViewById(R.id.connect);
-            creerCompte = (Button) findViewById(R.id.createcpt);
-            retenir = (CheckBox) findViewById(R.id.memorize); 
-            param = (Button) findViewById(R.id.param);
+            _editText_Password = (EditText) findViewById(R.id.mdp);
+            _editText_Utilisateur = (EditText) findViewById(R.id.pseudo);
+            _bouton_Connexion = (Button) findViewById(R.id.connect);
+            _bouton_CreerCompte = (Button) findViewById(R.id.createcpt);
+            _checkBox_Retenir = (CheckBox) findViewById(R.id.memorize); 
+            _bouton_Parametre = (Button) findViewById(R.id.param);
         }catch(Exception e){
             return false;
         }
@@ -258,22 +258,21 @@ public class Accueuil extends Activity{
             final EditText mdpCRT = (EditText) alertDialogView.findViewById(R.id.mdpcrt);
             
             //Création de l'AlertDialog
-            adb = new AlertDialog.Builder(this);
+            _adb = new AlertDialog.Builder(this);
 
             //On affecte la vue personnalisé que l'on a crée à notre AlertDialog
-            adb.setView(alertDialogView);
+            _adb.setView(alertDialogView);
 
             //On donne un titre à l'AlertDialog
-            adb.setTitle("Créer compte");
+            _adb.setTitle("Créer compte");
 
             //On modifie l'icône de l'AlertDialog pour le fun ;)
-            adb.setIcon(R.drawable.add);
+            _adb.setIcon(R.drawable.add);
 
             final AnalyseurEnvoi verifEnv = new AnalyseurEnvoi();
-            
-            
+             
             //On affecte un bouton "OK" à notre AlertDialog et on lui affecte un évènement
-            adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            _adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     
                     if(verifEnv.analysePseudo(pseudoCRT.getText().toString()) && verifEnv.analyseMDP(mdpCRT.getText().toString())){
@@ -281,11 +280,11 @@ public class Accueuil extends Activity{
                         arg[0] = pseudoCRT.getText().toString();
                         arg[1] = mdpCRT.getText().toString();
 
-                        if(connect.init(ip, port)){
+                        if(connexion.init(_ip, _port)){
                             try {
-                                sender.setTram(CreateurTram.CREATECPT, arg, 2);
+                                createurTram.setTram(CreateurTram.CREATECPT, arg, 2);
                             } catch (IOException ex) {
-                                Logger.getLogger(Accueuil.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                         dialog.cancel();
@@ -300,7 +299,7 @@ public class Accueuil extends Activity{
             });
 
             //On crée un bouton "Annuler" à notre AlertDialog et on lui affecte un évènement
-            adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            _adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     //Lorsque l'on cliquera sur annuler on quittera l'application
                     dialog.cancel();
@@ -321,27 +320,27 @@ public class Accueuil extends Activity{
      */
     private boolean initObjet(){
         try{
-            connection.setOnClickListener(new View.OnClickListener() {
+            _bouton_Connexion.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View arg0) {
                     Toast.makeText(getApplicationContext(), "Connection...", Toast.LENGTH_SHORT).show();
-                    if(user.getText().toString().equals("") || pass.getText().toString().equals("")){
+                    if(_editText_Utilisateur.getText().toString().equals("") || _editText_Password.getText().toString().equals("")){
                         Toast.makeText(getApplicationContext(), "Veuillez renseigner les champs", Toast.LENGTH_SHORT).show();
                     }else{ 
-                        if(retenir.isChecked()){
+                        //if(checkBox_Retenir.isChecked()){
                             saveZone();
-                        }else if(!retenir.isChecked()){
+                        /*}else if(!checkBox_Retenir.isChecked()){
                             ereaseZone();
-                        }
+                        }*/
                         if(connexion()){
                             String[] arg = new String[2];
-                            arg[0] = user.getText().toString();
-                            arg[1] = pass.getText().toString();
-                            if(connect.init(ip, port)){
+                            arg[0] = _editText_Utilisateur.getText().toString();
+                            arg[1] = _editText_Password.getText().toString();
+                            if(connexion.init(_ip, _port)){
                                 try {
-                                    sender.setTram(CreateurTram.CONNECT, arg, 2);
+                                    createurTram.setTram(CreateurTram.CONNECT, arg, 2);
                                 } catch (IOException ex) {
-                                    Logger.getLogger(Accueuil.class.getName()).log(Level.SEVERE, null, ex);
+                                    Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
                                 }
                             }else{
                                 Toast.makeText(getApplicationContext(), "Connection échoué", Toast.LENGTH_SHORT).show();
@@ -353,18 +352,18 @@ public class Accueuil extends Activity{
                 }
             });
             
-            param.setOnClickListener(new View.OnClickListener() {
+            _bouton_Parametre.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View arg0) {
-                    Accueuil.this.openOptionsMenu();
+                    Accueil.this.openOptionsMenu();
                 }
             });
             
-            creerCompte.setOnClickListener(new View.OnClickListener() {
+            _bouton_CreerCompte.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View arg0) {  
                     initDialog();
-                    adb.show();
+                    _adb.show();
                 }
             });
             
@@ -384,8 +383,8 @@ public class Accueuil extends Activity{
     public static void finCreatCompte(String message){
         Message msg = new Message();
         msg.obj = message;
-        messageHandler.sendMessage(msg);
-        Accueuil.connect.dispose();
+        _messageHandler.sendMessage(msg);
+        Accueil.connexion.dispose();
     }
     
     /**
@@ -401,12 +400,12 @@ public class Accueuil extends Activity{
         if(co){
             Message msg = new Message();
             msg.obj = message;
-            messageHandler.sendMessage(msg);
+            _messageHandler.sendMessage(msg);
         }else{
             Message msg = new Message();
             msg.obj = message;
-            messageHandler.sendMessage(msg);
-            Accueuil.connect.dispose();
+            _messageHandler.sendMessage(msg);
+            Accueil.connexion.dispose();
         }   
     }
     
@@ -419,10 +418,10 @@ public class Accueuil extends Activity{
      * @return boolean - si le format est le bon ou non
      */
     private boolean connexion(){
-        String pseudo = user.getText().toString();
-        String password = pass.getText().toString();
+        String pseudo = _editText_Utilisateur.getText().toString();
+        String password = _editText_Password.getText().toString();
         
-        boolean retour = verifEnvoi.analysePseudo(pseudo) && verifEnvoi.analyseMDP(password);
+        boolean retour = _analyseurEnvoi.analysePseudo(pseudo) && _analyseurEnvoi.analyseMDP(password);
         
         return retour;
     }
@@ -435,9 +434,9 @@ public class Accueuil extends Activity{
     private void initZone(){
         SharedPreferences settings = getSharedPreferences(PREFS_CONNECT, 0);        
         if(!settings.getString("pseudo", "0").equals("0") && settings.getBoolean("memorise", false)){
-            user.setText(settings.getString("pseudo", "0"));
-            pass.setText(settings.getString("password", "0"));
-            retenir.setChecked(settings.getBoolean("memorise", false));
+            _editText_Utilisateur.setText(settings.getString("pseudo", "0"));
+            _editText_Password.setText(settings.getString("password", "0"));
+            _checkBox_Retenir.setChecked(settings.getBoolean("memorise", false));
         }    
     }
     
@@ -449,9 +448,9 @@ public class Accueuil extends Activity{
     private void saveZone(){
         SharedPreferences settings = getSharedPreferences(PREFS_CONNECT, 0);        
         SharedPreferences.Editor editor = settings.edit();
-        editor.putString("pseudo", user.getText().toString());
-        editor.putString("password", pass.getText().toString());
-        editor.putBoolean("memorise", retenir.isChecked());
+        editor.putString("pseudo", _editText_Utilisateur.getText().toString());
+        editor.putString("password", _editText_Password.getText().toString());
+        editor.putBoolean("memorise", _checkBox_Retenir.isChecked());
         editor.commit();
     }
     
@@ -478,18 +477,18 @@ public class Accueuil extends Activity{
             final EditText ip = (EditText) alertDialogView.findViewById(R.id.ip);
             final EditText port = (EditText) alertDialogView.findViewById(R.id.port);
             //Création de l'AlertDialog
-            adb = new AlertDialog.Builder(this);
+            _adb = new AlertDialog.Builder(this);
             //On affecte la vue personnalisé que l'on a crée à notre AlertDialog
-            adb.setView(alertDialogView);
+            _adb.setView(alertDialogView);
             //On donne un titre à l'AlertDialog
-            adb.setTitle("Parametrage reseau");
+            _adb.setTitle("Parametrage reseau");
             //On modifie l'icône de l'AlertDialog pour le fun ;)
-            adb.setIcon(R.drawable.info);
+            _adb.setIcon(R.drawable.info);
             final AnalyseurEnvoi verifEnv = new AnalyseurEnvoi();
             //On affecte un bouton "OK" à notre AlertDialog et on lui affecte un évènement
-            adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            _adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    SharedPreferences settings = getSharedPreferences(Accueuil.PREFS_CONFIG, 0);        
+                    SharedPreferences settings = getSharedPreferences(Accueil.PREFS_CONFIG, 0);        
                     SharedPreferences.Editor editor = settings.edit();
                     editor.putString("ip", ip.getText().toString());
                     editor.putString("port", port.getText().toString());
@@ -499,7 +498,7 @@ public class Accueuil extends Activity{
             });
 
             //On crée un bouton "Annuler" à notre AlertDialog et on lui affecte un évènement
-            adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            _adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     //Lorsque l'on cliquera sur annuler on quittera l'application
                     dialog.cancel();

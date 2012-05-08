@@ -17,44 +17,50 @@ import projet.poker.*;
  */
 public class AnalyseurTram {
 
+    /**
+     * Constructeur de l'analyseur de tram
+     * 
+     * @author Jessy Bonnotte
+     */
     public AnalyseurTram(){
         
     }
+    
     /**
- * Fonction permmettant d'analyser les tram reçu. On dis a cette fonction dans quel activité nous sommes puis on analyse la tram reçu en fonction. Celà permet d'ignorer les tram reçu qui n'ont aucun rapport avec l'activity courante.
- * 
- * @author Jessy Bonnotte && Mathieu Polizzi
- */
+     * Fonction permmettant d'analyser les tram reçu. On dis a cette fonction dans quel activité nous sommes puis on analyse la tram reçu en fonction. Celà permet d'ignorer les tram reçu qui n'ont aucun rapport avec l'activity courante.
+     * 
+     * @author Jessy Bonnotte && Mathieu Polizzi
+     */
     public void setTram(String tram, int currentActivity) throws IOException{
         Log.v("Reception", "Analyseur : "+tram+" "+currentActivity);
         
         if(tram.equals("MARCO")){
-            Accueuil.connect.say("POLO");
-        }else if(currentActivity == Connection.ACCUEUIL){
+            Accueil.connexion.say("POLO");
+        }else if(currentActivity == Connexion.ACCUEUIL){
             if(tram.equals("ERREUR")){
-                Accueuil.finConnectCompte("Erreur de connexion", false);
+                Accueil.finConnectCompte("Erreur de connexion", false);
             }else if(tram.equals("TIMEOUT")){
                 Parametre.finOperation("Connexion timeOut");
             }else if(tram.equals("CONNECTOK")){
-                Accueuil.finConnectCompte("Connexion etabli", true);
+                Accueil.finConnectCompte("Connexion etabli", true);
             }else if(tram.equals("CREATOK")){
-                Accueuil.finConnectCompte("Creation faite", true);
+                Accueil.finConnectCompte("Creation faite", true);
             }else if(tram.equals("WPSEUDO")){
-                Accueuil.finConnectCompte("Pseudo inexistant", false);
+                Accueil.finConnectCompte("Pseudo inexistant", false);
             }else if(tram.equals("WPASS")){
-                Accueuil.finConnectCompte("Mot de passe invalide", false);
+                Accueil.finConnectCompte("Mot de passe invalide", false);
             }else if(tram.equals("WFPSEUDO")){
-                Accueuil.finConnectCompte("Mauvais format pseudo", false);
+                Accueil.finConnectCompte("Mauvais format pseudo", false);
             }else if(tram.equals("AUPSEUDO")){
-                Accueuil.finConnectCompte("Pseudo deja utilisé", false);
+                Accueil.finConnectCompte("Pseudo deja utilisé", false);
             }else if(tram.equals("WFPASS")){
-                Accueuil.finConnectCompte("Mauvais format password", false);
+                Accueil.finConnectCompte("Mauvais format password", false);
             }else if(tram.equals("ERREURBDD")){
-                Accueuil.finConnectCompte("Ajout impossible", false);  
+                Accueil.finConnectCompte("Ajout impossible", false);  
             }else if(tram.equals("CONNEXION CLOSE")){
-                Accueuil.connect.dispose();
+                Accueil.connexion.dispose();
             }
-        }else if(currentActivity == Connection.PARAMETRE){
+        }else if(currentActivity == Connexion.PARAMETRE){
             if(tram.equals("ERREUR")){
                 Parametre.finOperation("Erreur de connexion");
             }else if(tram.equals("TIMEOUT")){
@@ -74,11 +80,11 @@ public class AnalyseurTram {
             }else if(tram.equals("ERREURBDD")){
                 Parametre.finOperation("Ajout impossible");
             }else if(tram.equals("CONNEXION CLOSE")){
-                Accueuil.connect.dispose();
+                Accueil.connexion.dispose();
             }else if(tram.equals("OK")){
                 Parametre.finOperation("Opération effectué");
             }
-        }else if(currentActivity == Connection.LISTE_PARTIE){
+        }else if(currentActivity == Connexion.LISTE_PARTIE){
             int index1 = 0;
             int index2 = tram.indexOf("@");
             
@@ -118,6 +124,8 @@ public class AnalyseurTram {
                     listeArguments.add(argumentCourant.clone());
                 }while(index2 != -1);
                 ListePartie.MAJList(listeArguments);
+            }else if(typeTram.equals("LISTEPARTIE") && index2 == -1){
+                ListePartie.afficheMessage("Vide");
             }else if(typeTram.equals("ERROR")){
                 ListePartie.afficheMessage("Erreur de chargement");
             }else if(typeTram.equals("CREATPOK")){
@@ -127,7 +135,7 @@ public class AnalyseurTram {
             }else if(typeTram.equals("PAU")){
                 ListePartie.afficheMessage("Nom deja utilise");
             }
-        }else if(currentActivity == Connection.LISTE_JOUEUR_PARTIE){
+        }else if(currentActivity == Connexion.LISTE_JOUEUR_PARTIE){
             int index1 = 0;
             int index2 = tram.indexOf("@");
             
@@ -165,7 +173,7 @@ public class AnalyseurTram {
             }else if(typeTram.equals("EXITOK")){
                 ListeJoueur.afficheMessage("EXITOK");
             }
-        }else if(currentActivity == Connection.PARTIE){
+        }else if(currentActivity == Connexion.PARTIE){
             int index1 = 0;
             int index2 = tram.indexOf("@");
             
@@ -213,11 +221,11 @@ public class AnalyseurTram {
                 index1 = new Integer(index2);
                 index2 = tram.indexOf("@", index1 + 1);
                 
-                argumentCourant[0] = tram.substring(index1 + 1, index2);
+                argumentCourant[0] = String.valueOf(Integer.parseInt(tram.substring(index1 + 1, index2)) + 1);
                 
                 index1 = new Integer(index2);
                 
-                argumentCourant[1] = tram.substring(index1 + 1, tram.length());
+                argumentCourant[1] = String.valueOf(Integer.parseInt(tram.substring(index1 + 1, tram.length())) +1);
                 
                 listeArguments.add(argumentCourant.clone());
                 
@@ -235,7 +243,7 @@ public class AnalyseurTram {
                         tmp = tram.substring(index1 + 1, index2);
                     }
                     
-                    argumentCourant[0] = tmp;
+                    argumentCourant[0] = String.valueOf(Integer.parseInt(tmp) + 1);
                     
                     listeArguments.add(argumentCourant.clone());
                     i++;

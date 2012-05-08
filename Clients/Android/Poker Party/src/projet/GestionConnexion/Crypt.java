@@ -11,10 +11,10 @@ package projet.GestionConnexion;
  */
 public class Crypt {
     
-    private final String cle = "12gh5yt68oi39";
-    private int i;
-    private int j;
-    private String retour;
+    private final String            _cle = "12gh5yt68oi39";
+    private int                     _i;
+    private int                     _j;
+    private String                  _retour;
     
     /**
      * Fonction permettant de crypter la tram a envoyer.
@@ -26,21 +26,21 @@ public class Crypt {
      * @return String - la tram a envoyer encrypté
      */
     public String enCrypt(String tram){
-        i = 0;
-        j = 0;
-        retour = "";
+        _i = 0;
+        _j = 0;
+        _retour = "";
         
-        while(i < tram.length()){
-            retour += (char)((int)tram.charAt(i) + (int)cle.charAt(j));
+        while(_i < tram.length()){
+            _retour += (char)((int)tram.charAt(_i) + (int)_cle.charAt(_j));
             
-            i++;
-            j++;
+            _i++;
+            _j++;
             
-            if(j == cle.length()){
-                j=0;
+            if(_j == _cle.length()){
+                _j=0;
             }
         }
-        return retour;
+        return _retour;
     }
     
     /**
@@ -53,20 +53,20 @@ public class Crypt {
      * @return String - la tram reçu décrypté
      */
     public String deCrypt(String tram){
-        i = 0;
-        j = 0;
-        retour = "";
+        _i = 0;
+        _j = 0;
+        _retour = "";
         
-        while(i < tram.length()){
-            retour += (char)((int)tram.charAt(i) - (int)cle.charAt(j));
+        while(_i < tram.length()){
+            _retour += (char)((int)tram.charAt(_i) - (int)_cle.charAt(_j));
             
-            i++;
-            j++;
+            _i++;
+            _j++;
             
-            if(j == cle.length()){
-                j=0;
+            if(_j == _cle.length()){
+                _j=0;
             }
         }
-        return retour;
+        return _retour;
     }
 }

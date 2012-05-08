@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import projet.GestionConnexion.AnalyseurEnvoi;
-import projet.GestionConnexion.Connection;
+import projet.GestionConnexion.Connexion;
 import projet.GestionConnexion.CreateurTram;
 
 /**
@@ -30,30 +30,30 @@ import projet.GestionConnexion.CreateurTram;
  */
 public class ListePartie extends Activity{    
     // Pour la boite de dialog 
-    AlertDialog.Builder                 adb;
+    AlertDialog.Builder                         _adb;
     
     // Handlers permettant de sortir les message serveur des fonctions static
-    private static Handler              messageHandler;
-    private static Handler              resultHandler;
+    private static Handler                      _messageHandler;
+    private static Handler                      _resultHandler;
     
     // Ouverture d'une nouvelle activity
-    private Intent                      i;
+    private Intent                              _i;
     
     // Gestion des éléments graphiques
-    private Button                      create;
-    private Button                      refresh;
-    private Button                      disconnect;
-    private EditText                    findParty;
-    private ListView                    maList;
+    private Button                              _bouton_Creer;
+    private Button                              _bouton_Rafraichir;
+    private Button                              _bouton_Deconnecter;
+    private EditText                            _editText_ChercherPartie;
+    private ListView                            _listView_Parties;
   
     // Liste des partie de type liste de string
-    private List<String[]>              listPartie;
+    private List<String[]>                      _listeParties;
 
     // Création de la ArrayList qui nous permettra de remplire la listView
-    ArrayList<HashMap<String, String>>  listItem = new ArrayList<HashMap<String, String>>();
+    private ArrayList<HashMap<String, String>>  _listePartiesTransfet = new ArrayList<HashMap<String, String>>();
            
-    // On déclare la HashMap qui contiendra les informations pour un item
-    HashMap<String, String>             map;  
+    // On déclare la HashMap qui contiendra les informations pour un item de la liste
+    private HashMap<String, String>             _nomPartieTemp;  
     
     @Override
     /** Called when the activity is first created. */
@@ -73,25 +73,29 @@ public class ListePartie extends Activity{
         super.onResume();
         
         // on prepare le handler de retour de liste
-        messageHandler = new Handler() {
+        _messageHandler = new Handler() {
             @Override
             public void handleMessage(android.os.Message msg) {
-                listPartie = new ArrayList<String[]>((List<String[]>)msg.obj);
+                _listeParties = new ArrayList<String[]>((List<String[]>)msg.obj);
+                Log.v("la partie", "nom : ");
                 MAJAffichage();
             }
         };
         
         // on prepare le handler de retour message
-        resultHandler = new Handler() {
+        _resultHandler = new Handler() {
             @Override
             public void handleMessage(android.os.Message msg) {
                 Log.v("rejoindre", msg.obj.toString());
                 if(msg.obj.toString().equals("REJOK")){
-                    i = new Intent (getApplicationContext(), ListeJoueur.class);
-                    startActivity(i);
+                    _i = new Intent (getApplicationContext(), ListeJoueur.class);
+                    startActivity(_i);
                 }else if(msg.obj.toString().equals("CREATPOK")){
-                    i = new Intent (getApplicationContext(), ListeJoueur.class);
-                    startActivity(i);
+                    _i = new Intent (getApplicationContext(), ListeJoueur.class);
+                    startActivity(_i);
+                }else if(msg.obj.toString().equals("Vide")){
+                    _listeParties = new ArrayList<String[]>();
+                    MAJAffichage();
                 }
                 Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT);
             }
@@ -107,11 +111,11 @@ public class ListePartie extends Activity{
             Toast.makeText(this, "Problème a la Création des objets", Toast.LENGTH_SHORT).show();
         }
           
-        refresh.setOnClickListener(new View.OnClickListener() {
+        _bouton_Rafraichir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 try {
-                    Accueuil.sender.setTram(CreateurTram.GET_LISTE_PARTIE);
+                    Accueil.createurTram.setTram(CreateurTram.GET_LISTE_PARTIE);
                 } catch (IOException ex) {
                     Logger.getLogger(ListePartie.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -119,25 +123,25 @@ public class ListePartie extends Activity{
         });
         
         //Enfin on met un écouteur d'évènement sur notre listView
-        maList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        _listView_Parties.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             @SuppressWarnings("unchecked")
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 String tmp[] = new String[1];
-                map = new HashMap<String, String>();
-                map = (HashMap<String, String>)a.getItemAtPosition(position);
-                tmp[0] = map.get("PartyName");
+                _nomPartieTemp = new HashMap<String, String>();
+                _nomPartieTemp = (HashMap<String, String>)a.getItemAtPosition(position);
+                tmp[0] = _nomPartieTemp.get("PartyName");
                 try {
-                    Accueuil.sender.setTram(CreateurTram.REJOINDRE_PARTIE, tmp, 1);
+                    Accueil.createurTram.setTram(CreateurTram.REJOINDRE_PARTIE, tmp, 1);
                 } catch (IOException ex) {
                     Logger.getLogger(ListePartie.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
         
-        Accueuil.connect.setActivity(Connection.LISTE_PARTIE);
+        Accueil.connexion.setActivity(Connexion.LISTE_PARTIE);
         try {
-            Accueuil.sender.setTram(CreateurTram.GET_LISTE_PARTIE);
+            Accueil.createurTram.setTram(CreateurTram.GET_LISTE_PARTIE);
         } catch (IOException ex) {
             Logger.getLogger(ListePartie.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -152,13 +156,13 @@ public class ListePartie extends Activity{
      */
     private boolean liaisonXML(){
         try{
-            create = (Button) findViewById(R.id.create);
-            refresh = (Button) findViewById(R.id.refresh);
-            disconnect = (Button) findViewById(R.id.disconnect);
-            findParty =(EditText) findViewById(R.id.findParty);
+            _bouton_Creer = (Button) findViewById(R.id.create);
+            _bouton_Rafraichir = (Button) findViewById(R.id.refresh);
+            _bouton_Deconnecter = (Button) findViewById(R.id.disconnect);
+            _editText_ChercherPartie =(EditText) findViewById(R.id.findParty);
    
             //Récupération de la listview créée dans le fichier main.xml
-            maList = (ListView) findViewById(R.id.listviewpartie);
+            _listView_Parties = (ListView) findViewById(R.id.listviewpartie);
                          
         }catch(Exception e){
             return false;
@@ -175,23 +179,23 @@ public class ListePartie extends Activity{
      */
     private boolean initObjet(){
         try{
-            create.setOnClickListener(new View.OnClickListener() {
+            _bouton_Creer.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View arg0) {  
                     initDialog();
-                    adb.show();
+                    _adb.show();
                 }
             });
             
-            disconnect.setOnClickListener(new View.OnClickListener() {
+            _bouton_Deconnecter.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View arg0) {
                     try {
-                        Accueuil.sender.setTram(CreateurTram.DECONNECT);
+                        Accueil.createurTram.setTram(CreateurTram.DECONNECT);
                     } catch (IOException ex) {
                         Logger.getLogger(ListePartie.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    Accueuil.connect.dispose();
+                    Accueil.connexion.dispose();
                     finish();
                 }
             });
@@ -218,37 +222,58 @@ public class ListePartie extends Activity{
             //Liaison du xml
             final EditText nomPartie = (EditText) alertDialogView.findViewById(R.id.partyName);
             final SeekBar nbPlayer = (SeekBar) alertDialogView.findViewById(R.id.nbPlayers);
-            
+            final TextView afficheNbPlayers = (TextView) alertDialogView.findViewById(R.id.TextView2);
+                    
             //Création de l'AlertDialog
-            adb = new AlertDialog.Builder(this);
+            _adb = new AlertDialog.Builder(this);
 
             //On affecte la vue personnalisé que l'on a crée à notre AlertDialog
-            adb.setView(alertDialogView);
+            _adb.setView(alertDialogView);
 
             //On donne un titre à l'AlertDialog
-            adb.setTitle("Créer Partie");
+            _adb.setTitle("Créer Partie");
 
             //On modifie l'icône de l'AlertDialog pour le fun ;)
-            adb.setIcon(R.drawable.add);
+            _adb.setIcon(R.drawable.add);
 
             final AnalyseurEnvoi verifEnv = new AnalyseurEnvoi();
             
+            nbPlayer.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
+
+                    try {
+
+                        afficheNbPlayers.setText("Joueurs max : "+Integer.toString(progress + 2));
+
+                    } catch (Exception e) {
+
+                    }
+                }
+
+                public void onStartTrackingTouch(SeekBar arg0) {
+
+                }
+
+                public void onStopTrackingTouch(SeekBar arg0) {
+
+                }
+            });
+            
             //On affecte un bouton "OK" à notre AlertDialog et on lui affecte un évènement
-            adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            _adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     
-                    Toast.makeText(getApplicationContext(), ""+nbPlayer.getProgress(), Toast.LENGTH_SHORT).show();
-                    
-                    Log.v("Accueuil", "test");
+                    Toast.makeText(getApplicationContext(), ""+(nbPlayer.getProgress()+2), Toast.LENGTH_SHORT).show();
                     
                     if(verifEnv.analyseNomPartie(nomPartie.getText().toString())){
                         String[] arg = new String[2];
                         arg[0] = nomPartie.getText().toString();
-                        arg[1] = ""+nbPlayer.getProgress();
+                        arg[1] = ""+(nbPlayer.getProgress()+2);
+                        Log.v("creation partie", arg[1]);
                         try {
-                            Accueuil.sender.setTram(CreateurTram.CREATE_PARTIE, arg, 2);
+                            Accueil.createurTram.setTram(CreateurTram.CREATE_PARTIE, arg, 2);
                         } catch (IOException ex) {
-                            Logger.getLogger(Accueuil.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         //MAJAffichage();
                         dialog.cancel();
@@ -261,7 +286,7 @@ public class ListePartie extends Activity{
             });
 
             //On crée un bouton "Annuler" à notre AlertDialog et on lui affecte un évènement
-            adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            _adb.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     //Lorsque l'on cliquera sur annuler on quittera l'application
                     dialog.cancel();
@@ -284,8 +309,7 @@ public class ListePartie extends Activity{
     public static void MAJList(List<String[]> tabPartie){
         Message msg = new Message();
         msg.obj = tabPartie;
-        messageHandler.sendMessage(msg);
-     
+        _messageHandler.sendMessage(msg);
     }
     
     /**
@@ -299,7 +323,7 @@ public class ListePartie extends Activity{
     public static void afficheMessage(String message){
         Message msg = new Message();
         msg.obj = message;
-        resultHandler.sendMessage(msg);
+        _resultHandler.sendMessage(msg);
     }
     
     /**
@@ -308,20 +332,21 @@ public class ListePartie extends Activity{
      * @author Mathieu Polizzi
      */
     private void MAJAffichage(){
-        listItem.clear();
-        Iterator<String[]> iterator = listPartie.iterator();
+        _listePartiesTransfet.clear();
+        _nomPartieTemp = new HashMap<String, String>();
+        Iterator<String[]> iterator = _listeParties.iterator();
         while (iterator.hasNext()) {
-            map = new HashMap<String, String>();
+            _nomPartieTemp = new HashMap<String, String>();
             String[] temp= iterator.next();
             //on insère un élément partyname que l'on récupérera dans le textView titre créé dans le fichier displaylist.xml
-            map.put("PartyName", temp[0]);
+            _nomPartieTemp.put("PartyName", temp[0]);
             //on insère un élément nbplayers que l'on récupérera dans le textView titre créé dans le fichier displaylist.xml
-            map.put("nbPlayers",temp[1]+"/"+temp[2]);
-            listItem.add(map);
+            _nomPartieTemp.put("nbPlayers",temp[1]+"/"+temp[2]);
+            _listePartiesTransfet.add(_nomPartieTemp);
         }
-        SimpleAdapter mSchedule = new SimpleAdapter (this.getBaseContext(), listItem, R.layout.displaylist,
+        SimpleAdapter mSchedule = new SimpleAdapter (this.getBaseContext(), _listePartiesTransfet, R.layout.displaylist,
         new String[] {"nbPlayers", "PartyName"}, new int[] { R.id.nbPlayers, R.id.PartyName});
-        maList.setAdapter(mSchedule);      
+        _listView_Parties.setAdapter(mSchedule);      
     }
     
     /**
