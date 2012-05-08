@@ -11,7 +11,7 @@ import java.util.Vector;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+ 
 
 /**
  * Classe du serveur qui va gerer les parties
@@ -312,7 +312,16 @@ public class PokerPartie {
           //lancer dans un nouveau thread la partie
           ExecPartie e = new ExecPartie(this);
           e.start();
+          
+          for(int w=0;w<getNbJ();w++)clientList.get(w).setAttente(0);
+          
           broadcastClientsPartie("DEBUTPARTIE");
+          try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
           availableLancementPartie.release();
         return 1;
     }
@@ -420,11 +429,7 @@ public class PokerPartie {
     private void envoiCarteM(int joueur) {
     	
     	if(clientList.get(joueur)!=null)clientList.get(joueur).send("CARTEM@"+clientList.get(joueur).getCartes()[0]+"@"+clientList.get(joueur).getCartes()[1]);
-                try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(PokerPartie.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
     }
     
     
@@ -615,7 +620,11 @@ public class PokerPartie {
 	    		}else nbJoueur--;
     		}
     	}
-    	
+        try {
+        Thread.sleep(1000);
+    } catch (InterruptedException ex) {
+        Logger.getLogger(PokerPartie.class.getName()).log(Level.SEVERE, null, ex);
+    }
     	
     	jetons=5;
     	//j0 mise la blind et j1 la surblind
@@ -708,23 +717,21 @@ public class PokerPartie {
 				if(clientList.get(i).getAttente()==0 || clientList.get(i).getAttente()==2){
 					cartes[cpt]=clientList.get(i).getCartes();
 					cl[cpt]=i;
-					
+					cpt++;
 				}
 			}
 		}
 		
 		int[] gagne;
-		if(nbJoueur>1){
-			float[] g=je.gagnant(cartes,table,nbJoueur);
+		if(cpt>1){
+			float[] g=je.gagnant(cartes,table,cpt);
 			gagne=new int[g.length-2];
 		                 
 			for(int i=2;i<g.length;i++){
                             
                             gagne[i-2]=cl[(int)g[i]];
                         }
-			repartionDesGains(jetTable,gagne,gagne.length,true);
-			
-                        envoiGagnantT(gagne);	
+	
 			
 			
 			
@@ -732,28 +739,31 @@ public class PokerPartie {
 		else{
                     gagne=new int[1];
                     gagne[0]=cl[0];
+		}
+                    repartionDesGains(jetTable,gagne,gagne.length,true);
                     envoiGagnantT(gagne);
+                    
+            		for(int i=0;i<getNbJ();i++){
+                		if(clientList.get(i)!=null){
+            	    			clientList.get(i).setJetonsPoses(0);
+            			    	clientList.get(i).setPot(0);	                
+            	    		}
+            		}
+            		
+                	envoiJetonsJ();
+                	jetTable=0;
+                	envoiJetonsT();
             try {
                 Thread.sleep(7000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(PokerPartie.class.getName()).log(Level.SEVERE, null, ex);
             }
-			if(clientList.get(cl[0])!=null){
-				if(clientList.get(cl[0]).getAttente()==0)
-					clientList.get(cl[0]).setJetonsTotaux(clientList.get(cl[0]).getJetonsTotaux()+jetTable);
-			}
-		}
+			
 		
-		for(int i=0;i<getNbJ();i++){
-    		if(clientList.get(i)!=null){
-	    			clientList.get(i).setJetonsPoses(0);
-			    	clientList.get(i).setPot(0);	                
-	    		}
-		}
 		
-    	envoiJetonsJ();
-    	jetTable=0;
-    	envoiJetonsT();
+
+		
+
 		
 	//on regarde si il y a des nouveaux perdants
 		
@@ -763,7 +773,7 @@ public class PokerPartie {
 				if(clientList.get(i).getAttente()!=-1){
 					
 					if(clientList.get(i).getJetonsTotaux()<=10){
-						
+	 					
 						clientList.get(i).setAttente(-1);
 						envoiPerdu(i);
 					}
@@ -818,12 +828,12 @@ public class PokerPartie {
 					
 					if(clientList.get(gagne[i])!=null && !r[i]){
 							tp=this.jetTable-clientList.get(gagne[i]).getPot();
-							if(gain>=tp){//gain superieure a ce qu'il a le droit de toucher
+							if(gain>= tp){//gain superieure a ce qu'il a le droit de toucher
 								
 								clientList.get(gagne[i]).setJetonsTotaux(clientList.get(gagne[i]).getJetonsTotaux()+tp);
 								jreste--;
 								r[i]=true;
-								clientList.get(gagne[i]).ajoutePot(this.jetTable);
+								clientList.get(gagne[i]).ajoutePot(tp);
 								reste=reste-tp;
 							}
 							else{//gain<
@@ -1236,11 +1246,11 @@ private void envoiChoixJoueur(String pseudo) {
 			if(clientList.get(i)!=null && clientList.get(joueur)!=null){
 				if(clientList.get(i).getAttente()==2 && clientList.get(joueur).getJetonsPoses()>clientList.get(i).getJetonsPoses()){
 					
-					if(clientList.get(i).getJetonsPoses()>clientList.get(joueur).getJetonsPoses()-jetMis)
+					/*if(clientList.get(i).getJetonsPoses()>clientList.get(joueur).getJetonsPoses()-jetMis)
 						ajout=clientList.get(i).getJetonsPoses()-clientList.get(joueur).getJetonsPoses();
-					else
+					else*/
 						ajout=jetMis;
-					
+				
 					clientList.get(i).ajoutePot(ajout);
 					
 				}
