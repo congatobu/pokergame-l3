@@ -400,7 +400,7 @@ function cartem(act){
  */
 function cartet(act){
 	partie.centrerJetons(jetonsTable);
-	partie.distribuerCarteTable(act.slice(1,act.length));
+	partie.distribuerCarteTable(act.slice(2,act.length));
 }
 
 /**
