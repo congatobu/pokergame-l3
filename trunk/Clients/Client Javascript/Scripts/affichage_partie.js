@@ -352,7 +352,7 @@ function Partie(u){
 			}
 		    montantjoueurs = [0,0,0,0,0,0,0,0];
 		    montantjoueurstour = [0,0,0,0,0,0,0,0];
-		},3000);
+		},500);
 	};
 	//----- méthodes relatives à la gestion des cartes & Jetons -----
 	this.distribuerCarteJoueurs=function(c){
