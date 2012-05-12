@@ -421,26 +421,26 @@ return 0;
 int Reseau::creerPartie()// creer une partie
 {
 cout<<"Donnez le nom de la partie"<<endl;
-	cin>>nompartie;
+	cin>>nompartie;// recupere le nom de la partie a crée
 cout<<"Donnez le nombre max de joueurs"<<endl;
-	cin>>nbjoueursmax;
+	cin>>nbjoueursmax;// recupere le nombre de joueurs max
 
 
-	string tmp="CREATEPARTIE@"+nompartie+"@"+nbjoueursmax+"\n";
+	string tmp="CREATEPARTIE@"+nompartie+"@"+nbjoueursmax+"\n";// place dans tmp la socket a envoyer au serveur 
 
-	rjp = tmp.c_str();
+	rjp = tmp.c_str();//création de la socket
 
 	cout<<rjp<<endl;
 
-	if ((send(socketID, rjp, strlen(rjp), 0)) == 0)
+	if ((send(socketID, rjp, strlen(rjp), 0)) == 0)// si la socket n'est pas envoyé afficher une erreur
 		perror("send");
 //	cout<<strlen(&rjp)<<endl;
 	cout<<"phrase send"<<endl;
 
-	memset(phrase, 0, 255);
+	memset(phrase, 0, 255);//void * memset ( void * ptr, int value, size_t num );
 	recv(socketID, phrase, 255, 0);
 
-	cout<<"phrase :"<<phrase<<endl;
+	cout<<"phrase :"<<phrase<<endl;// affiche ce que l'on recois du serveur
 	
 
 return 0;
